@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "397117718492",
+    "firebase_url": "https://restaurant-e5a17.firebaseio.com",
+    "project_id": "restaurant-e5a17",
+    "storage_bucket": "restaurant-e5a17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397117718492:android:8054751f71c21001be5919",
+        "android_client_info": {
+          "package_name": "com.customerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsqkMqtndVpCs-jSjtzI09yBnRhXrYHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397117718492:android:62287acfe6efdfd4be5919",
+        "android_client_info": {
+          "package_name": "com.kitchenapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsqkMqtndVpCs-jSjtzI09yBnRhXrYHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397117718492:android:09538d1e66cf32e6be5919",
+        "android_client_info": {
+          "package_name": "com.managerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsqkMqtndVpCs-jSjtzI09yBnRhXrYHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:397117718492:android:04c1dbdaf13e2ba9be5919",
+        "android_client_info": {
+          "package_name": "com.waitstaffapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrsqkMqtndVpCs-jSjtzI09yBnRhXrYHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "397117718492-qhonjfch84jgv8afpnde7un3lgs66nbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
