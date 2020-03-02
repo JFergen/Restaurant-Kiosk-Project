@@ -1,5 +1,10 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+# To override the React Native Firebase iOS SDK versions used uncomment any of the below and change the version
+# $FirebaseSDKVersion = '6.8.1'
+# $FabricSDKVersion = '1.6.0'
+# $CrashlyticsSDKVersion = '3.1.0'
 
 target 'kitchenApp' do
   # Pods for kitchenApp
@@ -21,7 +26,6 @@ target 'kitchenApp' do
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
   pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
   pod 'React-Core/RCTWebSocket', :path => '../node_modules/react-native/'
-
   pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
   pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
   pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
