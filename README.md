@@ -13,6 +13,14 @@
     3.3)  npm i react-native-paper
   
     3.4.) npm i react-native-vector-icons
+    
+    3.5) npm i '@react-native-firebase/functions'
+    
+    3.6) npm i '@react-native-firebase/firestore'
+     
+    3.7) npm i '@react-native-firebase/auth'
+    
+    
 
 4.) in andriod studio
  
@@ -40,3 +48,6 @@
     5.1.3) if you have a debug error then go to android\app\build\generated\res\google-services\debug and delete the debug folder and re-run npx react-native run-android
 
 6.) if all goes well you should see your app on your virtual device and you can add data through the firebase console. Go to database and on the top left select Cloud Firestore
+
+
+7.) Documentation for database usage: https://firebase.google.com/docs/firestore
