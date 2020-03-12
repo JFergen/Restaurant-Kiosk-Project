@@ -51,3 +51,5 @@
 
 
 7.) Documentation for database usage: https://firebase.google.com/docs/firestore
+
+8.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
