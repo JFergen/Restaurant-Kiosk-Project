@@ -10,29 +10,30 @@ import {
  } from 'react-native'
 import Header from './components/Header'
 import OrderContainer from './components/orderContainer'
-import ServerHelpButton from './components/serverHelpButton'
+import IngredientsButton from './components/ingredients'
 import KitchenappBackground from './images/app.jpg'
+import styles from './StyleSheet/styles.js'
 export default class App extends Component {
 
   render(){
   return(
     <ImageBackground source = {KitchenappBackground} style = {{height: '100%', width:'100%'}}>
-    <ScrollView>
-    <View style = {styles.container}>
+    
+    <View style = {styles.container2}>
     <Header />
+      <ScrollView>
     <OrderContainer />
-      <ServerHelpButton text = 'Back' color = '#33ABF9' ></ServerHelpButton>
-    </View>
+    <OrderContainer/>
+    <OrderContainer/>
+      <IngredientsButton text = 'Ingredients' color = '#33ABF9' ></IngredientsButton>
     </ScrollView>
+    </View>
     </ImageBackground>
 
   )}}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 60
-  }
-})
+
+
+
 
 
