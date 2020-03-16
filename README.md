@@ -62,7 +62,7 @@
 Every backend function returns a promise. A promise is an object that represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
 
 To handle a promise: 
-'''
+```
  updateMenu(item) 
   .then((success) => {
         console.log('Function successful', success);
@@ -70,7 +70,7 @@ To handle a promise:
     .catch((error) => {
         console.log('Function error', error);
     });
-'''    
+```    
     
  Some functions require the user to pass in an 'item' object. This object should look like this:
  let item = {
