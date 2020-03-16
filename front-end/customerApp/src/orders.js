@@ -23,7 +23,7 @@ export async function createOrder(customerID) {
 }
 
 export async function addItemToOrder(orderID, item) {
-    let success;
+    let isSuccess;
 
     await firebase.firestore().collection('Orders').doc(orderID).update({ item })
     .then((success) => {
@@ -34,22 +34,22 @@ export async function addItemToOrder(orderID, item) {
         isSucces = false;
     });
 
-    return success;
+    return isSuccess;
 }
 
 export async function removeOrder(orderId) {
-    let success;
+    let isSuccess;
 
     await firebase.firestore().collection('Orders').doc(orderID).delete()
-    .then((success) => {
-        success = 1;
+    .then(() => {
+        isSuccess = 1;
     })
     .catch((error) => {
         console.log('Error deleting order: ', error);
-        success = 0;
+        isSuccess = 0;
     });
 
-    return success;
+    return isSuccess;
 }
 
 export async function getEntrees() {
