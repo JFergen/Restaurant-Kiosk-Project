@@ -73,6 +73,7 @@ To handle a promise:
 ```    
     
  Some functions require the user to pass in an 'item' object. This object should look like this:
+ ```
  let item = {
   calories: 750,
   indgredients: ['cheese', 'tomato sauce', 'pepperoni'],
@@ -81,4 +82,4 @@ To handle a promise:
   type: 'entree',
   uri: 'image link'
   }
-  
+  ```
