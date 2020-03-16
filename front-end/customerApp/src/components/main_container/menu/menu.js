@@ -29,16 +29,18 @@ let DATA = [
     },
 ];
 
+
 class Menu extends Component {
     constructor() {
         super();
         this.state = {items: DATA};
     }
 
+
     incrementQty = (id) => {
-        orders.createOrder('123456789')
-        .then(function(orderID) {
-            console.log(orderID);
+        orders.getDesserts()
+        .then(function(entrees) {
+            console.log(entrees);
         })
         .catch((error) => {
             console.log("error getting order");

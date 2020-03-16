@@ -16,22 +16,22 @@ export async function createOrder(customerID) {
     })
     .catch(function(error) {
         console.error("Error creating Order: ", error);
-        orderID = 'FAILURE';
+        orderID = null;
     });
 
     return orderID;
 }
 
-export async function addItemToOrder(orderID, items) {
+export async function addItemToOrder(orderID, item) {
     let success;
 
-    await firebase.firestore().collection('Orders').doc(orderID).update({ items })
+    await firebase.firestore().collection('Orders').doc(orderID).update({ item })
     .then((success) => {
-        success = 1;
+        isSuccess = true;
     })
     .catch((error) => {
         console.log('Error adding to order: ', error);
-        success = 0;
+        isSucces = false;
     });
 
     return success;
@@ -52,10 +52,47 @@ export async function removeOrder(orderId) {
     return success;
 }
 
-export async function updateOrder(orderID, item) {
+export async function getEntrees() {
+    let query;
 
+    await firebase.firestore().collection('Menu').where('type', '==', 'entree').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        query = null;
+    });
+
+    return query;
 }
 
-export async function finalizeOrder(orderID) {
+export async function getDesserts() {
+    let query;
 
+    await firebase.firestore().collection('Menu').where('type', '==', 'dessert').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        query = null;
+    });
+
+    return query;
+}
+
+export async function getBeverages() {
+    let query;
+
+    await firebase.firestore().collection('Menu').where('type', '==', 'beverage').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        query = null;
+    });
+
+    return query;
 }
