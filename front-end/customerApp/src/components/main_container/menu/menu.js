@@ -3,6 +3,7 @@ import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } fro
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
+import * as orders from '../../../orders.js'
 
 let DATA = [
     {
@@ -35,6 +36,14 @@ class Menu extends Component {
     }
 
     incrementQty = (id) => {
+        orders.createOrder('123456789')
+        .then(function(orderID) {
+            console.log(orderID);
+        })
+        .catch((error) => {
+            console.log("error getting order");
+        });
+
         let newItems = [...this.state.items];
 
         var i;
