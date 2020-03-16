@@ -72,6 +72,7 @@ To handle a promise:
     });
 ```    
     
+ ## Function Arguments
  Some functions require the user to pass in an 'item' object. This object should look like this:
  ```
  let item = {
