@@ -36,7 +36,7 @@ export async function deleteEmployee(employeeID) {
 
 
 export async function getEmployees() {
-    let document=[];
+    let document = [];
     
         await firebase.firestore().collection('Employees').get()
         .then((snapshot) => {
@@ -49,55 +49,5 @@ export async function getEmployees() {
             
         });
         
-        
-        
-    
-
     return document;
 }
-
-/* export async function deleteFromMenu(itemName) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Menu').doc(itemName).delete()
-    .then(() => {
-        isSuccess = true;
-    })
-    .catch((error) => {
-        console.error("Error deleting item from menu: ", error);
-        isSuccess = false;
-    });
-
-    return isSuccess;
-}
-
-export async function updateMenuItem(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Menu').doc(item.name).update(item)
-    .then(() => {
-        isSuccess = true;
-    })
-    .catch((error) => {
-        console.error("Error updating item in menu: ", error);
-        isSuccess = false;
-    });
-
-    return isSuccess;
-}
-
-export async function getItemDetails(itemName) {
-    let query;
-
-    await firebase.firestore().collection('Menu').where('name', '==', itemName).get()
-    .then((snapshot) => {
-        query = snapshot.docs.map(doc => doc.data());
-    })
-    .catch ((error) => {
-        console.log('Error getting document', error);
-        query = null;
-    });
-
-    return query;
-}
- */
