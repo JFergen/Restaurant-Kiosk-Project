@@ -26,7 +26,7 @@ export async function deleteFromMenu(itemName) {
     .then(() => {
         isSuccess = true;
     })
-    .catch(function(error) {
+    .catch((error) => {
         console.error("Error deleting item from menu: ", error);
         isSuccess = false;
     });
@@ -53,10 +53,10 @@ export async function getItemDetails(itemName) {
     let query;
 
     await firebase.firestore().collection('Menu').where('name', '==', itemName).get()
-    .then(snapshot => {
+    .then((snapshot) => {
         query = snapshot.docs.map(doc => doc.data());
     })
-    .catch (error => {
+    .catch ((error) => {
         console.log('Error getting document', error);
         query = null;
     });
