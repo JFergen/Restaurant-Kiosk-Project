@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/android/app/src/main/java/com/customerapp/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/android/app/src/main/java/com/customerapp/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/android/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/firebase.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/components/main_container/menu/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/components/main_container/menu/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +14,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2608" />
-    <option name="y" value="516" />
+    <option name="x" value="2080" />
+    <option name="y" value="407" />
     <option name="width" value="1026" />
     <option name="height" value="546" />
   </component>
@@ -32,9 +24,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">

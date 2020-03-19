@@ -11,7 +11,7 @@ export async function createOrder(customerID) {
         customerID: customerID,
         order: null,
     })
-    .then(function(docRef) {
+    .then((docRef) => {
         orderID = docRef.id;
     })
     .catch(function(error) {
