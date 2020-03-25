@@ -1,30 +1,28 @@
 import React, { Component } from 'react'
-import { StyleSheet,Button,
- View,Text,
- ScrollView,
- Alert, } from 'react-native'
+import { StyleSheet, Button, View,Text, ScrollView, Alert, } from 'react-native'
 import {Table, Row, Rows} from 'react-native-table-component'
-import {createAppContainer}from 'react-navigation'
+import { createAppContainer }from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import OrderDetails from '../orderDetails/orderDetails'
+//import OrderDetails from '../orderDetails/orderDetails'
 
 
 export default class OrderContainer extends Component{
 
-    constructor (props){
+    constructor (props) {
     super(props)
     this.state = {
-      buttonColor :'black',
+      buttonColor: 'black',
       buttonText: 'call server',
       bText: 'order is ready',
       bcolor: 'black'
-      
     }
   }
+
   onPressButton = () => {
     this.setState({buttonText: 'server is called',
     buttonColor:'green'})
   }
+  
   onButtonPress = () =>
   {
     this.setState({bText: " the order is marked as ready",
