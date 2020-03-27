@@ -4,6 +4,10 @@ import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
 import * as orders from '../../../orders.js'
+import * as employees from '../../../employees.js'
+import * as tables from '../../../tables.js'
+import * as menuop from '../../../menu_operations.js'
+
 
 let DATA = [
     {
@@ -38,13 +42,36 @@ class Menu extends Component {
 
 
     incrementQty = (id) => {
+        
         orders.getDesserts()
+        let item = {
+            available: false,
+            tableNumber: '1',
+            waitstaff: 'Dak Prescott',
+            }
+        let item2 = {
+            available: false,
+            tableNumber: '4',
+            waitstaff: 'Tony Romo',
+            }
+        let item3 = {
+            available: false,
+            tableNumber: '5',
+            waitstaff: 'Carson Wentz',
+            }
+        tables.updateTableInformation(item)
+        tables.getTable('2')
+        tables.addTables(item2)
+        //tables.addTables(item3)
+        tables.deleteTables('afXDLp1uuYCi52xS2K4h')
         .then(function(entrees) {
             console.log(entrees);
         })
         .catch((error) => {
             console.log("error getting order");
         });
+
+        
 
         let newItems = [...this.state.items];
 
