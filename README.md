@@ -20,6 +20,8 @@
      
     3.7) npm i '@react-native-firebase/auth'
     
+    3.8) npm i react-native-gesture-handler
+    
     
 
 4.) in andriod studio
