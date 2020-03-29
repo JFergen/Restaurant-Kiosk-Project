@@ -3,11 +3,7 @@ import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } fro
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
-import * as orders from '../../../orders.js'
-import * as employees from '../../../employees.js'
-import * as tables from '../../../tables.js'
-import * as menuop from '../../../menu_operations.js'
-
+import * as orders from '../../../menu_operations.js'
 
 let DATA = [
     {
@@ -33,6 +29,10 @@ let DATA = [
     },
 ];
 
+let item = {
+    name: "Pizza",
+    price: 1.66
+};
 
 class Menu extends Component {
     constructor() {
@@ -42,6 +42,7 @@ class Menu extends Component {
 
 
     incrementQty = (id) => {
+<<<<<<< HEAD
         
         //orders.getDesserts()
         let item = {
@@ -78,6 +79,9 @@ class Menu extends Component {
 
         
 
+=======
+    
+>>>>>>> aef594715be1441ea66b590eb0512843f8e89183
         let newItems = [...this.state.items];
 
         var i;
