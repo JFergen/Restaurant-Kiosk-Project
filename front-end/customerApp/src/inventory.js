@@ -4,10 +4,10 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 // function to add inventory item
-export async function addToInventory(item) {
+export async function addToInventory(ingredient) {
     let isSuccess;
 
-    await firebase.firestore().collection('Inventory').add(item)
+    await firebase.firestore().collection('Inventory').add(ingredient)
     .then(() => {
         isSuccess = true;
     })
@@ -23,7 +23,7 @@ export async function addToInventory(item) {
 export async function deleteFromInventory(itemName) {
     let isSuccess;
 
-    await firebase.firestore().collection('Inventory').doc(itemName).delete()
+    await firebase.firestore().collection('Inventory').doc(IngredientName).delete()
     .then(() => {
         isSuccess = true;
     })
@@ -33,20 +33,4 @@ export async function deleteFromInventory(itemName) {
     });
 
     return isSuccess;
-}
-
-//function to view inventory item details
-export async function getItemDetails(itemName) {
-    let query;
-
-    await firebase.firestore().collection('Inventory').where('name', '==', itemName).get()
-    .then((snapshot) => {
-        query = snapshot.docs.map(doc => doc.data());
-    })
-    .catch ((error) => {
-        console.log('Error getting document', error);
-        query = null;
-    });
-
-    return query;
 }
