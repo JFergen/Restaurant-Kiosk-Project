@@ -43,7 +43,7 @@ class Menu extends Component {
 
     incrementQty = (id) => {
         
-        orders.getDesserts()
+        //orders.getDesserts()
         let item = {
             available: false,
             tableNumber: '1',
@@ -59,11 +59,16 @@ class Menu extends Component {
             tableNumber: '5',
             waitstaff: 'Carson Wentz',
             }
-        tables.updateTableInformation(item)
-        tables.getTable('2')
-        tables.addTables(item2)
+        //tables.updateTableInformation(item)
+        //tables.getTable('2')
+        //tables.addTables(item2)
         //tables.addTables(item3)
-        tables.deleteTables('afXDLp1uuYCi52xS2K4h')
+        //tables.deleteTables('afXDLp1uuYCi52xS2K4h')
+        //menuop.getEntrees()
+        let items;
+        menuop.getDesserts()
+        //menuop.checkInventory('Egg')
+
         .then(function(entrees) {
             console.log(entrees);
         })

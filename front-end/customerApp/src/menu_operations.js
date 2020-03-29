@@ -7,6 +7,7 @@ import firestore from '@react-native-firebase/firestore'
 //parameter is a item object.
 //for example:
 /*let item = {
+ allergen: ['Egg' , 'Milk'],
  calories: 750,
  indgredients: ['cheese', 'tomato sauce', 'pepperoni'],
  name: 'Pizza',
@@ -51,6 +52,7 @@ export async function deleteFromMenu(itemName) {
 //parameter is a item object.
 //for example:
 /*let item = {
+ allergen: ['Egg', 'Milk'],
  calories: 850,
  indgredients: ['blue cheese', 'tomato sauce', 'pineapple'],
  name: 'Pizza',
@@ -96,3 +98,186 @@ export async function getItemDetails(itemName) {
 
     return query;
 }
+
+//function to check a particualar items inventory is not empty
+//the parameter for this function is a string which is the name of the item i.e., checkInventory('Sugar')
+export async function checkInventory(name) {
+    let query;
+    await firebase.firestore().collection('Inventory').where('IngredientName', '==', name).get()
+        .then(snapshot => {
+
+            query = snapshot.docs.map(doc => doc.data());
+
+        })
+        .catch(error => {
+            console.log('Error getting documents', error);
+            query = null;
+        });
+
+    if (query == null) {
+        return null;
+    }
+    
+
+    
+    if (query[0].IngredientQuantity == 0) {
+        return 0;
+    } else
+        return 1;
+
+
+}
+
+//function to get all entrees when the inventory is not empty
+export async function getEntrees() {
+    let query;
+
+    await firebase.firestore().collection('Menu').where('type', '==', 'entree').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch(error => {
+            console.log('Error getting documents', error);
+            query = null;
+        });
+    if (query == null) {
+        return query;
+    }
+    let availableItems = []
+    query.forEach((item, i) => {
+
+        let count = 1
+        item.ingredients.forEach((ingredient, j) => {
+
+            checkInventory(ingredient)
+                .then(snapshot => {
+
+                    query = snapshot;
+                })
+                .catch(error => {
+                    console.log('Error getting documents', error);
+                    query = null;
+                });
+
+            if (query == 0) {
+                count = 0;
+            }
+
+        });
+        if (count != 0) {
+            availableItems.push(item);
+        }
+    });
+
+    if (query == null) {
+        return null;
+    } else
+        return availableItems;
+
+
+}
+
+//function to get all beverages when the inventory is not empty
+export async function getBeverages() {
+    let query;
+
+    await firebase.firestore().collection('Menu').where('type', '==', 'beverage').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch(error => {
+            console.log('Error getting documents', error);
+            query = null;
+        });
+    if (query == null) {
+        return query;
+    }
+    let availableItems = []
+    query.forEach((item, i) => {
+
+        let count = 1
+        item.ingredients.forEach((ingredient, j) => {
+
+            checkInventory(ingredient)
+                .then(snapshot => {
+
+                    query = snapshot;
+                })
+                .catch(error => {
+                    console.log('Error getting documents', error);
+                    query = null;
+                });
+
+            if (query == 0) {
+                count = 0;
+            }
+
+        });
+        if (count != 0) {
+            availableItems.push(item);
+        }
+    });
+
+    if (query == null) {
+        return null;
+    } else
+        return availableItems;
+
+
+}
+
+
+ 
+//function to get all desserts when the inventory is not empty
+export async function getDesserts() {
+    let query;
+
+    await firebase.firestore().collection('Menu').where('type', '==', 'dessert').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch(error => {
+            console.log('Error getting documents', error);
+            query = null;
+        });
+    if (query == null) {
+        return query;
+    }
+    let availableItems = [];
+    let isAvailable;
+    query.forEach((item, i) => {
+
+        let count = 1;
+        console.log(isAvailable)
+            
+        item.ingredients.forEach((ingredient, j) => {
+
+            checkInventory(ingredient)
+                .then(snapshot => {
+
+                    isAvailable = snapshot;
+                    console.log(isAvailable)
+                })
+                .catch(error => {
+                    console.log('Error getting documents', error);
+                    isAvailable = null;
+                });
+             console.log(isAvailable)
+             if (isAvailable == 0) {
+                 console.log('hello')
+                 count = 0;
+             }
+
+        });
+        if (count != 0) {
+            availableItems.push(item);
+        }
+    });
+
+    
+        return availableItems;
+
+
+}
+
+
