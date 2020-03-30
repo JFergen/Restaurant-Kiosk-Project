@@ -1,27 +1,14 @@
-
 import React, { Component } from 'react';
 import { StyleSheet, View,Text} from 'react-native';
-
+import styles from '../StyleSheet/styles.js'
 export default class Header extends Component{
     render(){
     return (
-        <View  style = {styles.header}>
-        <Text style = {styles.text}> Kitchen App</Text>
+        <View  style = {styles.header2}>
+        <Text style = {styles.textHeader}> Orders</Text>
         </View>
     )
 }
 }
 
-const styles = StyleSheet.create({
-    header: {
-        height: 60,
-        backgroundColor: '#33ABF9',
-        padding: 15,
-    },
-    text: {
-        color: 'black',
-        fontSize: 25,
-        textAlign: 'center',
-    }
-}
-)
+

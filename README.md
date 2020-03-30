@@ -20,6 +20,8 @@
      
     3.7) npm i '@react-native-firebase/auth'
     
+    3.8) npm i react-native-gesture-handler
+    
     
 
 4.) in andriod studio
@@ -53,3 +55,34 @@
 7.) Documentation for database usage: https://firebase.google.com/docs/firestore
 
 8.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
+
+
+
+
+# Backend Function Usage
+## Promises
+Every backend function returns a promise. A promise is an object that represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+
+To handle a promise: 
+```
+ updateMenu(item) 
+  .then((success) => {
+        console.log('Function successful', success);
+    })
+    .catch((error) => {
+        console.log('Function error', error);
+    });
+```    
+    
+ ## Function Arguments
+ Some functions require the user to pass in an 'item' object. This object should look like this:
+ ```
+ let item = {
+  calories: 750,
+  indgredients: ['cheese', 'tomato sauce', 'pepperoni'],
+  name: 'Pizza',
+  price: 6.99,
+  type: 'entree',
+  uri: 'image link'
+  }
+  ```
