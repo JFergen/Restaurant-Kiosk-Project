@@ -34,3 +34,38 @@ export async function deleteFromInventory(itemName) {
 
     return isSuccess;
 }
+
+export async function updateInventory(ingredient) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Inventory').doc(ingredient.IngredientName).update(ingredient)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating item in menu: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+}
+
+
+export async function getIngredientQuantity(name) {
+    let ingredient;
+
+    await firebase.firestore().collection('Inventory').where('IngredientName', '==', name).get()
+    .then((snapshot) => {
+        ingredient = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        ingredient = null;
+    });
+
+    if (ingredient != null) {
+        return ingredient[0].IngredientQuantity;
+    }
+
+    return null;
+}
