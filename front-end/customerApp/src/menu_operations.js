@@ -48,50 +48,6 @@ export async function getMenu(type) {
 }
 
 
-export async function getEntrees() {
-    let query;
-
-    await firebase.firestore().collection('Menu').where('type', '==', 'entree').get()
-    .then(snapshot => {
-        query = snapshot.docs.map(doc => doc.data());
-    })
-    .catch (error => {
-        console.log('Error getting documents', error);
-        query = null;
-    });
-
-    let items = [];
-
-    for (i in query) {
-
-        let isAvailable = true;
-
-        for (j in query[i].ingredients) {
-           
-            await getIngredientQuantity(query[i].ingredients[j])
-                .then((quantity) => {
-                    if (quantity == 0) {
-                        isAvailable = false;
-                    }
-                })
-                .catch (error => {
-                    console.log('Error getting documents', error);
-                });
-
-            if (!isAvailable) {
-                break;
-            }
-        }
-
-        if (isAvailable) {
-            items.push(query[i]);
-        }
-    }
-
-    return items;
-}
-
-
 //function to add Menu item
 //parameter is a item object.
 //for example:
