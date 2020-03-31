@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, TouchableHighlight, Image, TouchableOpacity, Text } from 'react-native';
 import LoginIcon from '../../../assets/header/login.png';
 import WaiterIcon from '../../../assets/header/waiter.png';
+import DrinkIcon from '../../../assets/header/drink.png';
 import GameIcon from '../../../assets/header/joystick.png';
 import CartIcon from '../../../assets/header/shopping-cart.png';
-import LeftArrow from '../../../assets/header/left-arrow.png';
 import RightArrow from '../../../assets/header/right-arrow.png';
 import styles from './styles.js';
 
@@ -14,7 +14,7 @@ class Header extends Component {
             <View style = {styles.header}>
                 <TouchableHighlight
                     style = {styles.buttonBackground}
-                    onPress = {() => alert("login")}
+                    onPress = {() => { this.props.navigation.navigate('Login') }}
                 >
                     <Image source = {LoginIcon}/>
                 </TouchableHighlight>
@@ -24,6 +24,13 @@ class Header extends Component {
                     onPress = {() => alert("help button")}
                 >
                     <Image source = {WaiterIcon}/>
+                </TouchableHighlight>
+
+                <TouchableHighlight 
+                    style = {styles.buttonBackground}
+                    onPress = {() => alert("free refill")}
+                >
+                    <Image source = {DrinkIcon}/>
                 </TouchableHighlight>
 
                 <TouchableHighlight 
