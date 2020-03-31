@@ -42,46 +42,7 @@ class Menu extends Component {
 
 
     incrementQty = (id) => {
-<<<<<<< HEAD
-        
-        //orders.getDesserts()
-        let item = {
-            available: false,
-            tableNumber: '1',
-            waitstaff: 'Dak Prescott',
-            }
-        let item2 = {
-            available: false,
-            tableNumber: '4',
-            waitstaff: 'Tony Romo',
-            }
-        let item3 = {
-            available: false,
-            tableNumber: '5',
-            waitstaff: 'Carson Wentz',
-            }
-        //tables.updateTableInformation(item)
-        //tables.getTable('2')
-        //tables.addTables(item2)
-        //tables.addTables(item3)
-        //tables.deleteTables('afXDLp1uuYCi52xS2K4h')
-        //menuop.getEntrees()
-        let items;
-        menuop.getDesserts()
-        //menuop.checkInventory('Egg')
 
-        .then(function(entrees) {
-            console.log(entrees);
-        })
-        .catch((error) => {
-            console.log("error getting order");
-        });
-
-        
-
-=======
-    
->>>>>>> aef594715be1441ea66b590eb0512843f8e89183
         let newItems = [...this.state.items];
 
         var i;
