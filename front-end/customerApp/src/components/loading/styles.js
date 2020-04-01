@@ -1,12 +1,14 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
-        flex: 1
+    loadingTextView: {
+        alignSelf: 'center',
+        height: '100%',
+        justifyContent: 'center'
     },
-    headerContainer: {
-        width: Dimensions.get('window').width,
-        height: 120,
-        borderWidth: 5
-    }
+    loadingText: {
+        fontSize: 45,
+        fontFamily: "CamphorW01-Bold",
+        color: 'black' 
+    },
 });

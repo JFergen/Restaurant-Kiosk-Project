@@ -4,77 +4,64 @@ import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
 
-let DATA = [
-    {
-        id: '1',
-        title: 'Cheese burger',
-        price: 8,
-        qty: 0,
-        uri: 'https://cdn.foodbeast.com/wp-content/uploads/2017/06/Webp.net-compress-image.jpg'
-    },
-    {
-        id: '2',
-        title: 'Hot dog',
-        price: 4,
-        qty: 0,
-        uri: 'https://awrestaurants.com/sites/default/files/hotdog_0.png'
-    },
-    {
-        id: '3',
-        title: 'Sandwich',
-        price: 5,
-        qty: 0,
-        uri: 'https://image.shutterstock.com/image-photo/sandwich-ham-cheese-tomatoes-lettuce-600w-1027873330.jpg'
-    },
-];
-
 class Menu extends Component {
-    constructor() {
-        super();
-        this.state = {items: DATA};
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: props.menuList
+        };
     }
 
-    incrementQty = (id) => {
-        let newItems = [...this.state.items];
 
-        var i;
-        for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                ++newItems[i].qty;
-                break;
-            }
-        }
+    // incrementQty = (id) => {
+    
+    //     let newItems = [...this.state.items];
 
-        this.setState({items: newItems});
-    }
+    //     var i;
+    //     for(i = 0; i < newItems.length; ++i) {
+    //         if(newItems[i].id === id) {
+    //             ++newItems[i].qty;
+    //             break;
+    //         }
+    //     }
 
-    decrementQty = (id) => {
-        let newItems = [...this.state.items];
+    //     this.setState({items: newItems});
+    // }
 
-        var i;
-        for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                if (newItems[i].qty == 0) {
-                    alert("Can not go below 0");
-                    break;
-                }
+    // decrementQty = (id) => {
+    //     let newItems = [...this.state.items];
+
+    //     var i;
+    //     for(i = 0; i < newItems.length; ++i) {
+    //         if(newItems[i].id === id) {
+    //             if (newItems[i].qty == 0) {
+    //                 alert("Can not go below 0");
+    //                 break;
+    //             }
                 
-                --newItems[i].qty;
-                break;
-            }
-        }
+    //             --newItems[i].qty;
+    //             break;
+    //         }
+    //     }
 
-        this.setState({items: newItems});
-    }
+    //     this.setState({items: newItems});
+    // }
 
     render() {
         return (
             <FlatList
-                data = {DATA}
+                data = {this.state.items}
                 renderItem = {({item}) => (
                     <View style = {styles.container}>
                         <View style = {{flex: 1}}>
-                            <Text style = {{fontSize: 20}}>{item.title} - ${item.price}</Text>
+                            <Text style = {{
+                                paddingLeft: 5,
+                                fontSize: 22,
+                                fontWeight: 'bold',
+                                fontStyle: 'italic'
+                            }}>
+                                {item.name} - ${item.price}
+                            </Text>
                             <TouchableHighlight
                                 onPress = {() => alert(item.title)}
                                 underlayColor = 'transparent'
@@ -112,7 +99,7 @@ class Menu extends Component {
                         </View>
                     </View>
                 )}
-                keyExtractor = {item => item.id}
+                keyExtractor = {(item, index) => index.toString()}
             />
         )
     }

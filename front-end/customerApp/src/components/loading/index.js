@@ -1,3 +1,3 @@
-import Loading from './loading'
+import Registration from './Registration'
 
-export default Loading
+export default Registration

@@ -8,6 +8,11 @@ import styles from './styles';
 class MainContainer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            entrees: props.entrees,
+            beverages: props.beverages,
+            desserts: props.desserts
+        }
     }
 
     render() {
@@ -29,19 +34,19 @@ class MainContainer extends Component {
                         {/* Entrees */}
                         <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
                             {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                            <Menu/>
+                            <Menu menuList = {this.state.entrees}/>
                         </View>
             
                         {/* Sides */}
                         <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
                             {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                            <Menu/>
+                            <Menu menuList = {this.state.beverages}/>
                         </View>
             
                         {/* Drinks? */}
                         <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
                             {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                            <Menu/>
+                            <Menu menuList = {this.state.desserts}/>
                         </View>
                     </View>
                 </View>

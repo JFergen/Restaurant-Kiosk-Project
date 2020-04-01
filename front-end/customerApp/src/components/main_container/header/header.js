@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableHighlight, Image, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableHighlight, Image } from 'react-native';
 import LoginIcon from '../../../assets/header/login.png';
 import WaiterIcon from '../../../assets/header/waiter.png';
 import DrinkIcon from '../../../assets/header/drink.png';
@@ -14,7 +14,7 @@ class Header extends Component {
             <View style = {styles.header}>
                 <TouchableHighlight
                     style = {styles.buttonBackground}
-                    onPress = {() => { this.props.navigation.navigate('Login') }}
+                    onPress = {() => { this.props.navigation.navigate('Register') }}
                 >
                     <Image source = {LoginIcon}/>
                 </TouchableHighlight>
