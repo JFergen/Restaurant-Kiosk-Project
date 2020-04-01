@@ -35,13 +35,13 @@ export async function deleteCustomer(CustomerID) {
 }
 
 export async function login(email, password) {
-    let loginSuccess;
+    let validEmail = true;
     let customer;
 
     await firebase.firestore().collection('Customers').where('email', '==', email).get()
     .then((snapshot) => {
         if (snapshot.empty) {
-            loginSuccess = 'Invalid Email or Password';
+            validEmail = false;
         } 
         else {
             customer = snapshot.docs.map(doc => doc.data());
@@ -51,10 +51,13 @@ export async function login(email, password) {
         console.log('Error getting document', error);
     });
     
-    if (loginSuccess == 'Invalid Email or Password') {
+    if (validEmail) {
         if (password != customer.password) {
             return 'Invalid Email or Password';
         }
+    }
+    else {
+        return 'Invalid Email or Password';
     }
     
     return customer;
