@@ -4,6 +4,7 @@ import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
 import * as orders from '../../../menu_operations.js'
+import { addCustomer } from '../../../customers';
 
 let DATA = [
     {
@@ -42,6 +43,13 @@ class Menu extends Component {
 
 
     incrementQty = (id) => {
+        customer = {
+            name: 'Aaron Shehan',
+            email: 'aaronshehan28@gmail.com',
+            password: '12345',
+        }
+
+        addCustomer(customer);
 
         let newItems = [...this.state.items];
 

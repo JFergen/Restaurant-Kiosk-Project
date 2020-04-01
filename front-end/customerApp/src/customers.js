@@ -3,19 +3,18 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-export async function addCustomer(Customer) {
-    let isSuccess;
+export function addCustomer(Customer) {
+    let autoID = firebase.firestore().collection('Customers').doc().id;
 
-    await firebase.firestore().collection('Customers').add(Customer)
+    Customer.id = autoID;
+
+    firebase.firestore().collection('Customers').doc(autoID).set(Customer)
     .then(() => {
-        isSuccess = true;
+        console.log("Customer added Successfully");
     })
     .catch((error) => {
         console.error("Error adding Customer to Customer table: ", error);
-        isSuccess = false;
     });
-
-    return isSuccess;
 }
 
 
