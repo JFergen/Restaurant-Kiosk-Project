@@ -52,3 +52,16 @@ export async function removeOrder(orderId) {
     return isSuccess;
 }
 
+export async function orderNotReady() {
+    let orders = [];
+
+    await firebase.firestore().collection('Orders').where('completionStatus', '==', false).get()
+    .then((snapshot) => {
+        orders = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting document', error);
+    });
+
+    return orders;
+}
