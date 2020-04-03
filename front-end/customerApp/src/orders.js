@@ -52,3 +52,20 @@ export async function removeOrder(orderId) {
     return isSuccess;
 }
 
+export async function getOrders() {
+    let document = [];
+    
+        await firebase.firestore().collection('Orders').get()
+        .then((snapshot) => {
+            snapshot.forEach(doc => {
+                documents[doc.id] = doc.data();
+            });
+        })
+        .catch((error) => {
+            console.error("Error getting employees from orders from table: ", error);
+            
+        });
+        
+    return document;
+}
+
