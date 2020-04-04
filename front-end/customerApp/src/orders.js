@@ -81,3 +81,24 @@ export async function updateOrderInformation(item) {
 
     return isSuccess;
 }
+
+
+export async function getTableOrders(tableNumber){
+
+    let orders = []
+
+    await firebase.firestore().collection('Inventory').where('tableNumber', '==', tableNumber).get()
+    .then((snapshot) => {
+        orders = snapshot.docs.map(doc => doc.data());
+        console.log('Successfully retreived orders.')
+    })
+    .catch ((error) => {
+        alert('Unable to retrieve order information', error);
+    });
+
+    if (orders = []) {
+        return 'No orders for this table';
+    }
+
+    return orders;
+}
