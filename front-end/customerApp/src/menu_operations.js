@@ -82,7 +82,7 @@ export function deleteFromMenu(itemName) {
     });
 }
 
-//function to update menu item infromation to the database
+//function to update menu item information to the database
 //parameter is a item object.
 //for example:
 /*let item = {
