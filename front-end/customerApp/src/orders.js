@@ -51,7 +51,7 @@ export async function removeOrder(orderId) {
 
     return isSuccess;
 }
-
+//need to test
 export async function getOrders() {
     let document = [];
     
@@ -68,4 +68,18 @@ export async function getOrders() {
         
     return document;
 }
+//need to test
+export async function updateOrderInformation(item) {
+    let isSuccess;
 
+    await firebase.firestore().collection('Orders').doc(item.orderID).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Order in database table: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+}
