@@ -51,17 +51,33 @@ export async function removeOrder(orderId) {
 
     return isSuccess;
 }
+//gets all the orders in the database
+export async function getOrders() {
+    let query;
 
-export async function orderNotReady() {
-    let orders = [];
-
-    await firebase.firestore().collection('Orders').where('completionStatus', '==', false).get()
+    await firebase.firestore().collection('Orders').get()
     .then((snapshot) => {
-        orders = snapshot.docs.map(doc => doc.data());
+        query = snapshot.docs.map(doc => doc.data());
     })
-    .catch (error => {
+    .catch ((error) => {
         console.log('Error getting document', error);
+        query = null;
+    });
+    
+    return query;
+}
+//updates a specific order in the database
+export async function updateOrderInformation(item) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Orders').doc(item.orderID).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Order in database table: ", error);
+        isSuccess = false;
     });
 
-    return orders;
+    return isSuccess;
 }

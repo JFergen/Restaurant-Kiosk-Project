@@ -69,3 +69,19 @@ export async function getIngredientQuantity(name) {
 
     return null;
 }
+
+//gets all the inventory in the database
+export async function getInventory() {
+    let query;
+
+    await firebase.firestore().collection('Inventory').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+    
+    return query;
+}

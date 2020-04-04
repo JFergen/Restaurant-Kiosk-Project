@@ -62,3 +62,35 @@ export async function login(email, password) {
     
     return customer;
 }
+
+//gets all the customers in the database
+export async function getCustomers() {
+    let query;
+
+    await firebase.firestore().collection('Customers').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+    
+    return query;
+}
+//need to test
+export async function updateCustomerInformation(item) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Customers').doc(item.id).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Order in database table: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+
+}
