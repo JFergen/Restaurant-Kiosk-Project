@@ -63,22 +63,20 @@ export async function login(email, password) {
     return customer;
 }
 
-//need to test
+//gets all the customers in the database
 export async function getCustomers() {
-    let document = [];
+    let query;
+
+    await firebase.firestore().collection('Customers').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
     
-        await firebase.firestore().collection('Customers').get()
-        .then((snapshot) => {
-            snapshot.forEach(doc => {
-                documents[doc.id] = doc.data();
-            });
-        })
-        .catch((error) => {
-            console.error("Error getting Customers from Customers from table: ", error);
-            
-        });
-        
-    return document;
+    return query;
 }
 //need to test
 export async function updateCustomerInformation(item) {

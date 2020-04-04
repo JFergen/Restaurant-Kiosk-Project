@@ -3,8 +3,13 @@ import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } fro
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
-import * as orders from '../../../menu_operations.js'
-import { addCustomer } from '../../../customers';
+import * as orders from '../../../orders.js'
+import * as customers from '../../../customers.js'
+import * as menuOperations from '../../../menu_operations.js'
+import * as employees from '../../../employees.js'
+import * as tables from '../../../tables.js'
+import * as inventory from '../../../inventory.js'
+
 
 let DATA = [
     {
@@ -43,13 +48,23 @@ class Menu extends Component {
 
 
     incrementQty = (id) => {
-        customer = {
-            name: 'Aaron Shehan',
-            email: 'aaronshehan28@gmail.com',
-            password: '12345',
-        }
-
-        addCustomer(customer);
+      
+        // let orderobj = {
+        //     completionStatus: false,
+        //     customerID: 'l8qDPeaGzOC4egZMW5hW',
+        //     orderID: 'v6J7iJmyHxW5CIdCosvK',
+        //     orderedItems: ['Pizza', 'Apple Pie'],
+        //     price: 8.99,
+        //     waitstaff: '4MfW9403U5WqT5cSIgbG'
+        // }
+        // orders.updateOrderInformation(orderobj)
+        inventory.getInventory()
+        .then(function(orders) {
+            console.log(orders);
+        })
+        .catch((error) => {
+            console.log("error getting order");
+        });
 
         let newItems = [...this.state.items];
 

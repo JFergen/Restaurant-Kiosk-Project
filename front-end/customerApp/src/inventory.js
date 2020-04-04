@@ -70,20 +70,18 @@ export async function getIngredientQuantity(name) {
     return null;
 }
 
-//need to test
-export async function getIngredient() {
-    let document = [];
+//gets all the inventory in the database
+export async function getInventory() {
+    let query;
+
+    await firebase.firestore().collection('Inventory').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
     
-        await firebase.firestore().collection('Ingredients').get()
-        .then((snapshot) => {
-            snapshot.forEach(doc => {
-                documents[doc.id] = doc.data();
-            });
-        })
-        .catch((error) => {
-            console.error("Error getting Ingredients from Ingredients table: ", error);
-            
-        });
-        
-    return document;
+    return query;
 }

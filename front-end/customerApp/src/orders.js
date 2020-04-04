@@ -51,24 +51,22 @@ export async function removeOrder(orderId) {
 
     return isSuccess;
 }
-//need to test
+//gets all the orders in the database
 export async function getOrders() {
-    let document = [];
+    let query;
+
+    await firebase.firestore().collection('Orders').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
     
-        await firebase.firestore().collection('Orders').get()
-        .then((snapshot) => {
-            snapshot.forEach(doc => {
-                documents[doc.id] = doc.data();
-            });
-        })
-        .catch((error) => {
-            console.error("Error getting employees from orders from table: ", error);
-            
-        });
-        
-    return document;
+    return query;
 }
-//need to test
+//updates a specific order in the database
 export async function updateOrderInformation(item) {
     let isSuccess;
 
