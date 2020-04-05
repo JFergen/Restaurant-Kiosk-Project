@@ -47,19 +47,18 @@ export async function deleteTables(tableNumber) {
 
 //function to get table information from the database
 //paramater is a string which is the table number i.e., getTables('1') will get the table data for the table who's number is 1
-export async function getTable(tableNumber) {
-    let query;
-
-    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNumber).get()
+export async function getAvailableTables() {
+    let tables = []
+    
+    await firebase.firestore().collection('Tables').where('available', '==', true).get()
     .then((snapshot) => {
-        query = snapshot.docs.map(doc => doc.data());
+        tables = snapshot.docs.map(doc => doc.data());
     })
     .catch ((error) => {
-        console.log('Error getting document', error);
-        query = null;
+        alert('Failure getting tables.', error);
     });
     
-    return query;
+    return tables;
 }
 
 
