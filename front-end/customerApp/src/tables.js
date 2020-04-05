@@ -45,8 +45,7 @@ export async function deleteTables(tableNumber) {
     return isSuccess;
 }
 
-//function to get table information from the database
-//paramater is a string which is the table number i.e., getTables('1') will get the table data for the table who's number is 1
+
 export async function getTables() {
     let tables = []
     
