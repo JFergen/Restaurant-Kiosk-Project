@@ -74,18 +74,14 @@ export async function getTables() {
 //the available status will change to false,
 //table number will remain 1
 //waitsatff will be changed to Tony Romo 
-export async function updateTableInformation(item) {
-    let isSuccess;
-
+export function updateTableInformation(item) {
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
-        isSuccess = true;
+        console.log('Successfully updated table.');
     })
     .catch((error) => {
-        console.error("Error updating Table in database table: ", error);
-        isSuccess = false;
+      alert"Error updating Table in database table: ", error);
+     
     });
-
-    return isSuccess;
 }
 
