@@ -70,6 +70,8 @@ export function addToMenu(item) {
     });
 }
 
+
+
 //function to delete a Menu item from the database
 //parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
 export function deleteFromMenu(itemName) {

@@ -4,19 +4,14 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 // function to add inventory item
-export async function addToInventory(ingredient) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Inventory').add(ingredient)
+export async function addToInventory(item) {
+    firebase.firestore().collection('Inventory').doc(item.ingredientName).set(item)
     .then(() => {
-        isSuccess = true;
+        console.log("Successfully added Ingredient to the ingredient doc.");
     })
     .catch((error) => {
-        console.error("Error adding item to inventory: ", error);
-        isSuccess = false;
+        alert("Error adding ingredient to doc: ", error);
     });
-
-    return isSuccess;
 }
 
 // function to delete inventory item

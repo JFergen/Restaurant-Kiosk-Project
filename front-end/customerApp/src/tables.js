@@ -13,18 +13,15 @@ import firestore from '@react-native-firebase/firestore'
     }*/
 //then pass item to the function i.e, addTables(item)
 export async function addTables(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Tables').add(item)
+    firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
-        isSuccess = true;
+        console.log("Successfully added table to the table doc.");
     })
     .catch((error) => {
-        console.error("Error adding Table to database table: ", error);
-        isSuccess = false;
+        alert("Error adding table to table doc: ", error);
     });
 
-    return isSuccess;
+    
 }
 
 //function to delete a table from the database
@@ -74,13 +71,13 @@ export async function getTables() {
 //the available status will change to false,
 //table number will remain 1
 //waitsatff will be changed to Tony Romo 
-export function updateTableInformation(item) {
+export async function updateTableInformation(item) {
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
         console.log('Successfully updated table.');
     })
     .catch((error) => {
-      alert"Error updating Table in database table: ", error);
+      alert("Error updating Table in database table: ", error);
      
     });
 }
