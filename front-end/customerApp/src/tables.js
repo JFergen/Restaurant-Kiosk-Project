@@ -85,3 +85,24 @@ export function updateTableInformation(item) {
     });
 }
 
+
+export function markTableOrderStatusAsTrue(tableNum) {
+    
+    table = {
+        tableNumber: tableNum,
+        orderComplete: true
+    }
+    
+    await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
+    .then(() => {
+        console.log('Successfully updated table.');
+    })
+    .catch((error) => {
+      alert"Error updating Table in database table: ", error);
+     
+    });
+}
+
+
+
+
