@@ -93,7 +93,7 @@ export function markTableOrderStatusAsTrue(tableNum) {
         orderComplete: true
     }
     
-    await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
+    firebase.firestore().collection('Tables').doc(tableNumber).update(table)
     .then(() => {
         console.log('Successfully updated table.');
     })
