@@ -88,7 +88,7 @@ export function updateTableInformation(item) {
 
 export function markTableOrderStatusAsTrue(tableNum) {
     
-    table = {
+    let table = {
         tableNumber: tableNum,
         orderComplete: true
     }
