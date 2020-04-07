@@ -98,7 +98,7 @@ export function markTableOrderStatusAsTrue(tableNum) {
         console.log('Successfully updated table.');
     })
     .catch((error) => {
-      alert"Error updating Table in database table: ", error);
+      alert("Error updating Table in database table: ", error);
      
     });
 }
