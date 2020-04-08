@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
-import {addCustomer} from '../../menu_operations';
+import {addCustomer} from '../../customers';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import LeftArrow from '../../assets/header/left-arrow.png';
+import RegisterButton from '../../assets/registration/register_button.png';
 import validator from 'validator';
 import styles from './styles.js';
 
@@ -55,6 +56,28 @@ class Registration extends Component {
         this.setState({ password: text })
     }
 
+    registerCustomer = async () => {
+        let customer = {name: this.state.firstName, email: this.state.email, password: this.state.password}
+
+        if (this.state.firstName.length == 0) {
+            alert("Need first name");
+        } else if (this.state.email.length == 0) {    // TODO:: Change this to check database for same email
+
+        } else if (this.state.password.length < 6) {
+            alert("Need password with length > 6");
+        } else {
+            const success = await addCustomer(customer);
+            if (success) {
+                alert("Registered successfully");
+                this.props.navigation.navigate('Menu', {
+                    loginSuccessful: true
+                })
+            } else {
+                alert("Registration has failed");
+            }
+        }
+    }
+
     render() {
         return (
             <View style = {styles.container}>
@@ -83,12 +106,6 @@ class Registration extends Component {
                     </View>
                 </View>
                 <Image source = {UserIcon}/>
-                <Text style = {{
-                    fontSize: 50, 
-                    fontWeight: 'bold'
-                    }}>
-                        Register
-                </Text>
                 <View style = {styles.textFields}>
                     <Text style = {styles.textFieldLabel}>First Name</Text>
                     <View style = {styles.textField}>
@@ -142,6 +159,12 @@ class Registration extends Component {
                         />
                     </View>
                 </View>
+                <TouchableOpacity
+                    style = {{alignSelf: 'center'}}
+                    onPress = {() => { this.registerCustomer() }}
+                >
+                    <Image source = {RegisterButton}/>
+                </TouchableOpacity>
             </View> 
         )
     }

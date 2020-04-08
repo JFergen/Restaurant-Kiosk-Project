@@ -3,6 +3,7 @@ import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } fro
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
+import * as inventory from '../../../inventory.js'
 
 class Menu extends Component {
     constructor(props) {
@@ -12,40 +13,54 @@ class Menu extends Component {
         };
     }
 
+    incrementQty = (id) => {
+        // let orderobj = {
+        //     completionStatus: false,
+        //     customerID: 'l8qDPeaGzOC4egZMW5hW',
+        //     orderID: 'v6J7iJmyHxW5CIdCosvK',
+        //     orderedItems: ['Pizza', 'Apple Pie'],
+        //     price: 8.99,
+        //     waitstaff: '4MfW9403U5WqT5cSIgbG'
+        // }
+        // orders.updateOrderInformation(orderobj)
+        inventory.addToInventory(orderobj)
+        .then(function(orders) {
+            console.log(orders);
+        })
+        .catch((error) => {
+            console.log("error getting order");
+        });
 
-    // incrementQty = (id) => {
-    
-    //     let newItems = [...this.state.items];
+        let newItems = [...this.state.items];
 
-    //     var i;
-    //     for(i = 0; i < newItems.length; ++i) {
-    //         if(newItems[i].id === id) {
-    //             ++newItems[i].qty;
-    //             break;
-    //         }
-    //     }
+        var i;
+        for(i = 0; i < newItems.length; ++i) {
+            if(newItems[i].id === id) {
+                ++newItems[i].qty;
+                break;
+            }
+        }
 
-    //     this.setState({items: newItems});
-    // }
+        this.setState({items: newItems});
+    }
 
-    // decrementQty = (id) => {
-    //     let newItems = [...this.state.items];
+    decrementQty = (id) => {
+        let newItems = [...this.state.items];
 
-    //     var i;
-    //     for(i = 0; i < newItems.length; ++i) {
-    //         if(newItems[i].id === id) {
-    //             if (newItems[i].qty == 0) {
-    //                 alert("Can not go below 0");
-    //                 break;
-    //             }
+        var i;
+        for(i = 0; i < newItems.length; ++i) {
+            if(newItems[i].id === id) {
+                if (newItems[i].qty == 0) {
+                    alert("Can not go below 0");
+                    break;
+                }
                 
-    //             --newItems[i].qty;
-    //             break;
-    //         }
-    //     }
-
-    //     this.setState({items: newItems});
-    // }
+                --newItems[i].qty;
+                break;
+            }
+        }
+        this.setState({items: newItems});
+    }
 
     render() {
         return (

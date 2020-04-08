@@ -11,7 +11,7 @@ export async function addEmployee(employee) {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error adding employee to employee table: ", error);
+        console.error("Error adding Employee to Employees table: ", error);
         isSuccess = false;
     });
 
@@ -27,7 +27,7 @@ export async function deleteEmployee(employeeID) {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error deleting employee from employee table: ", error);
+        console.error("Error deleting Employee from Employees table: ", error);
         isSuccess = false;
     });
 
@@ -35,19 +35,35 @@ export async function deleteEmployee(employeeID) {
 }
 
 
+//gets all the employees in the database
 export async function getEmployees() {
-    let document = [];
+    let query;
+
+    await firebase.firestore().collection('Employees').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
     
-        await firebase.firestore().collection('Employees').get()
-        .then((snapshot) => {
-            snapshot.forEach(doc => {
-                documents[doc.id] = doc.data();
-            });
-        })
-        .catch((error) => {
-            console.error("Error getting employees from employee table: ", error);
-            
-        });
-        
-    return document;
+    return query;
+}
+
+//need to test
+export async function updateEmployeeInformation(item) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Employees').doc(item.id).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Employees in database table: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+
 }

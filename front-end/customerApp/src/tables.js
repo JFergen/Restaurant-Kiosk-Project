@@ -13,18 +13,15 @@ import firestore from '@react-native-firebase/firestore'
     }*/
 //then pass item to the function i.e, addTables(item)
 export async function addTables(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Tables').add(item)
+    firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
-        isSuccess = true;
+        console.log("Successfully added table to the table doc.");
     })
     .catch((error) => {
-        console.error("Error adding Table to database table: ", error);
-        isSuccess = false;
+        alert("Error adding table to table doc: ", error);
     });
 
-    return isSuccess;
+    
 }
 
 //function to delete a table from the database
@@ -45,21 +42,19 @@ export async function deleteTables(tableNumber) {
     return isSuccess;
 }
 
-//function to get table information from the database
-//paramater is a string which is the table number i.e., getTables('1') will get the table data for the table who's number is 1
-export async function getTable(tableNumber) {
-    let query;
 
-    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNumber).get()
+export async function getTables() {
+    let tables = []
+    
+    await firebase.firestore().collection('Tables').where('available', '==', false).get()
     .then((snapshot) => {
-        query = snapshot.docs.map(doc => doc.data());
+        tables = snapshot.docs.map(doc => doc.data());
     })
     .catch ((error) => {
-        console.log('Error getting document', error);
-        query = null;
+        alert('Failure getting tables.', error);
     });
     
-    return query;
+    return tables;
 }
 
 
@@ -77,17 +72,34 @@ export async function getTable(tableNumber) {
 //table number will remain 1
 //waitsatff will be changed to Tony Romo 
 export async function updateTableInformation(item) {
-    let isSuccess;
-
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
-        isSuccess = true;
+        console.log('Successfully updated table.');
     })
     .catch((error) => {
-        console.error("Error updating Table in database table: ", error);
-        isSuccess = false;
+      alert("Error updating Table in database table: ", error);
+     
     });
-
-    return isSuccess;
 }
+
+
+export function markTableOrderStatusAsTrue(tableNum) {
+    
+    let table = {
+        tableNumber: tableNum,
+        orderComplete: true
+    }
+    
+    firebase.firestore().collection('Tables').doc(tableNumber).update(table)
+    .then(() => {
+        console.log('Successfully updated table.');
+    })
+    .catch((error) => {
+      alert("Error updating Table in database table: ", error);
+     
+    });
+}
+
+
+
 

@@ -4,15 +4,19 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 export async function addCustomer(Customer) {
+    let autoID = await firebase.firestore().collection('Customers').doc().id;
+
+    Customer.id = autoID;
     let isSuccess;
 
-    await firebase.firestore().collection('Customers').add(Customer)
+    await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
     .then(() => {
         isSuccess = true;
+        console.log("Customer added Successfully");
     })
     .catch((error) => {
-        console.error("Error adding Customer to Customer table: ", error);
         isSuccess = false;
+        console.error("Error adding Customer to Customer table: ", error);
     });
 
     return isSuccess;
@@ -35,3 +39,66 @@ export async function deleteCustomer(CustomerID) {
     return isSuccess;
 }
 
+export async function login(email, password) {
+    let validEmail = true;
+    let customer;
+    console.log(email);
+    console.log(password);
+
+    await firebase.firestore().collection('Customers').where('email', '==', email).get()
+    .then((snapshot) => {
+        if (snapshot.empty) {
+            validEmail = false;
+        } 
+        else {
+            customer = snapshot.docs.map(doc => doc.data());
+            console.log(customer.password);
+        }
+    })
+    .catch (error => {
+        console.log('Error getting document', error);
+    });
+    
+    if (validEmail) {
+        if (password != customer.password) {
+            return 'Invalid Email or Password';
+        }
+    }
+    else {
+        return 'Invalid Email or Password';
+    }
+    
+    return customer;
+}
+
+//gets all the customers in the database
+export async function getCustomers() {
+    let query;
+
+    await firebase.firestore().collection('Customers').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+    
+    return query;
+}
+//need to test
+export async function updateCustomerInformation(item) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Customers').doc(item.id).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Order in database table: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+
+}

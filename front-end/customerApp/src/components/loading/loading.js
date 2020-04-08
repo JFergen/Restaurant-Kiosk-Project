@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import {getEntrees, getBeverages, getDesserts} from '../../menu_operations';
+import {getMenu} from '../../menu_operations';
 import styles from './styles';
 import MainContainer from '../main_container/main_container';
 
@@ -18,17 +18,18 @@ class Loading extends Component {
     this.getData();
   }
   
-  getData = async () => {
-    let newEntrees = await getEntrees();
-    let newBeverages = await getBeverages();
-    let newDesserts = await getDesserts();
+ getData = async () => {
+    let newEntrees = await getMenu('entree');
+    let newBeverages = await getMenu('beverage');
+    let newDesserts = await getMenu('dessert');
+    //let newAppetizers = await getMenu('appetizer');
     
     this.setState({
       entrees: newEntrees,
       beverages: newBeverages,
       desserts: newDesserts
     })
-  }
+ }
 
   // Add loading until all data is retreived
   renderApp = () => {
@@ -58,6 +59,7 @@ class Loading extends Component {
     } else {
       view = this.renderApp();
     }
+    //view = this.renderApp();
 
     return (
       view    

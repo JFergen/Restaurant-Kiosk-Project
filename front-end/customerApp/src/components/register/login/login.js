@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import UserIcon from '../../../assets/registration/user_icon.png';
 import LeftArrow from '../../../assets/header/left-arrow.png';
+import RegisterButton from '../../../assets/registration/register_button.png';
 import validator from 'validator';
+import {login} from '../../../customers';
 import styles from './styles.js';
 
 class Login extends Component {
@@ -51,6 +53,27 @@ class Login extends Component {
         this.setState({ password: text })
     }
 
+    loginCustomer = async () => {
+        let customer;
+
+        if (this.state.email.length == 0) {    // TODO:: Change this to check database for same email
+
+        } else if (this.state.password.length < 6) {
+            alert("Need password with length > 6");
+        } else {
+            customer = await login(this.state.email, this.state.password);
+            console.log(customer);
+            // if (customer.password.length > 0) {
+            //     alert("Login Successful");
+            //     this.props.navigation.navigate('Menu', {
+            //         loginSuccessful: true
+            //     })
+            // } else {
+            //     alert("Login has failed");
+            // }
+        }
+    }
+
     render() {
         return (
             <View style = {styles.container}>
@@ -96,6 +119,12 @@ class Login extends Component {
                         />
                     </View>
                 </View>
+                <TouchableOpacity
+                    style = {{alignSelf: 'center'}}
+                    onPress = {() => { this.loginCustomer() }}
+                >
+                    <Image source = {RegisterButton}/>
+                </TouchableOpacity>
             </View> 
         )
     }

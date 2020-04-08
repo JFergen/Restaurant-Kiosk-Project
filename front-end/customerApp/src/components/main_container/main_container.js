@@ -12,7 +12,7 @@ class MainContainer extends Component {
             entrees: props.entrees,
             beverages: props.beverages,
             desserts: props.desserts
-        }
+        };
     }
 
     render() {

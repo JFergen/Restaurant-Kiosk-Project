@@ -51,4 +51,54 @@ export async function removeOrder(orderId) {
 
     return isSuccess;
 }
+//gets all the orders in the database
+export async function getOrders() {
+    let query;
 
+    await firebase.firestore().collection('Orders').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+    
+    return query;
+}
+//updates a specific order in the database
+export async function updateOrderInformation(item) {
+    let isSuccess;
+
+    await firebase.firestore().collection('Orders').doc(item.orderID).update(item)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating Order in database table: ", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+}
+
+
+export async function getTableOrders(tableNumber){
+
+    let orders = []
+
+    await firebase.firestore().collection('Inventory').where('tableNumber', '==', tableNumber).get()
+    .then((snapshot) => {
+        orders = snapshot.docs.map(doc => doc.data());
+        console.log('Successfully retreived orders.')
+    })
+    .catch ((error) => {
+        alert('Unable to retrieve order information', error);
+    });
+
+    if (orders = []) {
+        return 'No orders for this table';
+    }
+
+    return orders;
+}
