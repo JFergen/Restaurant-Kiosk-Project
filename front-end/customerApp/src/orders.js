@@ -4,6 +4,10 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 
+//function will add a order to the database
+//the function will return the orderID
+//the functions parameter is a string which is the customerID
+//for example createOrder("l8qDPeaGzOC4egZMW5hW")
 export async function createOrder(customerID) {
     let orderID;
 
@@ -22,6 +26,12 @@ export async function createOrder(customerID) {
     return orderID;
 }
 
+
+//this function will add an item to the order
+//the parameter orderID is a string, and item is  a array of items
+//for example: 
+//let item=['Pizza', 'Cheese Cake'],
+//addItemToOrder('v6J7iJmyHxW5CIdCosvK', item)
 export async function addItemToOrder(orderID, item) {
     let isSuccess;
 
@@ -37,6 +47,9 @@ export async function addItemToOrder(orderID, item) {
     return isSuccess;
 }
 
+//this function will remove an order from the data base
+//orderId is a string which is the order ID
+//for example: removeOrder('v6J7iJmyHxW5CIdCosvK')
 export async function removeOrder(orderId) {
     let isSuccess;
 
@@ -51,7 +64,9 @@ export async function removeOrder(orderId) {
 
     return isSuccess;
 }
-//gets all the orders in the database
+
+
+//this function gets all the orders in the database
 export async function getOrders() {
     let query;
 
@@ -66,7 +81,30 @@ export async function getOrders() {
     
     return query;
 }
-//updates a specific order in the database
+
+
+//this function updates a specific order in the database
+//the function takes a object as it's parameter
+//for example:
+//let item = {
+//     completionStatus: false,
+//     customerID: "l8qDPeaGzOC4egZMW5hW",
+//     orderID: "v6J7iJmyHxW5CIdCosvK",
+//     orderedItems: ["Pizza" ,"Apple Pie"],
+//     price: 8.99,
+//     requests: "none",
+//     tableNumber: "3",
+//     waitstaff: "4MfW9403U5WqT5cSIgbG"
+// }
+//the completionStatus will remain false
+//the customerID will remain the same
+//the orderID will remain the same
+//the orderedItems will change to Pizza and Cheese Cake
+//the price will change to 20.99
+//the requests will change to make the pizza well done
+//the table number will remain the same
+//the waitstaff will remain the same
+//for example: updateOrderInformation(item)
 export async function updateOrderInformation(item) {
     let isSuccess;
 
@@ -83,6 +121,9 @@ export async function updateOrderInformation(item) {
 }
 
 
+//this function will get table orders
+//the parameter is a string which is the table number
+//for example getTableOrders('3')
 export async function getTableOrders(tableNumber){
 
     let orders = []

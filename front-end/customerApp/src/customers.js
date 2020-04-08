@@ -3,6 +3,18 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+
+//this function adds a customer to the database
+//the function takes a object as it's parameter
+//for example:
+//let Customer = {
+//     email:"johndoe@gmail.com",
+//     id: "l8qDPeaGzOC4egZMW5hW",
+//     name: "John Doe",
+//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
+//     password: "password"
+// }
+//addCustomer(Customer)
 export function addCustomer(Customer) {
     let autoID = firebase.firestore().collection('Customers').doc().id;
 
@@ -18,6 +30,9 @@ export function addCustomer(Customer) {
 }
 
 
+//this function deletes a customer from the database
+//CustomerID is the ID of the customer which is a string
+//for example: deleteCustomer("l8qDPeaGzOC4egZMW5hW")
 export async function deleteCustomer(CustomerID) {
     
     let isSuccess;
@@ -34,6 +49,10 @@ export async function deleteCustomer(CustomerID) {
     return isSuccess;
 }
 
+//this function stores the customers email and password to the database
+//the function parameter is a email and password which are both strings
+//for example:
+//login("abcd@gmail.com", "password1234")
 export async function login(email, password) {
     let validEmail = true;
     let customer;
@@ -63,7 +82,7 @@ export async function login(email, password) {
     return customer;
 }
 
-//gets all the customers in the database
+//this function gets all the customers in the database
 export async function getCustomers() {
     let query;
 
@@ -78,7 +97,24 @@ export async function getCustomers() {
     
     return query;
 }
-//need to test
+
+
+//this function updates a customers information
+//the functions parameter is a object
+//for example:
+//let item = {
+//     email:"johndoe1234@gmail.com",
+//     id: "l8qDPeaGzOC4egZMW5hW",
+//     name: "John Bob",
+//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
+//     password: "hello1234"
+// }
+//this email will change to jhondoe1234@gmail.com
+//the id will remain the same
+//the name will chage ot John Bob
+//the order id will remain the same
+//the pasword will change to hello1234
+//updateCustomerInformation(item)
 export async function updateCustomerInformation(item) {
     let isSuccess;
 
