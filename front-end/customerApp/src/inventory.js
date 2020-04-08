@@ -9,7 +9,7 @@ import firestore from '@react-native-firebase/firestore'
 //for example:
 //let item = {
     //ingredientName : 'Pizza Sauce',
-    //IngredientQuantity : 1000
+    //ingredientQuantity : 1000
 //}
 //addToInventory(item)
 export async function addToInventory(item) {
@@ -29,7 +29,7 @@ export async function addToInventory(item) {
 export async function deleteFromInventory(itemName) {
     let isSuccess;
 
-    await firebase.firestore().collection('Inventory').doc(IngredientName).delete()
+    await firebase.firestore().collection('Inventory').doc(ingredientName).delete()
     .then(() => {
         isSuccess = true;
     })
@@ -54,7 +54,7 @@ export async function deleteFromInventory(itemName) {
 export async function updateInventory(ingredient) {
     let isSuccess;
 
-    await firebase.firestore().collection('Inventory').doc(ingredient.IngredientName).update(ingredient)
+    await firebase.firestore().collection('Inventory').doc(ingredient.ingredientName).update(ingredient)
     .then(() => {
         isSuccess = true;
     })
@@ -73,7 +73,7 @@ export async function updateInventory(ingredient) {
 export async function getIngredientQuantity(name) {
     let ingredient;
 
-    await firebase.firestore().collection('Inventory').where('IngredientName', '==', name).get()
+    await firebase.firestore().collection('Inventory').where('ingredientName', '==', name).get()
     .then((snapshot) => {
         ingredient = snapshot.docs.map(doc => doc.data());
     })
@@ -83,7 +83,7 @@ export async function getIngredientQuantity(name) {
     });
 
     if (ingredient != null) {
-        return ingredient[0].IngredientQuantity;
+        return ingredient[0].ingredientQuantity;
     }
 
     return null;
