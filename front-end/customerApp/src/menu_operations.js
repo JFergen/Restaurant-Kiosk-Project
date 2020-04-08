@@ -146,7 +146,7 @@ export async function getItemDetails(itemName) {
 //the parameter for this function is a string which is the name of the item i.e., checkInventory('Sugar')
 export async function checkInventory(name) {
     let query;
-    await firebase.firestore().collection('Inventory').where('IngredientName', '==', name).get()
+    await firebase.firestore().collection('Inventory').where('ingredientName', '==', name).get()
         .then(snapshot => {
             query = snapshot.docs.map(doc => doc.data());
         })
@@ -159,7 +159,7 @@ export async function checkInventory(name) {
         return null;
     }
 
-    if (query[0].IngredientQuantity == 0) {
+    if (query[0].ingredientQuantity == 0) {
         return 0;
     } else
         return 1;
