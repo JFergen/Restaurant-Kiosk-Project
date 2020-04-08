@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import {addCustomer} from '../../menu_operations';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import LeftArrow from '../../assets/header/left-arrow.png';
