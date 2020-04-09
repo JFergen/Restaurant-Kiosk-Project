@@ -1,11 +1,17 @@
 import React, {Component, useState} from 'react';
-import { StyleSheet, ImageBackground, Text, View, Button, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, ImageBackground, Text, View, Button, Alert, TouchableHighlight, NavigationContainer } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Background from './assets/background.jpeg';
 import MainContainer from './components/main_container/main_container';
+//import inventory from './inventory/inventory';
+//import menu from './menu/menu';
+
 
 export default class App extends Component {
+  
   render() {
+    
+    //const Stack = createStackNavigator
 
      const onPress = () => {
           alert('Button Pressed');
@@ -114,9 +120,13 @@ const styles = StyleSheet.create({
 // Navigation
 const rootNavigator = createSwitchNavigator({
   Homescreen: MainContainer,
-  //Login: Login,
-  //Pay: PayScreen
-},
+  //Inventory: Inventory,
+  //Menu: PayScreen,
+  //Metrics: Metrics,
+  //ApTimes: ApTimes,
+  //ManTips: ManTips,
+  //ManEmps: ManEmps
+//},
 { initialRouteName: 'Homescreen' },
 { headerMode: 'none' })
 
