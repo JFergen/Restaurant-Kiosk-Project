@@ -6,18 +6,12 @@ import firestore from '@react-native-firebase/firestore'
 //this function will add daily revenue to the database
 //the function takes in a object as it's parameter
 //for example:
-//let employee = {
-    //dob: "03/23/1989",
-    // hourlyRate: 15.5,
-    // id: "4MfW9403U5WqT5cSIgbG",
-    // name: "Tony Romo",
-    // role: "waitstaff"
-// }
-//addEmployee(employee)
-export async function addEmployee(employee) {
+//
+//
+export async function addToDailyRev() {
     let isSuccess;
 
-    await firebase.firestore().collection('Employees').add(employee)
+    await firebase.firestore().collection('DailyRevenue').doc().add()
     .then(() => {
         isSuccess = true;
     })
@@ -32,18 +26,12 @@ export async function addEmployee(employee) {
 //this function will add monthly revenue to the database
 //the function takes in a object as it's parameter
 //for example:
-//let employee = {
-    //dob: "03/23/1989",
-    // hourlyRate: 15.5,
-    // id: "4MfW9403U5WqT5cSIgbG",
-    // name: "Tony Romo",
-    // role: "waitstaff"
-// }
-//addEmployee(employee)
-export async function addEmployee(employee) {
+//
+//
+export async function addToMonthlyRev() {
     let isSuccess;
 
-    await firebase.firestore().collection('Employees').add(employee)
+    await firebase.firestore().collection('MonthlyRevenue').add()
     .then(() => {
         isSuccess = true;
     })
@@ -56,10 +44,10 @@ export async function addEmployee(employee) {
 }
 
 //gets the daily revenue in the database
-export async function getEmployees() {
+export async function getDailyRev() {
     let query;
 
-    await firebase.firestore().collection('Employees').get()
+    await firebase.firestore().collection('DailyRevenue').get()
     .then((snapshot) => {
         query = snapshot.docs.map(doc => doc.data());
     })
@@ -72,10 +60,10 @@ export async function getEmployees() {
 }
 
 //gets the monthly revenue in the database
-export async function getEmployees() {
+export async function getMonthlyRev() {
     let query;
 
-    await firebase.firestore().collection('Employees').get()
+    await firebase.firestore().collection('MonthlyRevenue').get()
     .then((snapshot) => {
         query = snapshot.docs.map(doc => doc.data());
     })
