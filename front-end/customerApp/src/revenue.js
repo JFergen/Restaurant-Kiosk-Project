@@ -3,40 +3,45 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-//this function will add daily revenue to the database
-//the function takes in a object as it's parameter
+//this function will update daily revenue
+//if value not present, update() will create
+//this function takes a object as it's parameter
 //for example:
-//
-//
-export async function addToDailyRevenue() {
+//let revenue = {
+      // year: 2020
+      // month: January
+      // date: 0
+export async function updateDailyRevenue(revenue) {
     let isSuccess;
 
-    await firebase.firestore().collection('DailyRevenue').doc().add()
+    await firebase.firestore().collection('DailyRevenue').doc(revenue.year)
     .then(() => {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error adding to Daily Revenue: ", error);
+        console.error("Error updating Daily Revenue: ", error);
         isSuccess = false;
     });
 
     return isSuccess;
 }
 
-//this function will add monthly revenue to the database
-//the function takes in a object as it's parameter
+//this function will update the monthly revenue
+//if value not present, update() will create
+//this function takes a object as it's parameter
 //for example:
-//
-//
-export async function addToMonthlyRevenue() {
+//let revenue = {
+      // month: January
+export async function updateMonthlyRevenue(revenue) {
     let isSuccess;
 
-    await firebase.firestore().collection('MonthlyRevenue').add()
+    await firebase.firestore().collection('MonthlyRevenue').
+    .update(revenue)
     .then(() => {
         isSuccess = true;
-    })
+        })
     .catch((error) => {
-        console.error("Error adding Employee to Employees table: ", error);
+        console.error("Error updating Employees in database table: ", error);
         isSuccess = false;
     });
 
@@ -73,46 +78,4 @@ export async function getMonthlyRevenue() {
     });
 
     return query;
-}
-
-//this function will update daily revenue
-//this function takes a object as it's parameter
-//for example:
-//let item = {
-      // month: January
-      // date: 0
-export async function updateDailyRevenue(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('DailyRevenue').doc(item.id).update(item)
-    .then(() => {
-        isSuccess = true;
-    })
-    .catch((error) => {
-        console.error("Error updating Daily Revenue: ", error);
-        isSuccess = false;
-    });
-
-    return isSuccess;
-
-}
-
-//this function will update the monthly revenue
-//this function takes a object as it's parameter
-//for example:
-//
-export async function updateMonthlyRevenue(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('MonthlyRevenue').doc(item.id).update(item)
-    .then(() => {
-        isSuccess = true;
-    })
-    .catch((error) => {
-        console.error("Error updating Employees in database table: ", error);
-        isSuccess = false;
-    });
-
-    return isSuccess;
-
 }
