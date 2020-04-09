@@ -8,7 +8,7 @@ import firestore from '@react-native-firebase/firestore'
 //for example:
 //
 //
-export async function addToDailyRev() {
+export async function addToDailyRevenue() {
     let isSuccess;
 
     await firebase.firestore().collection('DailyRevenue').doc().add()
@@ -16,7 +16,7 @@ export async function addToDailyRev() {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error adding Employee to Employees table: ", error);
+        console.error("Error adding to Daily Revenue: ", error);
         isSuccess = false;
     });
 
@@ -28,7 +28,7 @@ export async function addToDailyRev() {
 //for example:
 //
 //
-export async function addToMonthlyRev() {
+export async function addToMonthlyRevenue() {
     let isSuccess;
 
     await firebase.firestore().collection('MonthlyRevenue').add()
@@ -44,7 +44,7 @@ export async function addToMonthlyRev() {
 }
 
 //gets the daily revenue in the database
-export async function getDailyRev() {
+export async function getDailyRevenue() {
     let query;
 
     await firebase.firestore().collection('DailyRevenue').get()
@@ -60,7 +60,7 @@ export async function getDailyRev() {
 }
 
 //gets the monthly revenue in the database
-export async function getMonthlyRev() {
+export async function getMonthlyRevenue() {
     let query;
 
     await firebase.firestore().collection('MonthlyRevenue').get()
@@ -78,29 +78,18 @@ export async function getMonthlyRev() {
 //this function will update daily revenue
 //this function takes a object as it's parameter
 //for example:
-//let employee = {
-    //dob: "03/23/1989",
-    // hourlyRate: 20.5,
-    // id: "4MfW9403U5WqT5cSIgbG",
-    // name: "Dak Romo",
-    // role: "manager"
-// }
-//for the employee with the id 4MfW9403U5WqT5cSIgbG
-//the employees dob will remain the same
-//the hourlyRate will change to 20.5
-//the id will remain the same
-//the name will change to Dak Romo
-//the role will change to manager
-//updateEmployeeInformation(item)
-export async function updateEmployeeInformation(item) {
+//let item = {
+      // month: January
+      // date: 0
+export async function updateDailyRevenue(item) {
     let isSuccess;
 
-    await firebase.firestore().collection('Employees').doc(item.id).update(item)
+    await firebase.firestore().collection('DailyRevenue').doc(item.id).update(item)
     .then(() => {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error updating Employees in database table: ", error);
+        console.error("Error updating Daily Revenue: ", error);
         isSuccess = false;
     });
 
@@ -111,24 +100,11 @@ export async function updateEmployeeInformation(item) {
 //this function will update the monthly revenue
 //this function takes a object as it's parameter
 //for example:
-//let employee = {
-    //dob: "03/23/1989",
-    // hourlyRate: 20.5,
-    // id: "4MfW9403U5WqT5cSIgbG",
-    // name: "Dak Romo",
-    // role: "manager"
-// }
-//for the employee with the id 4MfW9403U5WqT5cSIgbG
-//the employees dob will remain the same
-//the hourlyRate will change to 20.5
-//the id will remain the same
-//the name will change to Dak Romo
-//the role will change to manager
-//updateEmployeeInformation(item)
-export async function updateEmployeeInformation(item) {
+//
+export async function updateMonthlyRevenue(item) {
     let isSuccess;
 
-    await firebase.firestore().collection('Employees').doc(item.id).update(item)
+    await firebase.firestore().collection('MonthlyRevenue').doc(item.id).update(item)
     .then(() => {
         isSuccess = true;
     })

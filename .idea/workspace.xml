@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="Prototype functions to change and view Help status of tables.">
-      <change afterPath="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" afterDir="false" />
+    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/tables.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/tables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,19 +27,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="122" column="47" selection-start-line="122" selection-start-column="47" selection-end-line="122" selection-end-column="47" />
+            <state relative-caret-position="666">
+              <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -48,8 +38,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/employees.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="70" selection-start-line="70" selection-end-line="101" selection-end-column="1" />
+            <state relative-caret-position="1411">
+              <caret line="101" column="1" lean-forward="true" selection-start-line="101" selection-start-column="1" selection-end-line="101" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="86" column="83" lean-forward="true" selection-start-line="86" selection-start-column="83" selection-end-line="86" selection-end-column="83" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="445">
+              <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -65,8 +73,8 @@
       <list>
         <option value="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/tables.js" />
-        <option value="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" />
+        <option value="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" />
       </list>
     </option>
   </component>
@@ -149,7 +157,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586032442279</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="New files added for revenue and help functions.">
+      <created>1586393434565</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586393434565</updated>
+    </task>
+    <task id="LOCAL-00003" summary="TEST PUSH: Editing functions in revenue.">
+      <created>1586394808947</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586394808948</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -167,31 +189,48 @@
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32917964" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.15576324" />
-      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.32917964" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
     </layout>
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.js" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Prototype functions to change and view Help status of tables." />
-    <option name="LAST_COMMIT_MESSAGE" value="Prototype functions to change and view Help status of tables." />
+    <MESSAGE value="New files added for revenue and help functions." />
+    <MESSAGE value="TEST PUSH: Editing functions in revenue." />
+    <option name="LAST_COMMIT_MESSAGE" value="TEST PUSH: Editing functions in revenue." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51">
-          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/tables.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1938">
@@ -199,17 +238,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/employees.js">
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="70" selection-start-line="70" selection-end-line="101" selection-end-column="1" />
+        <state relative-caret-position="360">
+          <caret line="86" column="83" lean-forward="true" selection-start-line="86" selection-start-column="83" selection-end-line="86" selection-end-column="83" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/employees.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="122" column="47" selection-start-line="122" selection-start-column="47" selection-end-line="122" selection-end-column="47" />
+        <state relative-caret-position="1411">
+          <caret line="101" column="1" lean-forward="true" selection-start-line="101" selection-start-column="1" selection-end-line="101" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="123" column="1" lean-forward="true" selection-start-line="123" selection-start-column="1" selection-end-line="123" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
         </state>
       </provider>
     </entry>
