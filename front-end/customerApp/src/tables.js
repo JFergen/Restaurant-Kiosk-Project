@@ -3,17 +3,21 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-//function to add a table to the database
-//parameter is a item object.
+
+//NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE
+//this function will add a table to the database
+//the functions parameter is a item object.
 //for example:
 /*let item = {
     available: false,
+    ordersComplete: false,
     tableNumber: '1',
     waitstaff: 'Dak Prescott',
     }*/
 //then pass item to the function i.e, addTables(item)
+//NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE 
 export async function addTables(item) {
-    firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
+    await firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
         console.log("Successfully added table to the table doc.");
     })
@@ -24,8 +28,9 @@ export async function addTables(item) {
     
 }
 
-//function to delete a table from the database
-//paramater is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
+
+//this function is used delete a table from the database
+//the functionsparamater is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
 export async function deleteTables(tableNumber) {
     
     let isSuccess;
@@ -43,6 +48,7 @@ export async function deleteTables(tableNumber) {
 }
 
 
+//this function will get all of the tables in the Tables database
 export async function getTables() {
     let tables = []
     
@@ -58,19 +64,22 @@ export async function getTables() {
 }
 
 
-//function to update table infromation to the database
-//parameter is a item object.
+//this function is used to update table infromation to the database
+//the functionsparameter is a item object.
 //for example:
 /*let item = {
     available: false,
+    ordersComplete: true,
     tableNumber: '1',
     waitstaff: 'Tony Romo',
     }*/
 //then pass item to the function i.e, updateTableInformation(item)
-//this will update the table which is table number 1s 
+//this will update the table which is table number 1
 //the available status will change to false,
-//table number will remain 1
+//the ordersComplete status will change to true,
+//table number will remain 1,
 //waitsatff will be changed to Tony Romo 
+//updateTableInformation(item)
 export async function updateTableInformation(item) {
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
@@ -83,14 +92,19 @@ export async function updateTableInformation(item) {
 }
 
 
-export function markTableOrderStatusAsTrue(tableNum) {
+//this function is used to mark a particualr tables order status as true
+//the function takes a number which is a string as it's parameter
+//for example: markTableOrderStatusAsTrue('1')
+//this will mark the ordersComplete status for table number as true
+//markTableOrderStatusAdTrue(tableNum)
+export async function markTableOrderStatusAsTrue(tableNum) {
     
     let table = {
         tableNumber: tableNum,
         orderComplete: true
     }
     
-    firebase.firestore().collection('Tables').doc(tableNumber).update(table)
+    await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
     .then(() => {
         console.log('Successfully updated table.');
     })
@@ -99,7 +113,3 @@ export function markTableOrderStatusAsTrue(tableNum) {
      
     });
 }
-
-
-
-

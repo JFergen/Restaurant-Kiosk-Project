@@ -10,25 +10,31 @@ class Loading extends Component {
     this.state = { 
         entrees: [],
         beverages: [],
-        desserts: []
+        desserts: [],
+        appetizers: []
     }
   }
 
   componentDidMount() {
     this.getData();
   }
+
+  compo
   
  getData = async () => {
     let newEntrees = await getMenu('entree');
     let newBeverages = await getMenu('beverage');
     let newDesserts = await getMenu('dessert');
-    //let newAppetizers = await getMenu('appetizer');
+    let newAppetizers = await getMenu('appetizer');
     
     this.setState({
       entrees: newEntrees,
       beverages: newBeverages,
-      desserts: newDesserts
+      desserts: newDesserts,
+      appetizers: newAppetizers
     })
+
+    console.log(this.state.appetizers);
  }
 
   // Add loading until all data is retreived

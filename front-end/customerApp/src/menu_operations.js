@@ -4,6 +4,9 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 import { getIngredientQuantity } from './inventory';
 
+
+//this function is used to get the items on the menu based on their type
+//the functions parameter is a string which is the menu type i.e, getMenu('entree')
 export async function getMenu(type) {
     let query;
 
@@ -47,8 +50,9 @@ export async function getMenu(type) {
     return items;
 }
 
-//function to add Menu item
-//parameter is a item object.
+
+//this function is used to add Menu item
+//the functions parameter is a item object.
 //for example:
 /*let item = {
  allergen: ['Egg' , 'Milk'],
@@ -71,9 +75,8 @@ export function addToMenu(item) {
 }
 
 
-
-//function to delete a Menu item from the database
-//parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
+//this function is used to delete a Menu item from the database
+//the functions parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
 export function deleteFromMenu(itemName) {
     firebase.firestore().collection('Menu').doc(itemName).delete()
     .then(() => {
@@ -84,8 +87,9 @@ export function deleteFromMenu(itemName) {
     });
 }
 
-//function to update menu item infromation to the database
-//parameter is a item object.
+
+//this function is used to update menu item infromation to the database
+//the functions parameter is a item object.
 //for example:
 /*let item = {
  allergen: ['Egg', 'Milk'],
@@ -103,6 +107,7 @@ export function deleteFromMenu(itemName) {
 //the price will be changed to be 7.99
 //the type will remain entree
 //the uri can be changed to whatever image link you want
+//updateMenuItem(item)
 export async function updateMenuItem(item) {
     let isSuccess;
 
@@ -118,8 +123,9 @@ export async function updateMenuItem(item) {
     return isSuccess;
 }
 
-//function to get menu information from the database
-//parameter is a string which is the menu item name i.e., getItemDetails('Pizza') will get the menu item data for the menu item who's named is Pizza
+
+//this function is used to get menu information from the database
+//the functions parameter is a string which is the menu item name i.e., getItemDetails('Pizza') will get the menu item data for the menu item who's named is Pizza
 export async function getItemDetails(itemName) {
     let query;
 
@@ -135,11 +141,12 @@ export async function getItemDetails(itemName) {
     return query;
 }
 
-//function to check a particular items inventory is not empty
+
+//this function is used to check a particular items inventory is not empty
 //the parameter for this function is a string which is the name of the item i.e., checkInventory('Sugar')
 export async function checkInventory(name) {
     let query;
-    await firebase.firestore().collection('Inventory').where('IngredientName', '==', name).get()
+    await firebase.firestore().collection('Inventory').where('ingredientName', '==', name).get()
         .then(snapshot => {
             query = snapshot.docs.map(doc => doc.data());
         })
@@ -152,7 +159,7 @@ export async function checkInventory(name) {
         return null;
     }
 
-    if (query[0].IngredientQuantity == 0) {
+    if (query[0].ingredientQuantity == 0) {
         return 0;
     } else
         return 1;
