@@ -3,32 +3,34 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-//function to add a table to the database
-//parameter is a item object.
+
+//NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE
+//this function will add a table to the database
+//the functions parameter is a item object.
 //for example:
 /*let item = {
     available: false,
+    ordersComplete: false,
     tableNumber: '1',
     waitstaff: 'Dak Prescott',
     }*/
 //then pass item to the function i.e, addTables(item)
+//NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE 
 export async function addTables(item) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Tables').add(item)
+    await firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
-        isSuccess = true;
+        console.log("Successfully added table to the table doc.");
     })
     .catch((error) => {
-        console.error("Error adding Table to database table: ", error);
-        isSuccess = false;
+        alert("Error adding table to table doc: ", error);
     });
 
-    return isSuccess;
+    
 }
 
-//function to delete a table from the database
-//parameter is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
+
+//this function is used delete a table from the database
+//the functionsparamater is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
 export async function deleteTables(tableNumber) {
     
     let isSuccess;
@@ -45,96 +47,69 @@ export async function deleteTables(tableNumber) {
     return isSuccess;
 }
 
-//function to get table information from the database
-//parameter is a string which is the table number i.e., getTables('1') will get the table data for the table who's number is 1
-export async function getTable(tableNumber) {
-    let query;
 
-    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNumber).get()
+//this function will get all of the tables in the Tables database
+export async function getTables() {
+    let tables = []
+    
+    await firebase.firestore().collection('Tables').where('available', '==', false).get()
     .then((snapshot) => {
-        query = snapshot.docs.map(doc => doc.data());
+        tables = snapshot.docs.map(doc => doc.data());
     })
     .catch ((error) => {
-        console.log('Error getting document', error);
-        query = null;
+        alert('Failure getting tables.', error);
     });
     
-    return query;
+    return tables;
 }
 
 
-//function to update table information to the database
-//parameter is a item object.
+//this function is used to update table infromation to the database
+//the functionsparameter is a item object.
 //for example:
 /*let item = {
     available: false,
+    ordersComplete: true,
     tableNumber: '1',
     waitstaff: 'Tony Romo',
     }*/
 //then pass item to the function i.e, updateTableInformation(item)
-//this will update the table which is table number 1s 
+//this will update the table which is table number 1
 //the available status will change to false,
-//table number will remain 1
-//waitstaff will be changed to Tony Romo
+//the ordersComplete status will change to true,
+//table number will remain 1,
+//waitsatff will be changed to Tony Romo 
+//updateTableInformation(item)
 export async function updateTableInformation(item) {
-    let isSuccess;
-
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
-        isSuccess = true;
+        console.log('Successfully updated table.');
     })
     .catch((error) => {
-        console.error("Error updating Table in database table: ", error);
-        isSuccess = false;
+      alert("Error updating Table in database table: ", error);
+     
     });
-
-    return isSuccess;
 }
 
-// mark a table as needing help (the 'Help' collection, query it to see help status of a table)
-export async function getHelp(tableNumber) {
-    let isSuccess;
 
-    await firebase.firestore().collection('Help').where('tableNumber', '==', tableNumber).update({helpNeeded: 1})
+//this function is used to mark a particualr tables order status as true
+//the function takes a number which is a string as it's parameter
+//for example: markTableOrderStatusAsTrue('1')
+//this will mark the ordersComplete status for table number as true
+//markTableOrderStatusAdTrue(tableNum)
+export async function markTableOrderStatusAsTrue(tableNum) {
+    
+    let table = {
+        tableNumber: tableNum,
+        orderComplete: true
+    }
+    
+    await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
     .then(() => {
-        isSuccess = true;
+        console.log('Successfully updated table.');
     })
     .catch((error) => {
-        console.error("Error updating Help in database: ", error);
-        isSuccess = false;
+      alert("Error updating Table in database table: ", error);
+     
     });
-
-    return isSuccess;
-}
-
-// mark a table as NOT needing help (the 'Help' collection, query it to see help status of a table)
-export async function wasHelped(tableNumber) {
-    let isSuccess;
-
-    await firebase.firestore().collection('Help').where('tableNumber', '==', tableNumber).update({helpNeeded: 0})
-    .then(() => {
-        isSuccess = true;
-    })
-    .catch((error) => {
-        console.error("Error updating Help in database: ", error);
-        isSuccess = false;
-    });
-
-    return isSuccess;
-}
-
-// view help status of all tables(the 'Help' collection)
-export async function helpStatus() {
-    let query;
-
-    await firebase.firestore().collection('Help').get()
-    .then(snapshot => {
-        query = snapshot.docs.map(doc => doc.data());
-    })
-    .catch((error) => {
-        console.error("Error getting Help info from database: ", error);
-        query = null;
-    });
-
-    return query;
 }

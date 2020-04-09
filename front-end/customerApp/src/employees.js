@@ -3,6 +3,18 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+
+//this function will add a employee to the database
+//the function takes in a object as it's parameter
+//for example:
+//let employee = {
+    //dob: "03/23/1989",
+    // hourlyRate: 15.5,
+    // id: "4MfW9403U5WqT5cSIgbG",
+    // name: "Tony Romo",
+    // role: "waitstaff"
+// }
+//addEmployee(employee)
 export async function addEmployee(employee) {
     let isSuccess;
 
@@ -18,6 +30,10 @@ export async function addEmployee(employee) {
     return isSuccess;
 }
 
+
+//this function will delete a employee from the database
+//this function takes a string for the parameter which is the employeeID, for example:
+//deleteEmployee("4MfW9403U5WqT5cSIgbG")
 export async function deleteEmployee(employeeID) {
     
     let isSuccess;
@@ -51,7 +67,24 @@ export async function getEmployees() {
     return query;
 }
 
-//need to test
+
+//this function will update the employee information
+//this function takes a object as it's parameter
+//for example:
+//let employee = {
+    //dob: "03/23/1989",
+    // hourlyRate: 20.5,
+    // id: "4MfW9403U5WqT5cSIgbG",
+    // name: "Dak Romo",
+    // role: "manager"
+// }
+//for the employee with the id 4MfW9403U5WqT5cSIgbG
+//the employees dob will remain the same
+//the hourlyRate will change to 20.5
+//the id will remain the same
+//the name will change to Dak Romo
+//the role will change to manager
+//updateEmployeeInformation(item)
 export async function updateEmployeeInformation(item) {
     let isSuccess;
 

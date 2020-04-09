@@ -58,7 +58,7 @@ class Menu extends Component {
         //     waitstaff: '4MfW9403U5WqT5cSIgbG'
         // }
         // orders.updateOrderInformation(orderobj)
-        inventory.getInventory()
+        inventory.addToInventory(orderobj)
         .then(function(orders) {
             console.log(orders);
         })
