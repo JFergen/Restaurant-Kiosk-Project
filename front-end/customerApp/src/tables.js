@@ -78,7 +78,7 @@ export async function getTables() {
 //the available status will change to false,
 //the ordersComplete status will change to true,
 //table number will remain 1,
-//waitsatff will be changed to Tony Romo 
+//waitstaff will be changed to Tony Romo
 //updateTableInformation(item)
 export async function updateTableInformation(item) {
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
@@ -92,7 +92,7 @@ export async function updateTableInformation(item) {
 }
 
 
-//this function is used to mark a particualr tables order status as true
+//this function is used to mark a particular tables order status as true
 //the function takes a number which is a string as it's parameter
 //for example: markTableOrderStatusAsTrue('1')
 //this will mark the ordersComplete status for table number as true

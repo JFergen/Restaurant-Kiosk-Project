@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="">
+    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="Prototype functions to change and view Help status of tables.">
+      <change afterPath="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/tables.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/tables.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,25 +14,42 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/tables.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="132" column="6" lean-forward="true" selection-start-line="132" selection-start-column="6" selection-end-line="132" selection-end-column="6" />
+            <state relative-caret-position="1938">
+              <caret line="114" column="1" lean-forward="true" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="34" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="34" />
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="122" column="47" selection-start-line="122" selection-start-column="47" selection-end-line="122" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/employees.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="70" selection-start-line="70" selection-end-line="101" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -47,11 +65,13 @@
       <list>
         <option value="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/tables.js" />
+        <option value="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" />
+        <option value="$PROJECT_DIR$/front-end/customerApp/src/revenue.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="317" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="974" />
     <option name="height" value="1087" />
@@ -61,7 +81,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -91,6 +110,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -122,6 +142,14 @@
       <option name="presentableId" value="Default" />
       <updated>1583957180227</updated>
     </task>
+    <task id="LOCAL-00001" summary="Prototype functions to change and view Help status of tables.">
+      <created>1586032442278</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586032442279</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -136,7 +164,7 @@
       <window_info id="Resources Explorer" order="5" weight="0.3296131" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Version Control" order="0" weight="0.32917964" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.15576324" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" />
@@ -145,18 +173,43 @@
       <window_info anchor="right" id="Palette&#9;" order="2" />
     </layout>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Prototype functions to change and view Help status of tables." />
+    <option name="LAST_COMMIT_MESSAGE" value="Prototype functions to change and view Help status of tables." />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="34" />
+        <state relative-caret-position="-51">
+          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/tables.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="132" column="6" lean-forward="true" selection-start-line="132" selection-start-column="6" selection-end-line="132" selection-end-column="6" />
+        <state relative-caret-position="1938">
+          <caret line="114" column="1" lean-forward="true" selection-start-line="114" selection-start-column="1" selection-end-line="114" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/employees.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="70" selection-start-line="70" selection-end-line="101" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/revenue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="122" column="47" selection-start-line="122" selection-start-column="47" selection-end-line="122" selection-end-column="47" />
         </state>
       </provider>
     </entry>
