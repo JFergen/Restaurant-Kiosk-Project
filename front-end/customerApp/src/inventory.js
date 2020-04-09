@@ -13,7 +13,7 @@ import firestore from '@react-native-firebase/firestore'
 //}
 //addToInventory(item)
 export async function addToInventory(item) {
-    firebase.firestore().collection('Inventory').doc(item.ingredientName).set(item)
+    await firebase.firestore().collection('Inventory').doc(item.ingredientName).set(item)
     .then(() => {
         console.log("Successfully added Ingredient to the ingredient doc.");
     })

@@ -15,12 +15,12 @@ import firestore from '@react-native-firebase/firestore'
 //     password: "password"
 // }
 //addCustomer(Customer)
-export function addCustomer(Customer) {
+export async function addCustomer(Customer) {
     let autoID = firebase.firestore().collection('Customers').doc().id;
 
     Customer.id = autoID;
 
-    firebase.firestore().collection('Customers').doc(autoID).set(Customer)
+    await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
     .then(() => {
         console.log("Customer added Successfully");
     })
