@@ -105,3 +105,4 @@ export async function getInventory() {
     
     return query;
 }
+//hi
