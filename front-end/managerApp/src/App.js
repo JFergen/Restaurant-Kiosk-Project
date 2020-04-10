@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
 })
 
 // Navigation
-const rootNavigator = createSwitchNavigator({
-  Homescreen: MainContainer,
+//const rootNavigator = createSwitchNavigator({
+  //Homescreen: MainContainer,
   //Inventory: Inventory,
   //Menu: PayScreen,
   //Metrics: Metrics,
@@ -127,7 +127,7 @@ const rootNavigator = createSwitchNavigator({
   //ManTips: ManTips,
   //ManEmps: ManEmps
 //},
-{ initialRouteName: 'Homescreen' },
-{ headerMode: 'none' })
+//{ initialRouteName: 'Homescreen' },
+//{ headerMode: 'none' })
 
-const AppContainer = createAppContainer(rootNavigator);
+//const AppContainer = createAppContainer(rootNavigator);
