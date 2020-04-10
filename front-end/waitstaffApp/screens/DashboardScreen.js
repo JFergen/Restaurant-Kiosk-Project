@@ -8,10 +8,10 @@ import Button from '../components/Button';
 import '../inventory.js'
 import { addToInventory } from '../inventory.js';
 const DashboardScreen = ({navigation}) => {
-  let item = {
-    hello: "hello"
-  }
-  addToInventory(item)
+ // let item = {
+   // hello: "hello"
+  //}
+  //addToInventory(item)
   return (
     <View style={styles.container}>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
