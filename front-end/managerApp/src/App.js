@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import { StyleSheet, ImageBackground, Text, View, Button, Alert, TouchableHighlight, NavigationContainer } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack';
 import Background from './assets/background.jpeg';
 import MainContainer from './components/main_container/main_container';
 //import inventory from './inventory/inventory';
