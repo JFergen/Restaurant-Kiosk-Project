@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import { StyleSheet, ImageBackground, Text, View, Button, Alert, TouchableHighlight, NavigationContainer } from 'react-native';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack';
 import Background from './assets/background.jpeg';
 import MainContainer from './components/main_container/main_container';
 //import inventory from './inventory/inventory';
@@ -118,8 +119,8 @@ const styles = StyleSheet.create({
 })
 
 // Navigation
-const rootNavigator = createSwitchNavigator({
-  Homescreen: MainContainer,
+//const rootNavigator = createSwitchNavigator({
+  //Homescreen: MainContainer,
   //Inventory: Inventory,
   //Menu: PayScreen,
   //Metrics: Metrics,
@@ -127,7 +128,7 @@ const rootNavigator = createSwitchNavigator({
   //ManTips: ManTips,
   //ManEmps: ManEmps
 //},
-{ initialRouteName: 'Homescreen' },
-{ headerMode: 'none' })
+//{ initialRouteName: 'Homescreen' },
+//{ headerMode: 'none' })
 
-const AppContainer = createAppContainer(rootNavigator);
+//const AppContainer = createAppContainer(rootNavigator);
