@@ -21,3 +21,22 @@ export async function callServer(tableNumber) {
 
     return isSuccess;
 }
+
+export async function setToFalse(tableNumber) {
+    let isSuccess;
+    let call = {
+        tableNumber: tableNumber,
+        callServer: false
+    };
+    
+    await firebase.firestore().collection('callServer').doc(call.tableNumber).update(call)
+    .then(() => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error updating callServer table", error);
+        isSuccess = false;
+    });
+
+    return isSuccess;
+}
