@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
 
 
-export default class EmployeeManagement extends Component {
+export default class AddRemove extends Component {
+
 
     static navigationOptions = {
-        title: 'Employee Management',
+        title: 'Employee Managment',
         headerStyle: {
-            backgroundColor: 'black'
+            backgroundColor: 'white'
         },
-        headerTintColor: 'white',
+        headerTintColor: 'black',
         headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 30
@@ -21,50 +22,39 @@ export default class EmployeeManagement extends Component {
             <View style={styles.container}>
                 <TextInput 
                 placeholder="Employee Name"
-                placeholderTextColor='black'
+                placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
                 />
                 <TextInput 
                 placeholder="Employee ID"
-                placeholderTextColor='black'
+                placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
                 />
-            </View>
-            <View style={styles.buttonRight}> 
-                <Button 
-                title="Add Employee" onPress = {onPress}>
-                </Button>
-            </View>
-            <View style={styles.buttonLeft}>
+
                 <Button
-                title="Remove Employee" onPress = {onPress}>
+                style={styles.addPosition} 
+                title="Add Employee" onPress = {() => Alert.alert("Employee has been added.")}>
+                </Button>
+
+                <Button
+                style={styles.removePosition}
+                title="Remove Employee" onPress = {() => Alert.alert("Employee has been removed.")}>
                 </Button>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
-        backgroundColor: "black"
+        padding: 20
     },
     input: {
         height: 40,
-        backgroundColor: 'white',
+        backgroundColor: 'gray',
         marginBottom: 10,
-        color: 'black',
+        color: 'white',
         paddingHorizontal: 10
     },
-    buttonLeft: {
-        padding: 20,
-        position: 'absolute',
-        bottom: 0,
-        left: 0
-    },
-    buttonRight: {
-        position: 'absolute',
-        bottom: 0,
-        right: 5
-    },
+
 })
