@@ -17,13 +17,17 @@ import firestore from '@react-native-firebase/firestore'
 //then pass item to the function i.e, addTables(item)
 //NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE 
 export async function addTables(item) {
+    let isSuccess;
     await firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
         console.log("Successfully added table to the table doc.");
+        isSuccess = true;
     })
     .catch((error) => {
         alert("Error adding table to table doc: ", error);
+        isSuccess = false;
     });
+    return isSuccess;
 
     
 }
@@ -81,14 +85,18 @@ export async function getTables() {
 //waitstaff will be changed to Tony Romo
 //updateTableInformation(item)
 export async function updateTableInformation(item) {
+    let isSuccess;
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
         console.log('Successfully updated table.');
+        isSuccess = true;
     })
     .catch((error) => {
       alert("Error updating Table in database table: ", error);
+      isSuccess = false;
      
     });
+    return isSuccess;
 }
 
 
@@ -98,7 +106,7 @@ export async function updateTableInformation(item) {
 //this will mark the ordersComplete status for table number as true
 //markTableOrderStatusAdTrue(tableNum)
 export async function markTableOrderStatusAsTrue(tableNum) {
-    
+    let isSuccess;
     let table = {
         tableNumber: tableNum,
         orderComplete: true
@@ -107,9 +115,12 @@ export async function markTableOrderStatusAsTrue(tableNum) {
     await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
     .then(() => {
         console.log('Successfully updated table.');
+        isSuccess = true;
     })
     .catch((error) => {
       alert("Error updating Table in database table: ", error);
+      isSuccess = false;
      
     });
+    return isSuccess;
 }
