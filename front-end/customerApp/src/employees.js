@@ -39,14 +39,20 @@ export async function addEmployee(employee) {
         return emailExist
     }
 
-    await firebase.firestore().collection('Employees').add(employee)
+    let autoID = firebase.firestore().collection('Employees').doc().id;
+
+    employee.id = autoID;
+
+    await firebase.firestore().collection('Employees').doc(autoID).set(employee)
     .then(() => {
+        console.log("Employee added Successfully");
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error adding Employee to Employees table: ", error);
+        console.error("Error adding Employee to Employee table: ", error);
         isSuccess = false;
     });
+   
 
     return isSuccess;
 }
