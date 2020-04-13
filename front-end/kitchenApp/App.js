@@ -1,28 +1,39 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native'
-import Header from './components/Header'
-import OrderContainer from './components/orderContainer'
-import IngredientsButton from './components/ingredients'
-import KitchenappBackground from './images/app.jpg'
-import styles from './StyleSheet/styles.js'
+import { Platform, StyleSheet, Text, View,ScrollView} from 'react-native';
+import firebase from '@react-native-firebase/app';
+import styles from './Styles/Stylesheet.js'
+import OrderContainer from './Components/OrderContainer.js'
+import AppContainer from './Components/AppNavigator.js'
+
+
+// TODO(you): import any additional firebase services that you require for your app, e.g for auth:
+//    1) install the npm package: `yarn add @react-native-firebase/auth@alpha` - you do not need to
+//       run linking commands - this happens automatically at build time now
+//    2) rebuild your app via `yarn run run:android` or `yarn run run:ios`
+//    3) import the package here in your JavaScript code: `import '@react-native-firebase/auth';`
+//    4) The Firebase Auth service is now available to use here: `firebase.auth().currentUser`
+
+const instructions = Platform.select({
+  ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu',
+  android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu',
+});
+
+const firebaseCredentials = Platform.select({
+  ios: 'https://invertase.link/firebase-ios',
+  android: 'https://invertase.link/firebase-android',
+});
+
 
 export default class App extends Component {
-  render(){
-  return(
-    <ImageBackground source = {KitchenappBackground} style = {{height: '100%', width:'100%'}}>
-    
-    <View style = {styles.container2}>
-    <Header />
-      <ScrollView>
-    <OrderContainer />
-    <OrderContainer/>
-    <OrderContainer/>
-      <IngredientsButton text = 'Ingredients' color = '#33ABF9' ></IngredientsButton>
-    </ScrollView>
-    </View>
-    </ImageBackground>
+  render() {
+    return (
+      <AppContainer/>
+     
+  
+    );
+  }
+}
 
-  )}}
 
 
 
