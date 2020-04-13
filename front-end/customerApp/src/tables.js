@@ -54,18 +54,28 @@ export async function deleteTables(tableNumber) {
 
 //this function will get all of the tables in the Tables database
 export async function getTables() {
-    let tables = []
+    // let tables = []
     
-    await firebase.firestore().collection('Tables').where('available', '==', false).get()
-    .then((snapshot) => {
-        tables = snapshot.docs.map(doc => doc.data());
-    })
-    .catch ((error) => {
-        alert('Failure getting tables.', error);
+    // await firebase.firestore().collection('Tables').where('available', '==', false).get()
+    // .then((snapshot) => {
+    //     tables = snapshot.docs.map(doc => doc.data());
+    // })
+    // .catch ((error) => {
+    //     alert('Failure getting tables.', error);
+    // });
+    
+    // return tables;
+    let query = firebase.firestore().collection('Tables').where('available', '==', false);
+
+    let observer = query.onSnapshot(querySnapshot => {
+        console.log(`Received query snapshot of size ${querySnapshot.size}`);
+    // ...
+    }
+    , err => {
+    console.log(`Encountered error: ${err}`);
     });
-    
-    return tables;
 }
+
 
 
 //this function is used to update table infromation to the database

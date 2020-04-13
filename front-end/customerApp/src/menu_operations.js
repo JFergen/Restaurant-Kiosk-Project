@@ -10,13 +10,22 @@ import { getIngredientQuantity } from './inventory';
 export async function getMenu(type) {
     let query;
 
-    await firebase.firestore().collection('Menu').where('type', '==', type).get()
-    .then(snapshot => {
-        query = snapshot.docs.map(doc => doc.data());
-    })
-    .catch (error => {
-        console.log('Error getting documents', error);
-        query = null;
+    // await firebase.firestore().collection('Menu').where('type', '==', type).get()
+    // .then(snapshot => {
+    //     query = snapshot.docs.map(doc => doc.data());
+    // })
+    // .catch (error => {
+    //     console.log('Error getting documents', error);
+    //     query = null;
+    // });
+    query = firebase.firestore().collection('Menu').where('type', '==', type);
+
+    let observer = query.onSnapshot(querySnapshot => {
+        console.log(`Received query snapshot of size ${querySnapshot.size}`);
+    // ...
+    }, err => {
+    console.log(`Encountered error: ${err}`);
+    query=null;
     });
 
     let items = [];
