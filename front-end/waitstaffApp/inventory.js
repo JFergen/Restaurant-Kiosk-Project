@@ -13,13 +13,17 @@ import firestore from '@react-native-firebase/firestore'
 //}
 //addToInventory(item)
 export async function addToInventory(item) {
+    let isSuccess;
     await firebase.firestore().collection('Inventory').doc(item.ingredientName).set(item)
     .then(() => {
+        isSuccess = true;
         console.log("Successfully added Ingredient to the ingredient doc.");
     })
     .catch((error) => {
         alert("Error adding ingredient to doc: ", error);
+        isSuccess = false;
     });
+    return isSuccess;
 }
 
 
@@ -105,4 +109,3 @@ export async function getInventory() {
     
     return query;
 }
-//hi

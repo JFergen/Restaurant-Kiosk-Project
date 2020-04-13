@@ -65,26 +65,34 @@ export async function getMenu(type) {
  }*/
  //then pass item to the function i.e, addToMenu(item)
 export function addToMenu(item) {
+    let isSuccess;
     firebase.firestore().collection('Menu').doc(item.name).set(item)
     .then(() => {
         console.log("Successfully added item to the menu.");
+        isSuccess = true;
     })
     .catch((error) => {
         alert("Error adding item to menu: ", error);
+        isSuccess = false;
     });
+    return isSuccess;
 }
 
 
 //this function is used to delete a Menu item from the database
 //the functions parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
 export function deleteFromMenu(itemName) {
+    let isSuccess;
     firebase.firestore().collection('Menu').doc(itemName).delete()
     .then(() => {
         console.log("Successfully deleted item from the menu.");
+        isSuccess = ture;
     })
     .catch((error) => {
         alert("Error deleting item from menu: ", error);
+        isSuccess = false;
     });
+    return isSuccess;
 }
 
 
