@@ -160,3 +160,30 @@ export async function updateCustomerInformation(item) {
     return isSuccess;
 
 }
+
+
+export async function loginAsGuest() {
+    let autoID = firebase.firestore().collection('Customers').doc().id;
+
+    Customer.id = autoID;
+    Customer.email = 'none';
+    Customer.name = 'none;
+    Customer.password = 'none';
+    
+    let isSuccess = true;
+
+    await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
+    .then(() => {
+        console.log("Customer added Successfully");
+    })
+    .catch((error) => {
+        console.error("Error adding Customer to Customer table: ", error);
+        isSuccess = false;
+    });
+    
+    if (!isSuccess) {
+        Customer = false;
+    }
+    
+    return Customer;
+}
