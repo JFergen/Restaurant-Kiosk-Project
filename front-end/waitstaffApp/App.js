@@ -27,7 +27,7 @@ const AppNavigator = createStackNavigator({
         backgroundColor: theme.colors.primary,
       },
     },
-  },
-});
+  }  
+},{initialRouteName: 'Dashboard'});
 
 export default createAppContainer(AppNavigator);
