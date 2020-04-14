@@ -115,7 +115,7 @@ export async function login(email, password) {
         return 'Invalid Email or Password';
     }
     
-    return customer;
+    return customer[0];
 }
 
 //this function gets all the customers in the database
