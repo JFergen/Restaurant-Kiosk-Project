@@ -8,22 +8,31 @@ import firestore from '@react-native-firebase/firestore'
 //the function will return the orderID
 //the functions parameter is a string which is the customerID
 //for example createOrder("l8qDPeaGzOC4egZMW5hW")
-export async function createOrder(customerID) {
-    let orderID;
+export async function createOrder(custID, tableNum) {
+    
+    let autoID = firebase.firestore().collection('Orders').doc().id;
 
     await firebase.firestore().collection('Orders').add({
-        customerID: customerID,
+        customerID: custID,
         order: null,
+        waitstaff: null,
+        tableNumber: tableNum,
+        completionStatus: false,
+        price: null,
+        requests: null,
+        orderId: autoID
+    } 
     })
-    .then((docRef) => {
-        orderID = docRef.id;
+    .then(() => {
+        console.error("Successfully created order.);
+                      isSuccess = true;
     })
     .catch(function(error) {
         console.error("Error creating Order: ", error);
-        orderID = null;
+        isSuccess = false;
     });
 
-    return orderID;
+    return autoID;
 }
 
 
@@ -144,7 +153,7 @@ export async function getTableOrders(tableNumber){
     return orders;
 }
 
-export async function confirmOrder(ordID, custID, staffID, tableNum, items){
+export async function confirmOrder(ordID, custID, tableNum, items){
 
     let order = []
     
@@ -195,6 +204,28 @@ export async function confirmOrder(ordID, custID, staffID, tableNum, items){
         totalPrice += (order[i].quantity * order[i].price);
     }
     
+    let staffID;
+    let isSuccess;
+    
+    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
+    .then((snapshot) => {
+        console.log('Successfully retrieved waitstaff id.');
+        staffID = tables = snapshot.docs.map(doc => doc.data());
+    })
+    .catch((error) => {
+      alert("Error getting waitstaff id from table: ", error);
+      isSuccess = false;
+     
+    });
+    
+    staffID = staffID[0];
+    
+    if (!isSuccess) {
+        return false;
+    }
+    
+    isSuccess = true;
+    
     let completeOrder = {
         completionStatus: false,
         customerID: custID,
@@ -207,7 +238,7 @@ export async function confirmOrder(ordID, custID, staffID, tableNum, items){
         
     }
     
-    let isSuccess;
+   
     
     await firebase.firestore().collection('Orders').doc(completeOrder.orderID).update(completeOrder)
     .then((success) => {

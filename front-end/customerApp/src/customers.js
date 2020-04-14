@@ -26,10 +26,9 @@ export async function addCustomer(Customer) {
     .then((snapshot) => {
         if (snapshot.empty) {
             validEmail = false;
-        } 
-        
+        }  
     })
-    .catch (error => {
+    .catch ((error) => {
         console.log('error getting doc', error);
     });
     if(validEmail==true)
@@ -41,10 +40,16 @@ export async function addCustomer(Customer) {
     
     
     let autoID = firebase.firestore().collection('Customers').doc().id;
+    
+    let ret_Customer = {
+        id: autoID,
+        email: Customer.email,
+        password: Customer.password,
+        name: Customer.name
+    };
 
-    Customer.id = autoID;
 
-    await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
+    await firebase.firestore().collection('Customers').doc(autoID).set(ret_Customer)
     .then(() => {
         isSuccess = true;
         console.log("Customer added Successfully");
@@ -55,7 +60,12 @@ export async function addCustomer(Customer) {
         console.error("Error adding Customer to Customer table: ", error);
         isSuccess = false;
     });
-    return isSuccess;
+    
+    if (!isSuccess) {
+        return false;
+    }
+    
+    return ret_Customer;
 }
 
 
@@ -136,7 +146,7 @@ export async function getCustomers() {
 //     email:"johndoe1234@gmail.com",
 //     id: "l8qDPeaGzOC4egZMW5hW",
 //     name: "John Bob",
-//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
+//     orderID: "v6J7iJmyHxW5CIdCosvK",
 //     password: "hello1234"
 // }
 //this email will change to jhondoe1234@gmail.com
