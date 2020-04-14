@@ -23,7 +23,7 @@ export async function createOrder(custID, tableNum) {
         orderId: autoID 
     })
     .then(() => {
-        console.error("Successfully created order.");
+        console.log("Successfully created order.");
         isSuccess = true;
     })
     .catch((error) {
