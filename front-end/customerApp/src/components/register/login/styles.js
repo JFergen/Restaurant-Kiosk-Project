@@ -5,8 +5,7 @@ export default StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         height: '100%',
-        width: '100%',
-        borderWidth: 5
+        width: '100%'
     },
     textFields: {
         height: '50%',

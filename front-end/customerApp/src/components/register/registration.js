@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import {addCustomer} from '../../customers';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
-import LeftArrow from '../../assets/header/left-arrow.png';
 import RegisterButton from '../../assets/registration/register_button.png';
 import validator from 'validator';
 import styles from './styles.js';
@@ -61,33 +60,50 @@ class Registration extends Component {
 
         if (this.state.firstName.length == 0) {
             alert("Need first name");
-        } else if (this.state.email.length == 0) {    // TODO:: Change this to check database for same email
-
         } else if (this.state.password.length < 6) {
             alert("Need password with length > 6");
         } else {
             const success = await addCustomer(customer);
-            if (success) {
+            if (success == true) {
                 alert("Registered successfully");
-                this.props.navigation.navigate('Menu', {
+                this.props.navigation.navigate('Load', {
                     loginSuccessful: true
                 })
             } else {
-                alert("Registration has failed");
+                alert("Registration has failed: " + success);
             }
         }
     }
+
+    loginAsGuest = async () => {
+        let customer;
+    
+        //customer = await login(this.state.email, this.state.password);
+        
+        // if (customer[0].password.length > 0) {
+        //     alert("Login Successful");
+        //     this.props.navigation.navigate('Load', {
+        //         loginSuccessful: true
+        //     })
+        // } else {
+        //     alert("Login has failed: " + customer);
+        // }
+
+        this.props.navigation.navigate('Load', {
+            loginSuccessful: true
+        })
+    }
+    
 
     render() {
         return (
             <View style = {styles.container}>
                 <View style = {{flex: 1, flexDirection: 'row'}}>
-                    <TouchableOpacity
-                            style = {styles.arrowBackground}
-                            onPress = {() => this.props.navigation.goBack()}
-                        >
-                            <Image source = {LeftArrow}/>
-                    </TouchableOpacity>
+                    <Button
+                        title = "Continue As Guest"
+                        color = 'orange'
+                        onPress = {() => {this.loginAsGuest()}}
+                    />
                     <View style = {{flex: 1, alignSelf: 'flex-end'}}>
                         <Text style = {{
                             alignSelf: 'flex-end', 

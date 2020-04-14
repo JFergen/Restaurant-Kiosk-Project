@@ -55,22 +55,21 @@ class Login extends Component {
 
     loginCustomer = async () => {
         let customer;
-
-        if (this.state.email.length == 0) {    // TODO:: Change this to check database for same email
-
-        } else if (this.state.password.length < 6) {
+    
+        if (this.state.password.length < 6) {
             alert("Need password with length > 6");
         } else {
             customer = await login(this.state.email, this.state.password);
             console.log(customer);
-            // if (customer.password.length > 0) {
-            //     alert("Login Successful");
-            //     this.props.navigation.navigate('Menu', {
-            //         loginSuccessful: true
-            //     })
-            // } else {
-            //     alert("Login has failed");
-            // }
+            console.log(customer[0].password.length);
+            if (customer[0].password.length > 0) {
+                alert("Login Successful");
+                this.props.navigation.navigate('Load', {
+                    loginSuccessful: true
+                })
+            } else {
+                alert("Login has failed: " + customer);
+            }
         }
     }
 
@@ -118,13 +117,13 @@ class Login extends Component {
                             onSubmitEditing = {({ nativeEvent }) => { this.validPassword(nativeEvent.text) }}
                         />
                     </View>
-                </View>
-                <TouchableOpacity
-                    style = {{alignSelf: 'center'}}
+                    <TouchableOpacity
+                    style = {{alignSelf: 'center', paddingTop: 30}}
                     onPress = {() => { this.loginCustomer() }}
-                >
+                    >
                     <Image source = {RegisterButton}/>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
             </View> 
         )
     }

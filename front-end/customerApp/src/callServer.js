@@ -10,7 +10,7 @@ export async function callServer(tableNumber) {
         callServer: true
     };
     
-    await firebase.firestore().collection('callServer').doc(call.tableNumber).update(call)
+    await firebase.firestore().collection('CallServer').doc(call.tableNumber).update(call)
     .then(() => {
         isSuccess = true;
     })
@@ -29,12 +29,12 @@ export async function setToFalse(tableNumber) {
         callServer: false
     };
     
-    await firebase.firestore().collection('callServer').doc(call.tableNumber).update(call)
+    await firebase.firestore().collection('CallServer').doc(call.tableNumber).update(call)
     .then(() => {
         isSuccess = true;
     })
     .catch((error) => {
-        console.error("Error updating callServer table", error);
+        console.error("Error updating CallServer table", error);
         isSuccess = false;
     });
 

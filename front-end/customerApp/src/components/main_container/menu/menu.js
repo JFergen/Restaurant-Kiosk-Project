@@ -13,31 +13,13 @@ class Menu extends Component {
         };
     }
 
-    incrementQty = (id) => {
-      
-        // let orderobj = {
-        //     completionStatus: false,
-        //     customerID: 'l8qDPeaGzOC4egZMW5hW',
-        //     orderID: 'v6J7iJmyHxW5CIdCosvK',
-        //     orderedItems: ['Pizza', 'Apple Pie'],
-        //     price: 8.99,
-        //     waitstaff: '4MfW9403U5WqT5cSIgbG'
-        // }
-        // orders.updateOrderInformation(orderobj)
-        inventory.addToInventory(orderobj)
-        .then(function(orders) {
-            console.log(orders);
-        })
-        .catch((error) => {
-            console.log("error getting order");
-        });
-
+    incrementQty = (name) => {
         let newItems = [...this.state.items];
 
         var i;
         for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                ++newItems[i].qty;
+            if(newItems[i].name === name) {
+                ++newItems[i].quantity;
                 break;
             }
         }
@@ -45,18 +27,18 @@ class Menu extends Component {
         this.setState({items: newItems});
     }
 
-    decrementQty = (id) => {
+    decrementQty = (name) => {
         let newItems = [...this.state.items];
 
         var i;
         for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                if (newItems[i].qty == 0) {
+            if(newItems[i].name === name) {
+                if (newItems[i].quantity == 0) {
                     alert("Can not go below 0");
                     break;
                 }
                 
-                --newItems[i].qty;
+                --newItems[i].quantity;
                 break;
             }
         }
@@ -90,12 +72,12 @@ class Menu extends Component {
                         </View>
     
                         <View style = {{flex: 10, alignItems: 'flex-end'}}>
-                            <Text style = {{fontSize: 45, marginRight: 55}}>{item.qty}</Text>
+                            <Text style = {{fontSize: 45, marginRight: 55}}>{item.quantity}</Text>
                             
                             <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <TouchableHighlight
                                     underlayColor = 'transparent'
-                                    onPress = {() => this.incrementQty(item.id)}
+                                    onPress = {() => this.incrementQty(item.name)}
 
                                 >
                                     <Image 
@@ -106,7 +88,7 @@ class Menu extends Component {
                     
                                 <TouchableHighlight
                                     underlayColor = 'transparent'
-                                    onPress = {() => this.decrementQty(item.id)}
+                                    onPress = {() => this.decrementQty(item.name)}
                                     style = {{marginRight: 5}}
                                 >
                                     <Image source = {RedMinus}/>

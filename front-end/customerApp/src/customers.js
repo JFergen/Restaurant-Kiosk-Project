@@ -32,7 +32,7 @@ export async function addCustomer(Customer) {
     .catch (error => {
         console.log('error getting doc', error);
     });
-    if(validEmail==false)
+    if(validEmail==true)
     {
         console.log('Email already exists');
         let emailExist = 'Email already exists'
@@ -94,7 +94,6 @@ export async function login(email, password) {
         } 
         else {
             customer = snapshot.docs.map(doc => doc.data());
-            console.log(customer[0].password);
         }
     })
     .catch (error => {

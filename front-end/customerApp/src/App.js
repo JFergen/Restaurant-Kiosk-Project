@@ -10,6 +10,7 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 
 firebase.functions().useFunctionsEmulator('http://localhost:5000');
+global.tableNumber = '1';
 
 // Navigation
 const RootNavigator = createStackNavigator({
@@ -20,7 +21,7 @@ const RootNavigator = createStackNavigator({
   //Pay: PayScreen
 },
 { 
-  initialRouteName: 'Load',
+  initialRouteName: 'Register',
   headerMode: 'none',
   defaultNavigationOptions: {
     cardStyle: {

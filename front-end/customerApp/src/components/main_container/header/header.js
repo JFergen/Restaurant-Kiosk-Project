@@ -8,6 +8,7 @@ import DrinkIcon from '../../../assets/header/drink.png';
 import GameIcon from '../../../assets/header/joystick.png';
 import CartIcon from '../../../assets/header/shopping-cart.png';
 import RightArrow from '../../../assets/header/right-arrow.png';
+import {callServer} from '../../../callServer';
 import styles from './styles.js';
 
 class Header extends Component {
@@ -33,11 +34,25 @@ class Header extends Component {
         )
     }
 
-    alertServer = () => {
-        this.setState({
-            serverDialog: false,
-            serverCalled: true
-        })
+    alertServer = async () => {
+        let callServerSuc;
+        console.log('got here');
+
+        callServerSuc = await callServer(global.tableNumber);
+
+        console.log(callServerSuc);
+        console.log('got here2');
+
+        if (callServerSuc == true) {
+            this.setState({
+                serverDialog: false,
+                serverCalled: true
+            })
+        } else {
+            this.setState({ serverDialog: false })
+            alert('Server could not be called. Try again.')
+        }
+        
     }
 
     dismissServerDialog = () => {
