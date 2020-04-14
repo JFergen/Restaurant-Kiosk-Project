@@ -131,7 +131,7 @@ export async function getStaffAssignedToTable(tableNum) {
     
     await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
     .then((snapshot) => {
-        console.log('Successfully retrieved waitstaff if.');
+        console.log('Successfully retrieved waitstaff id.');
         staff = tables = snapshot.docs.map(doc => doc.data());
     })
     .catch((error) => {
