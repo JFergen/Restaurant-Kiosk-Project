@@ -85,7 +85,6 @@ class Registration extends Component {
         customer = await loginAsGuest();
         
         if (customer.id.length > 0) {
-            alert("Login As Guest Successful");
             global.orderID = await createOrder(customer.id);
 
             this.props.navigation.navigate('Load', {
