@@ -49,16 +49,16 @@ class Menu extends Component {
 
     incrementQty = (id) => {
       
-         let orderobj = {
-             completionStatus: false,
-             customerID: 'l8qDPeaGzOC4egZMW5hW',
-             orderID: 'v6J7iJmyHxW5CIdCosvK',
-             orderedItems: ['Pizza', 'Apple Pie'],
-             price: 8.99,
-             waitstaff: '4MfW9403U5WqT5cSIgbG'
-         }
+        // let orderobj = {
+        //     completionStatus: false,
+        //     customerID: 'l8qDPeaGzOC4egZMW5hW',
+        //     orderID: 'v6J7iJmyHxW5CIdCosvK',
+        //     orderedItems: ['Pizza', 'Apple Pie'],
+        //     price: 8.99,
+        //     waitstaff: '4MfW9403U5WqT5cSIgbG'
+        // }
         // orders.updateOrderInformation(orderobj)
-        menuOperations.getMenu('entree')
+        inventory.addToInventory(orderobj)
         .then(function(orders) {
             console.log(orders);
         })
