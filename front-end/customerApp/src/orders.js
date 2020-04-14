@@ -173,7 +173,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         inventory = null;
     });
     
-    if (query == null) {
+    if (inventory == null) {
         return false;
     }
     
@@ -183,7 +183,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     for (i in order) {
         for (j in order[i].ingredients) {
             for (k in inventory) {
-                if (inventory[k] == order[i].ingredients[j] && inventory[k].ingredientQuantity == 0) {
+                if (inventory[k].ingredientName == order[i].ingredients[j] && inventory[k].ingredientQuantity == 0) {
                     hasEnoughInventory = false;
                     break;
                 }
@@ -199,7 +199,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     let totalPrice = 0;
     
     for (i in order) {
-        finalizedOrder.push(order[i].concat(" " + order[i].quantity.toString()));
+        finalizedOrder.push(order[i].name.concat(" ", order[i].quantity.toString()));
         totalPrice += (order[i].quantity * order[i].price);
     }
     
@@ -209,7 +209,8 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
     .then((snapshot) => {
         console.log('Successfully retrieved waitstaff id.');
-        staffID = tables = snapshot.docs.map(doc => doc.data());
+        staffID = snapshot.docs.map(doc => doc.data());
+        isSuccess = true;
     })
     .catch((error) => {
       alert("Error getting waitstaff id from table: ", error);
@@ -217,13 +218,11 @@ export async function confirmOrder(ordID, custID, tableNum, items){
      
     });
     
-    staffID = staffID[0];
-    
     if (!isSuccess) {
         return false;
     }
     
-    isSuccess = true;
+    staffID = staffID[0];
     
     let completeOrder = {
         completionStatus: false,
@@ -234,10 +233,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         price: totalPrice,
         requests: 'none',
         tableNumber: tableNum
-        
-    }
-    
-   
+    };
     
     await firebase.firestore().collection('Orders').doc(completeOrder.orderID).update(completeOrder)
     .then((success) => {
