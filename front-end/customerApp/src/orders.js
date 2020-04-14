@@ -144,7 +144,7 @@ export async function getTableOrders(tableNumber){
     return orders;
 }
 
-export async function confirmOrder(ordID, custID, staffID, tableNum, items){
+export async function confirmOrder(ordID, custID, tableNum, items){
 
     let order = []
     
@@ -195,6 +195,28 @@ export async function confirmOrder(ordID, custID, staffID, tableNum, items){
         totalPrice += (order[i].quantity * order[i].price);
     }
     
+    let staffID;
+    let isSuccess;
+    
+    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
+    .then((snapshot) => {
+        console.log('Successfully retrieved waitstaff id.');
+        staffID = tables = snapshot.docs.map(doc => doc.data());
+    })
+    .catch((error) => {
+      alert("Error getting waitstaff id from table: ", error);
+      isSuccess = false;
+     
+    });
+    
+    staffID = staffID[0];
+    
+    if (!isSuccess) {
+        return false;
+    }
+    
+    isSuccess = true;
+    
     let completeOrder = {
         completionStatus: false,
         customerID: custID,
@@ -207,7 +229,7 @@ export async function confirmOrder(ordID, custID, staffID, tableNum, items){
         
     }
     
-    let isSuccess;
+   
     
     await firebase.firestore().collection('Orders').doc(completeOrder.orderID).update(completeOrder)
     .then((success) => {
