@@ -20,12 +20,11 @@ export async function createOrder(custID, tableNum) {
         completionStatus: false,
         price: null,
         requests: null,
-        orderId: autoID
-    } 
+        orderId: autoID 
     })
     .then(() => {
-        console.error("Successfully created order.);
-                      isSuccess = true;
+        console.error("Successfully created order.");
+        isSuccess = true;
     })
     .catch(function(error) {
         console.error("Error creating Order: ", error);
