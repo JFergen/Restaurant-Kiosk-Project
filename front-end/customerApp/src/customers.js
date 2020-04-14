@@ -33,7 +33,7 @@ export async function addCustomer(Customer) {
     
     if (validEmail == true) {
         console.log('Email already exists');
-        return 'Email already exists'
+        return 'Email already exists';
     }
     
     
