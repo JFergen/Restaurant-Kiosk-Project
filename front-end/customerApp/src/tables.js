@@ -17,13 +17,17 @@ import firestore from '@react-native-firebase/firestore'
 //then pass item to the function i.e, addTables(item)
 //NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE 
 export async function addTables(item) {
+    let isSuccess;
     await firebase.firestore().collection('Tables').doc(item.tableNumber).set(item)
     .then(() => {
         console.log("Successfully added table to the table doc.");
+        isSuccess = true;
     })
     .catch((error) => {
         alert("Error adding table to table doc: ", error);
+        isSuccess = false;
     });
+    return isSuccess;
 
     
 }
@@ -50,18 +54,28 @@ export async function deleteTables(tableNumber) {
 
 //this function will get all of the tables in the Tables database
 export async function getTables() {
-    let tables = []
+    // let tables = []
     
-    await firebase.firestore().collection('Tables').where('available', '==', false).get()
-    .then((snapshot) => {
-        tables = snapshot.docs.map(doc => doc.data());
-    })
-    .catch ((error) => {
-        alert('Failure getting tables.', error);
+    // await firebase.firestore().collection('Tables').where('available', '==', false).get()
+    // .then((snapshot) => {
+    //     tables = snapshot.docs.map(doc => doc.data());
+    // })
+    // .catch ((error) => {
+    //     alert('Failure getting tables.', error);
+    // });
+    
+    // return tables;
+    let query = firebase.firestore().collection('Tables').where('available', '==', false);
+
+    let observer = query.onSnapshot(querySnapshot => {
+        console.log(`Received query snapshot of size ${querySnapshot.size}`);
+    // ...
+    }
+    , err => {
+    console.log(`Encountered error: ${err}`);
     });
-    
-    return tables;
 }
+
 
 
 //this function is used to update table infromation to the database
@@ -78,27 +92,31 @@ export async function getTables() {
 //the available status will change to false,
 //the ordersComplete status will change to true,
 //table number will remain 1,
-//waitsatff will be changed to Tony Romo 
+//waitstaff will be changed to Tony Romo
 //updateTableInformation(item)
 export async function updateTableInformation(item) {
+    let isSuccess;
     await firebase.firestore().collection('Tables').doc(item.tableNumber).update(item)
     .then(() => {
         console.log('Successfully updated table.');
+        isSuccess = true;
     })
     .catch((error) => {
       alert("Error updating Table in database table: ", error);
+      isSuccess = false;
      
     });
+    return isSuccess;
 }
 
 
-//this function is used to mark a particualr tables order status as true
+//this function is used to mark a particular tables order status as true
 //the function takes a number which is a string as it's parameter
 //for example: markTableOrderStatusAsTrue('1')
 //this will mark the ordersComplete status for table number as true
 //markTableOrderStatusAdTrue(tableNum)
 export async function markTableOrderStatusAsTrue(tableNum) {
-    
+    let isSuccess;
     let table = {
         tableNumber: tableNum,
         orderComplete: true
@@ -107,9 +125,12 @@ export async function markTableOrderStatusAsTrue(tableNum) {
     await firebase.firestore().collection('Tables').doc(tableNumber).update(table)
     .then(() => {
         console.log('Successfully updated table.');
+        isSuccess = true;
     })
     .catch((error) => {
       alert("Error updating Table in database table: ", error);
+      isSuccess = false;
      
     });
+    return isSuccess;
 }

@@ -19,7 +19,9 @@ class Loading extends Component {
     this.getData();
   }
 
-  compo
+  // componentDidUpdate() {
+  //   this.getData();
+  // }
   
  getData = async () => {
     let newEntrees = await getMenu('entree');
@@ -34,7 +36,7 @@ class Loading extends Component {
       appetizers: newAppetizers
     })
 
-    console.log(this.state.appetizers);
+    console.log(this.state.entrees);
  }
 
   // Add loading until all data is retreived

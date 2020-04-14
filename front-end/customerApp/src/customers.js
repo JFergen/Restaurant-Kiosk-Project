@@ -15,22 +15,46 @@ import firestore from '@react-native-firebase/firestore'
 //     password: "password"
 // }
 //addCustomer(Customer)
+//function returns a string if email already exists
+//function returns true if Customer is added, false if not
 export async function addCustomer(Customer) {
+    
+    let isSuccess;
+    let validEmail = true;
+    
+    await firebase.firestore().collection('Customers').where('email', '==', Customer.email).get()
+    .then((snapshot) => {
+        if (snapshot.empty) {
+            validEmail = false;
+        } 
+        
+    })
+    .catch (error => {
+        console.log('error getting doc', error);
+    });
+    if(validEmail==false)
+    {
+        console.log('Email already exists');
+        let emailExist = 'Email already exists'
+        return emailExist
+    }
+    
+    
     let autoID = firebase.firestore().collection('Customers').doc().id;
 
     Customer.id = autoID;
-    let isSuccess;
 
     await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
     .then(() => {
         isSuccess = true;
         console.log("Customer added Successfully");
+        isSuccess = true;
     })
     .catch((error) => {
         isSuccess = false;
         console.error("Error adding Customer to Customer table: ", error);
+        isSuccess = false;
     });
-
     return isSuccess;
 }
 
@@ -53,6 +77,7 @@ export async function deleteCustomer(CustomerID) {
 
     return isSuccess;
 }
+
 
 //this function stores the customers email and password to the database
 //the function parameter is a email and password which are both strings

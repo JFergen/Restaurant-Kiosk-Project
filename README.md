@@ -1,3 +1,5 @@
+Latest BACKEND CODE IS LOCATED AT https://github.com/JFergen/Restaurant-Kiosk-Project/tree/dev/front-end/customerApp/src
+
 1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
   
     1.1) open your virtual device make sure it is running
