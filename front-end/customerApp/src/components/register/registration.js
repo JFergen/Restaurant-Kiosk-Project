@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity, Button } from 'react-native';
-import {addCustomer} from '../../customers';
+import {addCustomer, loginAsGuest} from '../../customers';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import RegisterButton from '../../assets/registration/register_button.png';
@@ -75,19 +75,19 @@ class Registration extends Component {
         }
     }
 
-    loginAsGuest = async () => {
+    loginGuest = async () => {
         let customer;
     
-        //customer = await login(this.state.email, this.state.password);
+        customer = await loginAsGuest();
         
-        // if (customer[0].password.length > 0) {
-        //     alert("Login Successful");
-        //     this.props.navigation.navigate('Load', {
-        //         loginSuccessful: true
-        //     })
-        // } else {
-        //     alert("Login has failed: " + customer);
-        // }
+        if (customer[0].id.length > 0) {
+            alert("Login As Guest Successful");
+            this.props.navigation.navigate('Load', {
+                loginSuccessful: true
+            })
+        } else {
+            alert("Login has failed: " + customer);
+        }
 
         this.props.navigation.navigate('Load', {
             loginSuccessful: true
@@ -102,7 +102,7 @@ class Registration extends Component {
                     <Button
                         title = "Continue As Guest"
                         color = 'orange'
-                        onPress = {() => {this.loginAsGuest()}}
+                        onPress = {() => {this.loginGuest()}}
                     />
                     <View style = {{flex: 1, alignSelf: 'flex-end'}}>
                         <Text style = {{

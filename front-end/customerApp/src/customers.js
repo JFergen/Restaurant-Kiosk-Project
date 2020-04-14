@@ -165,9 +165,11 @@ export async function updateCustomerInformation(item) {
 export async function loginAsGuest() {
     let autoID = firebase.firestore().collection('Customers').doc().id;
 
+    let Customer;
+    
     Customer.id = autoID;
     Customer.email = 'none';
-    Customer.name = 'none;
+    Customer.name = 'none';
     Customer.password = 'none';
     
     let isSuccess = true;
