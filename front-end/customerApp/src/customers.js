@@ -167,7 +167,7 @@ export async function loginAsGuest() {
         id: autoID,
         email: 'none',
         name: 'none',
-        password = 'none'
+        password: 'none'
     };
    
     
