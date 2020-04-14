@@ -143,3 +143,81 @@ export async function getTableOrders(tableNumber){
 
     return orders;
 }
+
+export async function confirmOrder(ordID, custID, staffID, tableNum, items){
+
+    let order = []
+    
+    for (i in items) {
+        if (items[i].quantity > 0) {
+            order.push(items[i]);
+        }
+    }
+    
+    let inventory;
+
+    await firebase.firestore().collection('Inventory').get()
+    .then((snapshot) => {
+        inventory = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        inventory = null;
+    });
+    
+    if (query == null) {
+        return false;
+    }
+    
+    
+    let hasEnoughInventory = true;
+    
+    for (i in order) {
+        for (j in order[i].ingredients) {
+            for (k in inventory) {
+                if (inventory[k] == order[i].ingredients[j] && inventory[k].ingredientQuantity == 0) {
+                    hasEnoughInventory = false;
+                    break;
+                }
+            }
+        }
+    }
+     
+    if (!hasEnoughInventory) {
+        return false;
+    }
+    
+    let finalizedOrder = [];
+    let totalPrice = 0;
+    
+    for (i in order) {
+        finalizedOrder.push(order[i].concat(" " + order[i].quantity.toString()));
+        totalPrice += (order[i].quantity * order[i].price);
+    }
+    
+    let completeOrder = {
+        completionStatus: false,
+        customerID: custID,
+        waitstaff: staffID,
+        orderID: ordID,
+        orderedItems: finalizedOrder,
+        price: totalPrice,
+        requests: 'none',
+        tableNumber: tableNum
+        
+    }
+    
+    let isSuccess;
+    
+    await firebase.firestore().collection('Orders').doc(completeOrder.orderID).update(completeOrder)
+    .then((success) => {
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.log('Error adding to order: ', error);
+        isSucces = false;
+    });
+    
+    return isSuccess;
+    
+}

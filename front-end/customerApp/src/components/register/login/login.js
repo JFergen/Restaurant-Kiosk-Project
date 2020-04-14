@@ -5,6 +5,7 @@ import LeftArrow from '../../../assets/header/left-arrow.png';
 import RegisterButton from '../../../assets/registration/register_button.png';
 import validator from 'validator';
 import {login} from '../../../customers';
+import {createOrder} from '../../../orders';
 import styles from './styles.js';
 
 class Login extends Component {
@@ -60,10 +61,11 @@ class Login extends Component {
             alert("Need password with length > 6");
         } else {
             customer = await login(this.state.email, this.state.password);
-            console.log(customer);
-            console.log(customer[0].password.length);
-            if (customer[0].password.length > 0) {
+
+            if (customer.password.length > 0) {
                 alert("Login Successful");
+                global.orderID = await createOrder(customer.id);
+
                 this.props.navigation.navigate('Load', {
                     loginSuccessful: true
                 })

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { createAppContainer } from 'react-navigation';
+import {createAppContainer} from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import Loading from './components/loading/loading';
 import MainContainer from './components/main_container/main_container';
@@ -10,7 +10,9 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 
 firebase.functions().useFunctionsEmulator('http://localhost:5000');
+
 global.tableNumber = '1';
+global.orderID = null;
 
 // Navigation
 const RootNavigator = createStackNavigator({

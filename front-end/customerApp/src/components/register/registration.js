@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import {addCustomer, loginAsGuest} from '../../customers';
+import {createOrder} from '../../orders';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import RegisterButton from '../../assets/registration/register_button.png';
@@ -63,14 +64,17 @@ class Registration extends Component {
         } else if (this.state.password.length < 6) {
             alert("Need password with length > 6");
         } else {
-            const success = await addCustomer(customer);
-            if (success == true) {
+            customer = await addCustomer(customer);
+
+            if (customer.id.length > 0) {
                 alert("Registered successfully");
+                global.orderID = await createOrder(customer.id);
+
                 this.props.navigation.navigate('Load', {
                     loginSuccessful: true
                 })
             } else {
-                alert("Registration has failed: " + success);
+                alert("Registration has failed: " + customer);
             }
         }
     }
@@ -80,13 +84,15 @@ class Registration extends Component {
     
         customer = await loginAsGuest();
         
-        if (customer[0].id.length > 0) {
+        if (customer.id.length > 0) {
             alert("Login As Guest Successful");
+            global.orderID = await createOrder(customer.id);
+
             this.props.navigation.navigate('Load', {
                 loginSuccessful: true
             })
         } else {
-            alert("Login has failed: " + customer);
+            alert("Login has failed");
         }
 
         this.props.navigation.navigate('Load', {
