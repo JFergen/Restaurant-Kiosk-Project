@@ -134,7 +134,7 @@ export async function getCustomers() {
 //     email:"johndoe1234@gmail.com",
 //     id: "l8qDPeaGzOC4egZMW5hW",
 //     name: "John Bob",
-//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
+//     orderID: "v6J7iJmyHxW5CIdCosvK",
 //     password: "hello1234"
 // }
 //this email will change to jhondoe1234@gmail.com
