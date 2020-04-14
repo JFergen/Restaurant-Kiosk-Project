@@ -124,3 +124,25 @@ export async function markTableOrderStatusAsTrue(tableNum) {
     });
     return isSuccess;
 }
+
+export async function getStaffAssignedToTable(tableNum) {
+    let isSuccess;
+    let staff;
+    
+    await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
+    .then(() => {
+        console.log('Successfully retrieved waitstaff if.');
+        staff = tables = snapshot.docs.map(doc => doc.data());
+    })
+    .catch((error) => {
+      alert("Error getting waitstaff id from table: ", error);
+      isSuccess = false;
+     
+    });
+    
+    if (!isSuccess) {
+        return false;
+    }
+    
+    return staff[0];
+}
