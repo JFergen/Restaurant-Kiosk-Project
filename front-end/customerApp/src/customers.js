@@ -11,7 +11,6 @@ import firestore from '@react-native-firebase/firestore'
 //     email:"johndoe@gmail.com",
 //     id: "l8qDPeaGzOC4egZMW5hW",
 //     name: "John Doe",
-//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
 //     password: "password"
 // }
 //addCustomer(Customer)
