@@ -26,7 +26,7 @@ export async function createOrder(custID, tableNum) {
         console.log("Successfully created order.");
         isSuccess = true;
     })
-    .catch((error) {
+    .catch((error) => {
         console.log("Error creating Order: ", error);
         isSuccess = false;
     });
