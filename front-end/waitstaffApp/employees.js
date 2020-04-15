@@ -32,7 +32,7 @@ export async function addEmployee(employee) {
     .catch (error => {
         console.log('error getting doc', error);
     });
-    if(validEmail==false)
+    if(validEmail==true)
     {
         console.log('Email already exists');
         let emailExist = 'Email already exists'
