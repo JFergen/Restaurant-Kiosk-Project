@@ -34,7 +34,7 @@ export async function validateCoupont(coupondCode) {
 
 export async function addCoupon(discount) {
    let isSuccess;
-   let autoID = firebase.firestore().collection('Employees').doc().id;
+   let autoID = firebase.firestore().collection('Coupons').doc().id;
 
    await firebase.firestore().collection('Employees').doc(autoID).set({code: autoID, percentOff: discount})
     .then(() => {
