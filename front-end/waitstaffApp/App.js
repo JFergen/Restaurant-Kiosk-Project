@@ -28,6 +28,6 @@ const AppNavigator = createStackNavigator({
       },
     },
   }  
-},{initialRouteName: 'Dashboard'});
+},{initialRouteName: 'Login'});
 
 export default createAppContainer(AppNavigator);

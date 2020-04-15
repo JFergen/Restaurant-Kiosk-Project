@@ -1,5 +1,6 @@
 import React, {memo, useState} from 'react';
-import {StyleSheet, Text, AsyncStorage, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, ActivityIndicator} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import TextInput from '../components/TextInput';
 import Background from '../components/Background';
 import Button from '../components/Button';

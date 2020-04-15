@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, AsyncStorage} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Background from '../components/Background';
 import Header from '../components/Header';
 import TableCard from '../components/TableCard';

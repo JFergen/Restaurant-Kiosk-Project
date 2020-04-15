@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView, AsyncStorage} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Background from '../components/Background';
 import {theme} from '../constants/theme';
 import Dot from '../components/Dot';
 import Header from '../components/Header';
 import OrderCard from '../components/OrderCard';
 import firestore from '@react-native-firebase/firestore';
+
 
 const OrdersScreen = () => {
   const [orders, setOrders] = useState(null);
