@@ -10,9 +10,12 @@ import firestore from '@react-native-firebase/firestore'
 //for example createOrder("l8qDPeaGzOC4egZMW5hW", "3")
 export async function createOrder(custID, tableNum) {
     
+    
     let autoID = firebase.firestore().collection('Orders').doc().id;
+    
+    let potentialError;
 
-    await firebase.firestore().collection('Orders').add({
+    await firebase.firestore().collection('Orders').doc(autoID).set({
         customerID: custID,
         order: null,
         waitstaff: null,
@@ -28,8 +31,13 @@ export async function createOrder(custID, tableNum) {
     })
     .catch((error) => {
         console.log("Error creating Order: ", error);
+        potentialError = error;
         isSuccess = false;
     });
+    
+    if (!isSuccess) {
+        return potentialError;
+    }
 
     return autoID;
 }
@@ -154,7 +162,7 @@ export async function getTableOrders(tableNumber){
 
 export async function confirmOrder(ordID, custID, tableNum, items){
 
-    let order = []
+    let order = [...new Set(items)];
     
     for (i in items) {
         if (items[i].quantity > 0) {
