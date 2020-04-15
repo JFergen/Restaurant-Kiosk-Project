@@ -1,6 +1,5 @@
 import Background from './assets/background.jpeg';
 import React from 'react';
-import {Button} from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -17,10 +16,10 @@ import ViewMenu from './screens/menu/viewMenu';
 import MenuManagement from './screens/menu/MenuManagement';
 import ApproveTimes from './screens/approveTimes/approveTimes';
 import ManageTips from './screens/manageTips/manageTips';
-import MetricsManagement from './screens/metrics/metricsManagement';
 import CompMeals from './screens/metrics/compMeals';
 import MetricsPage from './screens/metrics/MetricsPage';
 import TotalOrders from './screens/metrics/totalOrders';
+import SignUp from './screens/SignUp';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +31,13 @@ export function NavStack({ navigation }) {
         name="Login"
         component={Login}
         options={{ title: 'Login', headerStyle: {height: 70},
+                                   headerTitleAlign: 'center'}}
+      />
+
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ title: 'SignUp', headerStyle: {height: 70},
                                    headerTitleAlign: 'center'}}
       />
 
@@ -128,15 +134,8 @@ export function NavStack({ navigation }) {
       <Stack.Screen
         name="MetricsPage"
         component={MetricsPage}
-        options={{ title: 'Restaurant Metrics' , headerStyle: {height: 70},
-                                                 headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
-        name="MetricsManagement"
-        component={MetricsManagement}
-        options={{ title: 'Metrics' , headerStyle: {height: 70},
-                                      headerTitleAlign: 'center'}}
+        options={{ title: 'MetricsPage' , headerStyle: {height: 70},
+                                          headerTitleAlign: 'center'}}
       />
 
     </Stack.Navigator>

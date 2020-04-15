@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
+import './employees/employees';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
@@ -118,9 +119,10 @@ const SignUp = ({navigation}) => {
                 value={DOB}
                  />
 
+
                 <Button
                 style={styles.addPosition}
-                title="Add New Employee" onPress = {_onNewEmployeePressed}>
+                title="Register" onPress = {_onNewEmployeePressed}>
                 </Button>
             </View>
         );
