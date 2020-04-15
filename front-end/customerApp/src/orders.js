@@ -162,14 +162,27 @@ export async function getTableOrders(tableNumber){
 
 export async function confirmOrder(ordID, custID, tableNum, items){
 
-    let order = [...new Set(items)];
+   
     
-    for (i in items) {
-        if (items[i].quantity > 0) {
-            order.push(items[i]);
-        }
-    }
+//     for (i in items) {
+//         if (items[i].quantity > 0) {
+//             order.push(items[i]);
+//         }
+//     }
     
+    let newArray = []; 
+    let uniqueObject = {}; 
+    
+    for (i in items) { 
+        let objTitle = items[i]['name'];  
+        uniqueObject[objTitle] = items[i]; 
+    } 
+    
+    for (i in uniqueObject) { 
+        newArray.push(uniqueObject[i]); 
+    } 
+    
+    let order = newArray;    
     let inventory;
 
     await firebase.firestore().collection('Inventory').get()
