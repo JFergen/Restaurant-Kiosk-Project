@@ -29,3 +29,23 @@ export async function validateCoupont(coupondCode) {
     
     return coupon[0].percentOff;
 }
+
+
+
+export async function addCoupon(discount) {
+   let isSuccess;
+   let autoID = firebase.firestore().collection('Employees').doc().id;
+
+   await firebase.firestore().collection('Employees').doc(autoID).set({code: autoID, percentOff: discount})
+    .then(() => {
+        console.log("Coupon added Successfully");
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error adding Coupon to table: ", error);
+        isSuccess = false;
+    });
+   
+
+    return isSuccess;
+}
