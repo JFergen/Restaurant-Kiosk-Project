@@ -9,5 +9,11 @@ export default StyleSheet.create({
         borderWidth: 2, 
         marginBottom: 5, 
         backgroundColor: 'white'
+    },
+    itemName: {
+        paddingLeft: 5,
+        fontSize: 22,
+        fontWeight: 'bold',
+        fontStyle: 'italic'
     }
 });

@@ -11,7 +11,6 @@ import firestore from '@react-native-firebase/firestore'
 //     email:"johndoe@gmail.com",
 //     id: "l8qDPeaGzOC4egZMW5hW",
 //     name: "John Doe",
-//     orderID: ["v6J7iJmyHxW5CIdCosvK""],
 //     password: "password"
 // }
 //addCustomer(Customer)
@@ -31,11 +30,10 @@ export async function addCustomer(Customer) {
     .catch ((error) => {
         console.log('error getting doc', error);
     });
-    if(validEmail==true)
-    {
+    
+    if (validEmail == true) {
         console.log('Email already exists');
-        let emailExist = 'Email already exists'
-        return emailExist
+        return 'Email already exists';
     }
     
     
@@ -119,7 +117,7 @@ export async function login(email, password) {
         return 'Invalid Email or Password';
     }
     
-    return customer;
+    return customer[0];
 }
 
 //this function gets all the customers in the database

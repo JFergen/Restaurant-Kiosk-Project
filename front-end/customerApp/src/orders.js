@@ -7,7 +7,7 @@ import firestore from '@react-native-firebase/firestore'
 //function will add a order to the database
 //the function will return the orderID
 //the functions parameter is a string which is the customerID
-//for example createOrder("l8qDPeaGzOC4egZMW5hW")
+//for example createOrder("l8qDPeaGzOC4egZMW5hW", "3")
 export async function createOrder(custID, tableNum) {
     
     let autoID = firebase.firestore().collection('Orders').doc().id;
@@ -26,7 +26,7 @@ export async function createOrder(custID, tableNum) {
         console.log("Successfully created order.");
         isSuccess = true;
     })
-    .catch(function(error) {
+    .catch((error) => {
         console.log("Error creating Order: ", error);
         isSuccess = false;
     });
@@ -245,7 +245,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     })
     .catch((error) => {
         console.log('Error adding to order: ', error);
-        isSucces = false;
+        isSuccess = false;
     });
     
     return isSuccess;

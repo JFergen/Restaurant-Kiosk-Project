@@ -5,6 +5,9 @@ import LeftArrow from '../../../assets/header/left-arrow.png';
 import RegisterButton from '../../../assets/registration/register_button.png';
 import validator from 'validator';
 import {login} from '../../../customers';
+import { connect } from 'react-redux';
+import { setCustomerID } from '../../../store/actions/customer_actions';
+import { setOrderID } from '../../../store/actions/order_actions';
 import {createOrder} from '../../../orders';
 import styles from './styles.js';
 
@@ -63,12 +66,18 @@ class Login extends Component {
             customer = await login(this.state.email, this.state.password);
 
             if (customer.password.length > 0) {
-                alert("Login Successful");
-                global.orderID = await createOrder(customer.id);
+                let orderID = await createOrder(customer.id, global.tableNumber);
 
-                this.props.navigation.navigate('Load', {
-                    loginSuccessful: true
-                })
+                if (orderID === false) {
+                    alert('Could not create orderID. Try logging in again.');
+                } else {
+                    this.props.setOrderID(orderID)
+                    this.props.setCustomerID(customer.id)
+
+                    this.props.navigation.navigate('Load', {
+                        loginSuccessful: true
+                    })
+                }
             } else {
                 alert("Login has failed: " + customer);
             }
@@ -131,4 +140,9 @@ class Login extends Component {
     }
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+    orderID: state.ordReducer.orderID,
+    customerId: state.custReducer.customerID
+})
+
+export default connect(mapStateToProps, {setOrderID, setCustomerID})(Login);

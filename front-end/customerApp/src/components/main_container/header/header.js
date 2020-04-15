@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, TouchableHighlight, Image, Text } from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
 import Overlay from 'react-native-modal-overlay';
+import { connect } from 'react-redux';
+import LeftArrow from  '../../../assets/header/left-arrow.png';
 import LoginIcon from '../../../assets/header/login.png';
 import WaiterIcon from '../../../assets/header/waiter.png';
 import DrinkIcon from '../../../assets/header/drink.png';
@@ -18,30 +20,76 @@ class Header extends Component {
             serverDialog: false,
             serverCalled: false,
             drinkOverlay: false,
-            gamesOverlay: false
+            gamesOverlay: false,
+            showLeftArrow: false,
+            showRightArrow: true
         }
         this.loginSuccessful = this.props.navigation.getParam('loginSuccessful');
     }
 
     renderLoginIcon = () => {
-        return (
-            <TouchableHighlight
-                style = {styles.buttonBackground}
-                onPress = {() => { this.props.navigation.navigate('Register') }}
-            >
-                <Image source = {LoginIcon}/>
-            </TouchableHighlight>
-        )
+        if (!this.loginSuccessful) {
+            return (
+                <TouchableHighlight
+                    style = {styles.arrowBackground}
+                    onPress = {() => { this.props.navigation.navigate('Register') }}
+                >
+                    <Image source = {LoginIcon}/>
+                </TouchableHighlight>
+            )
+        } else {
+            return null
+        }
+    }
+
+    renderLeftArrow = () => {
+        if (this.state.showLeftArrow) {
+            return (
+                <TouchableHighlight
+                    style = {styles.arrowBackground}
+                    onPress = {() => this.scrollLeft()}
+                >
+                    <Image source = {LeftArrow}/>
+                </TouchableHighlight>
+            )
+        }
+    }
+
+    renderRightArrow = () => {
+        if (this.state.showRightArrow == true) {
+            return (
+                <TouchableHighlight
+                    style = {styles.arrowBackground}
+                    onPress = {() => this.scrollRight()}
+                >
+                    <Image source = {RightArrow}/>
+                </TouchableHighlight>
+            )
+        }
+    }
+
+    scrollRight = () => {
+        global.scroll.scrollToEnd({animated: true})
+
+        this.setState({
+            showRightArrow: false,
+            showLeftArrow: true
+        })
+    }
+
+    scrollLeft = () => {
+        global.scroll.scrollTo({x: 0, y: 0, animated: true});
+
+        this.setState({
+            showLeftArrow: false,
+            showRightArrow: true
+        })
     }
 
     alertServer = async () => {
         let callServerSuc;
-        console.log('got here');
 
         callServerSuc = await callServer(global.tableNumber);
-
-        console.log(callServerSuc);
-        console.log('got here2');
 
         if (callServerSuc == true) {
             this.setState({
@@ -52,7 +100,29 @@ class Header extends Component {
             this.setState({ serverDialog: false })
             alert('Server could not be called. Try again.')
         }
-        
+    }
+
+    goToCart = () => {
+        let allItems = [];
+        let buyingItems = [];
+
+        allItems = this.props.appetizers.concat(this.props.beverages, this.props.entrees, this.props.desserts)
+
+        for (var i = 0; i < allItems.length; i++) {
+            if (allItems[i].quantity > 0) {
+                for (var j = 0; j < allItems[i].quantity; j++) {
+                    buyingItems.push(allItems[i])
+                }
+            }
+        }
+
+        if (buyingItems.length === 0) {
+            alert('Shopping Cart is empty. Use \'+\' and \'-\' to order items')
+        } else {
+            this.props.navigation.navigate('Pay', {
+                items: buyingItems
+            })
+        }
     }
 
     dismissServerDialog = () => {
@@ -70,15 +140,11 @@ class Header extends Component {
     }
 
     render() {
-        let loginView;
-
-        if (!this.loginSuccessful) {
-            loginView = this.renderLoginIcon();
-        }
-
         return (
             <View style = {styles.header}>
-                {loginView}
+                {this.renderLoginIcon()}
+
+                {this.renderLeftArrow()}
 
                 <TouchableHighlight 
                     style = {styles.buttonBackground}
@@ -103,24 +169,13 @@ class Header extends Component {
 
                 <TouchableHighlight 
                     style = {styles.buttonBackground}
-                    onPress = {() => alert("cart")}
+                    onPress = {() => this.goToCart()}
                 >
                     <Image source = {CartIcon}/>
                 </TouchableHighlight>
                 
                 <View style = {styles.rightIcons}>
-                    {/* <TouchableHighlight 
-                        style = {styles.arrowBackground}
-                        onPress = {() => alert("cart")}
-                    >
-                        <Image source = {LeftArrow}/>
-                    </TouchableHighlight> */}
-                    <TouchableHighlight 
-                        style = {styles.arrowBackground}
-                        onPress = {() => alert("cart")}
-                    >
-                        <Image source = {RightArrow}/>
-                    </TouchableHighlight>
+                    {this.renderRightArrow()}
                 </View>
 
 
@@ -202,4 +257,11 @@ class Header extends Component {
     }
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+    appetizers: state.menReducer.appetizers,
+    beverages:  state.menReducer.beverages,
+    entrees:    state.menReducer.entrees,
+    desserts:   state.menReducer.desserts
+})
+
+export default connect(mapStateToProps, {})(Header);

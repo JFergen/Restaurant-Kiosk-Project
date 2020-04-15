@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, Text, TextInput, TouchableOpacity, Button } from 'react-native';
+import {View, Image, Text, TextInput, TouchableOpacity, Button} from 'react-native';
 import {addCustomer, loginAsGuest} from '../../customers';
-import {createOrder} from '../../orders';
+import { createOrder } from '../../orders';
+import { connect } from 'react-redux';
+import { setCustomerID } from '../../store/actions/customer_actions';
+import { setOrderID } from '../../store/actions/order_actions';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import RegisterButton from '../../assets/registration/register_button.png';
@@ -68,11 +71,18 @@ class Registration extends Component {
 
             if (customer.id.length > 0) {
                 alert("Registered successfully");
-                global.orderID = await createOrder(customer.id);
+                let orderID = await createOrder(customer.id, global.tableNumber);
 
-                this.props.navigation.navigate('Load', {
-                    loginSuccessful: true
-                })
+                if (orderID == false) {
+                    alert('Could not create orderID. Try registering again.');
+                } else {
+                    this.props.setOrderID(orderID)
+                    this.props.setCustomerID(customer.id)
+
+                    this.props.navigation.navigate('Load', {
+                        loginSuccessful: true
+                    })
+                }       
             } else {
                 alert("Registration has failed: " + customer);
             }
@@ -82,17 +92,24 @@ class Registration extends Component {
     loginGuest = async () => {
         let customer;
     
-        customer = await loginAsGuest();
+        // customer = await loginAsGuest();
         
-        if (customer.id.length > 0) {
-            global.orderID = await createOrder(customer.id);
+        // if (customer.id.length > 0) {
+        //     let orderID = await createOrder(customer.id);
 
-            this.props.navigation.navigate('Load', {
-                loginSuccessful: true
-            })
-        } else {
-            alert("Login has failed");
-        }
+        //     if (orderID == false) {
+        //         alert('Could not create orderID. Try logging in again.');
+        //     } else {
+        //         this.props.setOrderID(orderID)
+        //         this.props.setCustomerID(customer.id)    
+
+        //         this.props.navigation.navigate('Load', {
+        //             loginSuccessful: true
+        //         })
+        //     }
+        // } else {
+        //     alert("Login has failed");
+        // }
 
         this.props.navigation.navigate('Load', {
             loginSuccessful: true
@@ -191,4 +208,9 @@ class Registration extends Component {
     }
 };
 
-export default Registration;
+const mapStateToProps = (state) => ({
+    orderID: state.ordReducer.orderID,
+    customerId: state.custReducer.customerID
+})
+
+export default connect(mapStateToProps, {setOrderID, setCustomerID})(Registration);

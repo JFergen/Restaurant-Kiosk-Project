@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Image, FlatList, Text, TouchableHighlight } from 'react-native';
+import { connect } from 'react-redux';
+import { setAppetizers, setBeverages, setDesserts, setEntrees } from '../../../store/actions/menu_actions';
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import styles from './styles.js';
-import * as inventory from '../../../inventory.js'
 
 class Menu extends Component {
     constructor(props) {
@@ -11,12 +12,42 @@ class Menu extends Component {
         this.state = {
             items: props.menuList
         };
+        this.type = null;
+    }
+
+    componentDidMount() {
+        let testType = this.state.items[0].type
+
+        if (testType === 'appetizer') {
+            this.type = 'appetizer'
+        } else if (testType === 'beverage') {
+            this.type = 'beverage'
+        } else if (testType === 'entree') {
+            this.type = 'entree'
+        } else if (testType === 'dessert') {
+            this.type = 'dessert'
+        } else {
+            alert('monkaS')
+        }
+    }
+
+    updateArray = (type) => {
+        if (type === 'appetizer') {
+            this.props.setAppetizers(this.state.items)
+        } else if (type === 'beverage') {
+            this.props.setBeverages(this.state.items)
+        } else if (type === 'entree') {
+            this.props.setEntrees(this.state.items)
+        } else if (type === 'dessert') {
+            this.props.setDesserts(this.state.items)
+        } else {
+            alert('monkaS')
+        }
     }
 
     incrementQty = (name) => {
-        let newItems = [...this.state.items];
+        let newItems = [...this.state.items]
 
-        var i;
         for(i = 0; i < newItems.length; ++i) {
             if(newItems[i].name === name) {
                 ++newItems[i].quantity;
@@ -25,6 +56,7 @@ class Menu extends Component {
         }
 
         this.setState({items: newItems});
+        this.updateArray(this.type)
     }
 
     decrementQty = (name) => {
@@ -42,33 +74,24 @@ class Menu extends Component {
                 break;
             }
         }
+
         this.setState({items: newItems});
+        this.updateArray(this.type)
     }
 
     render() {
         return (
             <FlatList
-                data = {this.state.items}
+                data = {this.props.menuList}
                 renderItem = {({item}) => (
                     <View style = {styles.container}>
                         <View style = {{flex: 1}}>
-                            <Text style = {{
-                                paddingLeft: 5,
-                                fontSize: 22,
-                                fontWeight: 'bold',
-                                fontStyle: 'italic'
-                            }}>
-                                {item.name} - ${item.price}
-                            </Text>
-                            <TouchableHighlight
-                                onPress = {() => alert(item.title)}
-                                underlayColor = 'transparent'
-                            >
-                                <Image
-                                    style = {{height: 110, width: 150}}
-                                    source = {{uri: item.uri}}
-                                />
-                            </TouchableHighlight>
+                            <Text style = {styles.itemName}>{item.name} - ${item.price}</Text>
+                            
+                            <Image
+                                style = {{height: 110, width: 150}}
+                                source = {{uri: item.uri}}
+                            />
                         </View>
     
                         <View style = {{flex: 10, alignItems: 'flex-end'}}>
@@ -103,4 +126,11 @@ class Menu extends Component {
     }
 };
 
-export default Menu;
+const mapStateToProps = (state) => ({
+    appetizers: state.menReducer.appetizers,
+    beverages:  state.menReducer.beverages,
+    entrees:    state.menReducer.entrees,
+    desserts:   state.menReducer.desserts
+})
+
+export default connect(mapStateToProps, { setAppetizers, setBeverages, setEntrees, setDesserts })(Menu);
