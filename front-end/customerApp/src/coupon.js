@@ -3,11 +3,11 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-export async function validateCoupont(coupondCode) {
+export async function validateCoupont(couponCode) {
   let validCoupon;
   let coupon;
   
-  await firebase.firestore().collection('Coupons').where('code', '==', Customer.email).get()
+  await firebase.firestore().collection('Coupons').where('code', '==', couponCode).get()
     .then((snapshot) => {
         if (snapshot.empty) {
             validCoupon = false;
