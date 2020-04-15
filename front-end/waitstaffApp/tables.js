@@ -3,7 +3,7 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-
+//hello
 //NOTE-------make sure to set ordersComplete to false when adding a table number-------NOTE
 //this function will add a table to the database
 //the functions parameter is a item object.
