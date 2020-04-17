@@ -753,6 +753,17 @@ it("should get monthly revenue", async () => {
 });
 
 ///////////////////////////////////////////////Transactions Section
+
+/*  example?:
+    let transaction = {
+        amountDue = 15.00,
+        discount = 0.0,
+        orderTotal = 11.00,
+        paymentMethod = "Credit Card",
+        tips = 4.00,
+        waitstaff = "4MfW9403U5WqT5cSIgbG"
+    };
+    */
 it("should add transaction", async () => {
     async function addTransaction(transaction) {
         let isSuccess;
@@ -776,6 +787,14 @@ it("should add transaction", async () => {
          return true;
     }
 
+    let transaction = {
+            amountDue = 15.00,
+            discount = 0.0,
+            orderTotal = 11.00,
+            paymentMethod = "Credit Card",
+            tips = 4.00,
+            waitstaff = "4MfW9403U5WqT5cSIgbG"
+        };
     addTransaction(transaction);
 });
 
@@ -1353,6 +1372,5 @@ it("should confirm order", async () => {
 
     //confirmOrder(ordID, custID, tableNum, items)
     let items = ["Pizza" ,"Apple Pie"];
-    confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW",
-    "3", items);
+    confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "3", items);
 });
