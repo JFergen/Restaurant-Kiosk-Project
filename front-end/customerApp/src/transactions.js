@@ -23,6 +23,4 @@ export async function addTransaction(transaction) {
     }
   
      return true;
-
-    
 }

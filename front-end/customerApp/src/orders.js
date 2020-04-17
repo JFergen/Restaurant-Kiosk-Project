@@ -147,7 +147,7 @@ export async function getTableOrders(tableNumber){
     await firebase.firestore().collection('Inventory').where('tableNumber', '==', tableNumber).get()
     .then((snapshot) => {
         orders = snapshot.docs.map(doc => doc.data());
-        console.log('Successfully retreived orders.')
+        console.log('Successfully retrieved orders.')
     })
     .catch ((error) => {
         alert('Unable to retrieve order information', error);
@@ -161,9 +161,6 @@ export async function getTableOrders(tableNumber){
 }
 
 export async function confirmOrder(ordID, custID, tableNum, items){
-
-   
-    
 //     for (i in items) {
 //         if (items[i].quantity > 0) {
 //             order.push(items[i]);
@@ -262,7 +259,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     })
     .catch((error) => {
         console.log('Error adding to order: ', error);
-        isSucces = false;
+        isSuccess = false;
     });
     
     return isSuccess;
