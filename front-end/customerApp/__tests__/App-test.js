@@ -59,7 +59,7 @@ addTables(item)
 
 
 //this function is used delete a table from the database
-//the functionsparamater is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
+//the functions parameter is a string which is the table number i.e., deleteTables('1') will delete the table who's number is 1
 it("should delete table", async () => {
 async function deleteTables(tableNumber) {
     
@@ -97,8 +97,8 @@ async function getTables() {
 getTables()
 });
 
-//this function is used to update table infromation to the database
-//the functionsparameter is a item object.
+//this function is used to update table information to the database
+//the function's parameter is a item object.
 //for example:
 /*let item = {
     available: false,
@@ -1113,7 +1113,7 @@ it("should add item to order", async () => {
         })
         .catch((error) => {
             console.log('Error adding to order: ', error);
-            isSucces = false;
+            isSuccess = false;
         });
 
         return isSuccess;

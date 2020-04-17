@@ -57,7 +57,7 @@ export async function addItemToOrder(orderID, item) {
     })
     .catch((error) => {
         console.log('Error adding to order: ', error);
-        isSucces = false;
+        isSuccess = false;
     });
 
     return isSuccess;
