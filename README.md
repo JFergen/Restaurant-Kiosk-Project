@@ -1,7 +1,9 @@
 Latest BACKEND CODE IS LOCATED AT https://github.com/JFergen/Restaurant-Kiosk-Project/tree/dev/front-end/customerApp/src
 
 To run: unit tests be in the: 'Restaurant-Kiosk-Project\front-end\customerApp>' directory
+
 Then run: firebase emulators:exec --only firestore 'npm test'
+
 the file for unit test are located under: 'Restaurant-Kiosk-Project\front-end\customerApp\__tests__>' the file is called App-test.js
 
 
