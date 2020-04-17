@@ -3,7 +3,7 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-export async function validateCoupont(couponCode) {
+export async function validateCoupon(couponCode) {
   let validCoupon;
   let coupon;
   

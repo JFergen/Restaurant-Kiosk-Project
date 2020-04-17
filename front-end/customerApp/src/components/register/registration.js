@@ -92,28 +92,27 @@ class Registration extends Component {
     loginGuest = async () => {
         let customer;
     
-        // customer = await loginAsGuest();
+        customer = await loginAsGuest();
         
-        // if (customer.id.length > 0) {
-        //     let orderID = await createOrder(customer.id);
+        if (customer.id.length > 0) {
+            let orderID = await createOrder(customer.id);
 
-        //     if (orderID == false) {
-        //         alert('Could not create orderID. Try logging in again.');
-        //     } else {
-        //         this.props.setOrderID(orderID)
-        //         this.props.setCustomerID(customer.id)    
+            if (orderID == false) {
+                alert('Could not create orderID. Try logging in again.');
+            } else {
+                this.props.setOrderID(orderID)
+                this.props.setCustomerID(customer.id)    
 
-        //         this.props.navigation.navigate('Load', {
-        //             loginSuccessful: true
-        //         })
-        //     }
-        // } else {
-        //     alert("Login has failed");
-        // }
-
-        this.props.navigation.navigate('Load', {
-            loginSuccessful: true
-        })
+                this.props.navigation.navigate('Load', {
+                    loginSuccessful: true
+                })
+            }
+        } else {
+            alert("Login has failed");
+        }
+        // this.props.navigation.navigate('Load', {
+        //     loginSuccessful: true
+        // })
     }
     
 

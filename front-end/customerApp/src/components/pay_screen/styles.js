@@ -63,5 +63,15 @@ export default StyleSheet.create({
         color:'black',  
         fontWeight: 'bold', 
         fontSize: 15
+    },
+    blackText: {
+        fontSize: 15,
+        color: 'black',
+        fontWeight: 'bold'
+    },
+    redText: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'red'
     }
 });

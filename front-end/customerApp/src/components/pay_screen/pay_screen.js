@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, FlatList, TouchableHighlight, Image } from 'react-native';
+import { View, Text, ImageBackground, FlatList, TouchableHighlight, Image, TextInput } from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
 import Background from '../../assets/background.jpeg';
 import Cancel from '../../assets/pay_screen/cancel.png';
@@ -9,56 +9,106 @@ import PayButton from '../../assets/pay_screen/dollar.png';
 import { connect } from 'react-redux';
 import { callServer } from '../../callServer';
 import { confirmOrder } from '../../orders';
+import { validateCoupon } from '../../coupon';
 import styles from './styles';
 
 class PayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            numPeople: 1,
-            canceled: false,
+            //canceled: false,
+            couponDialog: false,
+            couponSuccessDialog: false,
             splitBillDialog: false,
             howToPayDialog: false,
             creditCardDialog: false,
             serverCalledDialog: false,
-            receitDialog: false
+            receiptDialog: false
         };
         this.buyingItems = this.props.navigation.getParam('items');
+        this.numPeople = 1;
         this.total = 0;
         this.tax = 0;
         this.totalWithTax = 0;
+        this.couponCode = null;
+        this.percentOff = 0;
+        //this.blackText = styles.blackText
     }
 
-    showCorrectX() {
-        if (this.state.canceled) {
-            return (
-                <TouchableHighlight 
-                    underlayColor = 'transparent'
-                    onPress = {() => this.uncancel()}
-                >
-                        <Image source = {Cancel}/>
-                </TouchableHighlight>
-            )
+    // displayIngredients() {
+    //     return (
+    //         this.buyingItems.map((item, index) => 
+    //         <TouchableHighlight 
+    //             underlayColor = 'transparent'
+    //             onPress = {() => this.uncancel()}
+    //         >
+    //                             <Image source = {Cancel}/>
+    //                     </TouchableHighlight>
+    //         )
+    //     )
+    // }
+
+    // showCorrectX() {
+    //     if (this.state.canceled) {
+    //         return (
+    //             <TouchableHighlight 
+    //                 underlayColor = 'transparent'
+    //                 onPress = {() => this.uncancel()}
+    //             >
+    //                     <Image source = {Cancel}/>
+    //             </TouchableHighlight>
+    //         )
+    //     } else {
+    //         return (
+    //             <TouchableHighlight
+    //                 underlayColor = 'transparent'
+    //                 onPress = {() => this.cancel()}
+    //             >
+    //                     <Image source = {UnCancel}/>
+    //             </TouchableHighlight>
+    //         )
+    //     }
+    // }
+
+    // cancel() {
+    //     alert('This item has been canceled and will not be a part of your total cost')
+    //     this.setState({ canceled: true })
+    // }
+
+    // uncancel() {
+    //     alert('This item has been sucessfully brought back')
+    //     this.setState({ canceled: false })
+    // }
+
+    updateRequests = index => text => {
+        this.buyingItems[index].requests = text
+    }
+
+    updateCouponCode = (text) => { this.couponCode = text }
+
+    updateNumPeople = (text) => {
+        let people = parseInt(text, 10)
+        
+        if (people < 1) {
+            alert("Number of people can not go below 1")
         } else {
-            return (
-                <TouchableHighlight
-                    underlayColor = 'transparent'
-                    onPress = {() => this.cancel()}
-                >
-                        <Image source = {UnCancel}/>
-                </TouchableHighlight>
-            )
+            this.numPeople = people
         }
     }
 
-    cancel() {
-        alert('This item has been canceled and will not be a part of your total cost')
-        this.setState({ canceled: true })
-    }
+    tryCouponCode = async (couponCode) => {
+        let success = await validateCoupon(couponCode)
 
-    uncancel() {
-        alert('This item has been sucessfully brought back')
-        this.setState({ canceled: false })
+        if (success === false) {
+            alert("Code: \"" + couponCode + "\" was invalid")
+        } else {
+            this.percentOff = success;
+
+            this.setState({
+                couponDialog: false,
+                couponSuccessDialog: true
+            })
+        }
     }
 
     initiatePay = async () => {
@@ -66,6 +116,7 @@ class PayScreen extends Component {
 
         if (success) {
             var i;
+            this.total = 0
 
             for (i = 0; i < this.buyingItems.length; i++) {
                 this.total += this.buyingItems[i].price
@@ -78,11 +129,7 @@ class PayScreen extends Component {
             this.totalWithTax = +this.total + +this.tax
             this.totalWithTax = this.totalWithTax.toFixed(2)
 
-            this.setState({
-                //splitBillDialog: true,
-                //howToPayDialog: true,
-                receitDialog: true
-            })
+            this.setState({ receiptDialog: true })
         } else {
             alert("Failed to confirm the order and/or the ingredients. Try again")
         }
@@ -95,10 +142,69 @@ class PayScreen extends Component {
                     style = {styles.receiptText}
                     key = {index}
                 >
-                    Item {index}-{item.name}{"\t\t"}${item.price}
+                    Item {index}-{item.name}{"\t\t\t"}${item.price}
                 </Text>
             )
         )
+    }
+
+    renderCoupon() {
+        if (this.percentOff === 0) {
+            return (
+                <Text style = {styles.receiptText}>Total with Tax: ${this.totalWithTax}</Text>
+            )
+        } else {
+            this.totalWithTax = (this.total)*(parseFloat(this.percentOff) / 100.0) + +(.08)*(this.total)
+            this.totalWithTax = this.totalWithTax.toFixed(2)
+
+            return (
+                <Text style = {styles.receiptText}>
+                    Coupons: {this.percentOff}% from coupon code: "{this.couponCode}"
+                    {"\n\n"}
+                    New total: ${this.totalWithTax} 
+                </Text>
+            )
+        }
+    }
+
+    renderSplit() {
+        if (this.numPeople === 1) {
+            return (
+                null
+            )
+        } else {
+            return (
+                <Text styles = {styles.receiptText}>
+                    {/* {"\n"} */}
+                    Number of ways to split check: {this.numPeople}{"\n"}
+                    New total: ${(this.totalWithTax / this.numPeople).toFixed(2)} each
+                </Text>
+            )
+        }
+    }
+
+    displayCouponDialog = () => {
+        this.setState({
+            receiptDialog: false,
+            couponDialog: true
+        })
+    }
+
+    displayHowToPayDialog = () => {
+        var i;
+
+        for(i = 0; i < this.numPeople; i++) {
+            if (i === 0) {
+                this.setState({ receiptDialog: false })
+                alert('Payment #' + i)
+                this.setState({ howToPayDialog: true })
+            } else {
+                this.setState({ howToPayDialog: false })
+                alert('Payment #' + i)
+
+                this.setState({ howToPayDialog: true })
+            }
+        }
     }
 
     displayCreditCardDialog = () => {
@@ -106,6 +212,13 @@ class PayScreen extends Component {
             splitBillDialog: false,
             howToPayDialog: false,
             creditCardDialog: true
+        })
+    }
+
+    displaySplitBillDialog = () => {
+        this.setState({
+            receiptDialog: false,
+            splitBillDialog: true
         })
     }
 
@@ -125,19 +238,40 @@ class PayScreen extends Component {
         }
     }
 
-    dismissReciptDialog = () => {
-        this.setState({ receitDialog: false })
+    dismissReceiptDialog = () => {
+        this.setState({ receiptDialog: false })
     }
 
-    dissmissSplitBillDialog= () => {
+    dismissCouponDialog = () => {
+        this.setState({ 
+            couponDialog: false,
+            receiptDialog: true 
+        })
+    }
+
+    dismissCouponSuccessDialog = () => {
+        this.setState({
+            couponSuccessDialog: false,
+            receiptDialog: true
+        })
+    }
+
+    backToReceiptDialog = () => {
+        this.setState({
+            splitBillDialog: false,
+            receiptDialog: true
+        })
+    }
+
+    dismissSplitBillDialog = () => {
         this.setState({ splitBillDialog: false })
     }
 
-    dissmissHowToPayDialog = () => {
+    dismissHowToPayDialog = () => {
         this.setState({ howToPayDialog: false })
     }
 
-    dissmissCreditCardDialog = () => {
+    dismissCreditCardDialog = () => {
         this.setState({ creditCardDialog: false })
     }
 
@@ -157,7 +291,7 @@ class PayScreen extends Component {
                    <FlatList
                         data = {this.buyingItems}
                         keyExtractor = {(item, index) => index.toString()}
-                        renderItem = {({item}) => (
+                        renderItem = {({item, index}) => (
                             <View style = {styles.itemContainer}>
                                 <Text style = {{fontSize: 25, color: 'black', fontWeight: 'bold'}}>{item.name} - ${item.price}</Text>
 
@@ -168,8 +302,19 @@ class PayScreen extends Component {
                                     source = {{uri: item.uri}}
                                 />
 
-                                <View style = {{width: 1100, height: 145, backgroundColor: 'yellow', alignSelf: 'center'}}>
-                                    <Text style = {{fontSize: 20, color: 'black', fontWeight: 'bold'}}>Special Requests:</Text>
+                                {/* <View style = {{width: 400, height: 147, backgroundColor: 'white', borderWidth: 2, borderColor: 'black'}}>
+                                    <Text style = {{fontSize: 20, color: 'black', fontWeight: 'bold'}}>Ingredients: (Click any you do not want)</Text>
+
+                                    {this.displayIngredients}
+                                </View> */}
+
+                                <View style = {{width: 1100, height: 147, backgroundColor: 'yellow', alignSelf: 'center', borderWidth: 2, borderColor: 'black', marginLeft: 10}}>
+                                    <TextInput 
+                                        style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                                        multiline = {true}
+                                        placeholder = "Special Requests (or ingredients to add)"
+                                        onChangeText = {this.updateRequests(index)}
+                                    />
                                 </View>
 
                                 {/* <View style = {{alignContent: 'flex-end'}}>
@@ -205,7 +350,7 @@ class PayScreen extends Component {
 
                 {/* Dialog Boxes Here */}
                 <Dialog
-                    visible = {this.state.receitDialog}
+                    visible = {this.state.receiptDialog}
                     dialogAnimation = {new ScaleAnimation()}
                     dialogTitle = {
                         <DialogTitle title = {"Receipt: Order ID-" + global.orderID}/>
@@ -214,19 +359,19 @@ class PayScreen extends Component {
                         <DialogFooter>
                             <DialogButton
                                 text = "PAY"
-                                onPress = {this.dissmissHowToPayDialog} 
+                                onPress = {this.displayHowToPayDialog} 
                             />
                             <DialogButton
                                 text = "COUPONS"
-                                //onPress = 
+                                onPress = {this.displayCouponDialog}
                             />
                             <DialogButton
                                 text = "SPLIT THE BILL"
-                                onPress = {this.dissmissSplitBillDialog}
+                                onPress = {this.displaySplitBillDialog}
                             />
                             <DialogButton
                                 text = "DISMISS"
-                                onPress = {this.dissmissReciptDialog}
+                                onPress = {this.dismissReceiptDialog}
                             />
                         </DialogFooter>
                     }
@@ -239,9 +384,63 @@ class PayScreen extends Component {
                             Total:{"\t\t\t\t"}${this.total}{"\n"}
                             Tax (8%):{"\t"}${this.tax}{"\n"}
                             {"\n"}
-                            Total with Tax: ${this.totalWithTax}
                         </Text>
 
+                        {this.renderCoupon()}
+
+                        {this.renderSplit()}
+
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    visible = {this.state.couponDialog}
+                    dialogAnimation = {new ScaleAnimation()}
+                    dialogTitle = {
+                        <DialogTitle title = "Coupons"/>
+                    }
+                    footer = {
+                        <DialogFooter>
+                            <DialogButton
+                                text = "TRY CODE"
+                                onPress = {() => this.tryCouponCode(this.couponCode)} 
+                            />
+                            <DialogButton
+                                text = "DISMISS"
+                                onPress = {this.dismissCouponDialog}
+                            />
+                        </DialogFooter>
+                    }
+                >
+                    <DialogContent>
+                        <Text style = {styles.receiptText}>Try coupon code: </Text>
+
+                        <TextInput style = {styles.receiptText}
+                            style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                            placeholder = "Input coupon code"
+                            onChangeText = {this.updateCouponCode}
+                        />
+
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    visible = {this.state.couponSuccessDialog}
+                    dialogAnimation = {new ScaleAnimation()}
+                    dialogTitle = {
+                        <DialogTitle title = "Success!"/>
+                    }
+                    footer = {
+                        <DialogFooter>
+                            <DialogButton
+                                text = "BACK TO RECEIPT"
+                                onPress = {this.dismissCouponSuccessDialog}
+                            />
+                        </DialogFooter>
+                    }
+                >
+                    <DialogContent>
+                        <Text style = {styles.receiptText}>Success! {this.percentOff}% off of your meal</Text>
                     </DialogContent>
                 </Dialog>
 
@@ -254,22 +453,23 @@ class PayScreen extends Component {
                     footer = {
                         <DialogFooter>
                             <DialogButton
-                                text = "YES"
-                                //onPress = 
-                            />
-                            <DialogButton
-                                text = "NO, CONTINUE"
-                                //onPress = 
+                                text = "CONTINUE"
+                                onPress = {this.backToReceiptDialog} 
                             />
                             <DialogButton
                                 text = "DISMISS"
-                                onPress = {this.dissmissSplitBillDialog}
+                                onPress = {this.dismissSplitBillDialog}
                             />
                         </DialogFooter>
                     }
                 >
                     <DialogContent>
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Would you like to split the bill?</Text>
+                        <Text style = {styles.receiptText}>How many ways do you want to split the check?</Text>
+                            <TextInput style = {styles.receiptText}
+                                style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                                placeholder = "1"
+                                onChangeText = {this.updateNumPeople}
+                            />
                     </DialogContent>
                 </Dialog>
 
@@ -291,13 +491,16 @@ class PayScreen extends Component {
                             />
                             <DialogButton
                                 text = "DISMISS"
-                                onPress = {this.dissmissHowToPayDialog}
+                                onPress = {this.dismissHowToPayDialog}
                             />
                         </DialogFooter>
                     }
                 >
                     <DialogContent>
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>How will you be paying today?</Text>
+                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>
+                            How will you be paying today?
+                            Your total is ${(this.totalWithTax / this.numPeople).toFixed(2)}
+                        </Text>
                     </DialogContent>
                 </Dialog>
 
@@ -311,11 +514,11 @@ class PayScreen extends Component {
                         <DialogFooter>
                             <DialogButton
                                 text = "SWIPE"
-                                //onPress = {this.displayCreditCardDialog}
+                                //onPress = {this.displayCreditCardDialog} (make this work with backend)
                             />
                             <DialogButton
                                 text = "DISMISS"
-                                onPress = {this.dissmissCreditCardDialog}
+                                onPress = {this.dismissCreditCardDialog}
                             />
                         </DialogFooter>
                     }

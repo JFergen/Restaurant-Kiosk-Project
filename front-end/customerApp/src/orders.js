@@ -12,7 +12,7 @@ export async function createOrder(custID, tableNum) {
     
     let autoID = firebase.firestore().collection('Orders').doc().id;
 
-    await firebase.firestore().collection('Orders').add({
+    await firebase.firestore().collection('Orders').doc(autoID).set({
         customerID: custID,
         order: null,
         waitstaff: null,
