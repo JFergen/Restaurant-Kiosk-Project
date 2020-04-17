@@ -610,7 +610,7 @@ it("should validate coupon", async () => {
         return coupon[0].percentOff;
     }
 
-    validateCoupon();
+    validateCoupon("T12rO953AWNMvoaNM3JH");
 });
 
 it("should add coupon to table", async () => {
@@ -631,7 +631,7 @@ it("should add coupon to table", async () => {
         return isSuccess;
     }
 
-    addCoupon();
+    addCoupon("T12rO953AWNMvoaNM3JH");
 });
 
 ///////////////////////////////////////////////Revenue Section

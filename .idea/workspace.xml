@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="App-test.js: Copied/edited functions from customer app for testing&#10;coupon.js: Changed spelling of validateCoupont() to validateCoupon()&#10;menu_operations.js: spellchecking">
+    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/coupon.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/coupon.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/orders.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end/customerApp/src/transactions.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/src/transactions.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,47 +18,24 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46385542">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="914">
-                  <caret line="850" column="70" selection-start-line="850" selection-start-column="63" selection-end-line="850" selection-end-column="70" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="476">
-                  <caret line="109" column="4" lean-forward="true" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/orders.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="380">
-                  <caret line="115" column="37" lean-forward="true" selection-start-line="115" selection-start-column="37" selection-end-line="115" selection-end-column="37" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="554">
+              <caret line="614" lean-forward="true" selection-start-line="614" selection-end-line="614" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>section</find>
+      <find>orders</find>
+      <find>additem</find>
+      <find>coupon sec</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -74,9 +50,9 @@
         <option value="$PROJECT_DIR$/front-end/customerApp/src/coupon.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/transactions.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js" />
+        <option value="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/src/orders.js" />
         <option value="$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js" />
-        <option value="$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js" />
       </list>
     </option>
   </component>
@@ -134,6 +110,7 @@
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RunDashboard">
@@ -201,7 +178,21 @@
       <option name="project" value="LOCAL" />
       <updated>1586550049261</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="App-test.js: Copied/edited functions from customer app for testing&#10;coupon.js: Changed spelling of validateCoupont() to validateCoupon()&#10;menu_operations.js: added async to add/remove functions, spellchecking&#10;orders.js: spellchecking">
+      <created>1587098588140</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587098588140</updated>
+    </task>
+    <task id="LOCAL-00008" summary="spellchecking">
+      <created>1587099579742</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587099579742</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -215,7 +206,9 @@
       <window_info id="Resources Explorer" order="4" weight="0.3296131" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="7" visible="true" weight="0.12539515" />
+      <window_info content_ui="combo" id="Project" order="7" visible="true" weight="0.12539515" />
+      <window_info anchor="bottom" id="Inspection Results" weight="0.32917964" />
+      <window_info anchor="bottom" id="Find" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32917964" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.15576324" />
@@ -275,7 +268,9 @@
     <MESSAGE value="New functions in helpfunctions.js." />
     <MESSAGE value="revenue.js: help needed on update functions." />
     <MESSAGE value="revenue.js: spell checking.&#10;helpfunctions.js: tableHelped should change value to 0 to set table as no longer needing help" />
-    <option name="LAST_COMMIT_MESSAGE" value="revenue.js: spell checking.&#10;helpfunctions.js: tableHelped should change value to 0 to set table as no longer needing help" />
+    <MESSAGE value="App-test.js: Copied/edited functions from customer app for testing&#10;coupon.js: Changed spelling of validateCoupont() to validateCoupon()&#10;menu_operations.js: added async to add/remove functions, spellchecking&#10;orders.js: spellchecking" />
+    <MESSAGE value="spellchecking" />
+    <option name="LAST_COMMIT_MESSAGE" value="spellchecking" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/tables.js">
@@ -320,24 +315,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="109" column="4" lean-forward="true" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/orders.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="115" column="37" lean-forward="true" selection-start-line="115" selection-start-column="37" selection-end-line="115" selection-end-column="37" />
+        <state relative-caret-position="302">
+          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="914">
-          <caret line="850" column="70" selection-start-line="850" selection-start-column="63" selection-end-line="850" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/menu_operations.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="109" column="4" lean-forward="true" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
+        <state relative-caret-position="554">
+          <caret line="614" lean-forward="true" selection-start-line="614" selection-end-line="614" />
         </state>
       </provider>
     </entry>
