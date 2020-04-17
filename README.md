@@ -1,6 +1,21 @@
 Latest BACKEND CODE IS LOCATED AT https://github.com/JFergen/Restaurant-Kiosk-Project/tree/dev/front-end/customerApp/src
 
-1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
+1.) To run: unit tests you must cd into in the following directory: 
+    
+    'Restaurant-Kiosk-Project\front-end\customerApp'
+
+2.) Then run: 
+
+    firebase emulators: exec --only firestore 'npm test'
+
+3.) The file for unit test is located in the following directory: 
+     
+    'Restaurant-Kiosk-Project\front-end\customerApp\__tests__' 
+    
+    The file is called 'App-test.js'
+
+
+1.) open andriod studio to the app you want work on for example: C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
   
     1.1) open your virtual device make sure it is running
 

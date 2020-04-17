@@ -65,7 +65,7 @@ export async function getMenu(type) {
  uri: 'image link'
  }*/
  //then pass item to the function i.e, addToMenu(item)
-export function addToMenu(item) {
+export async function addToMenu(item) {
     let isSuccess;
     firebase.firestore().collection('Menu').doc(item.name).set(item)
     .then(() => {
@@ -82,12 +82,12 @@ export function addToMenu(item) {
 
 //this function is used to delete a Menu item from the database
 //the functions parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
-export function deleteFromMenu(itemName) {
+export async function deleteFromMenu(itemName) {
     let isSuccess;
     firebase.firestore().collection('Menu').doc(itemName).delete()
     .then(() => {
         console.log("Successfully deleted item from the menu.");
-        isSuccess = ture;
+        isSuccess = true;
     })
     .catch((error) => {
         alert("Error deleting item from menu: ", error);
@@ -97,7 +97,7 @@ export function deleteFromMenu(itemName) {
 }
 
 
-//this function is used to update menu item infromation to the database
+//this function is used to update menu item information to the database
 //the functions parameter is a item object.
 //for example:
 /*let item = {
