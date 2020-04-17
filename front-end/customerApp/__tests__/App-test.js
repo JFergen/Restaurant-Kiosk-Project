@@ -191,3 +191,204 @@ async function getStaffAssignedToTable(tableNum) {
 }
 getStaffAssignedToTable('1')
 });
+
+
+it("should set call server to true", async () => {
+    async function callServer(tableNumber) {
+        let isSuccess;
+        let call = {
+            tableNumber: tableNumber,
+            callServer: true
+        };
+        
+        await firebase.firestore().collection('CallServer').doc(call.tableNumber).update(call)
+        .then(() => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            console.error("Error calling server.", error);
+            isSuccess = false;
+        });
+    
+        return isSuccess;
+    }
+
+    callServer('1');
+});
+
+
+it("should set call server to false", async () => {
+    async function setToFalse(tableNumber) {
+        let isSuccess;
+        let call = {
+            tableNumber: tableNumber,
+            callServer: false
+        };
+        
+        await firebase.firestore().collection('CallServer').doc(call.tableNumber).update(call)
+        .then(() => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            console.error("Error updating CallServer table", error);
+            isSuccess = false;
+        });
+    
+        return isSuccess;
+    }
+
+    setToFalse('1');
+});
+
+it("should add customer to customer table", async () => {
+    async function addCustomer(Customer) {
+    
+        let isSuccess;
+        let validEmail = true;
+        
+        await firebase.firestore().collection('Customers').where('email', '==', Customer.email).get()
+        .then((snapshot) => {
+            if (snapshot.empty) {
+                validEmail = false;
+            } 
+            
+        })
+        .catch (error => {
+            console.log('error getting doc', error);
+        });
+        if(validEmail==true)
+        {
+            console.log('Email already exists');
+            let emailExist = 'Email already exists'
+            return emailExist
+        }
+        
+        
+        let autoID = firebase.firestore().collection('Customers').doc().id;
+    
+        Customer.id = autoID;
+    
+        await firebase.firestore().collection('Customers').doc(autoID).set(Customer)
+        .then(() => {
+            isSuccess = true;
+            console.log("Customer added Successfully");
+            isSuccess = true;
+        })
+        .catch((error) => {
+            isSuccess = false;
+            console.error("Error adding Customer to Customer table: ", error);
+            isSuccess = false;
+        });
+        return isSuccess;
+    }
+
+    let Customer = {
+            email:"johndoe@gmail.com",
+            id: "l8qDPeaGzOC4egZMW5hW",
+            name: "John Doe",
+            orderID: ["v6J7iJmyHxW5CIdCosvK"],
+            password: "password"
+    };
+    
+    addCustomer(Customer);
+});
+
+it("should delete customer from customer table", async () => {
+    async function deleteCustomer(CustomerID) {
+    
+        let isSuccess;
+    
+        await firebase.firestore().collection('Customers').doc(CustomerID).delete()
+        .then(() => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            console.error("Error deleting customer from customer table: ", error);
+            isSuccess = false;
+        });
+    
+        return isSuccess;
+    }
+
+    deleteCustomer('l8qDPeaGzOC4egZMW5hW');
+});
+
+it("should login the customer", async () => {
+    async function login(email, password) {
+        let validEmail = true;
+        let customer;
+    
+        await firebase.firestore().collection('Customers').where('email', '==', email).get()
+        .then((snapshot) => {
+            if (snapshot.empty) {
+                validEmail = false;
+            } 
+            else {
+                customer = snapshot.docs.map(doc => doc.data());
+            }
+        })
+        .catch (error => {
+            console.log('Error getting document', error);
+        });
+        
+        if (validEmail) {
+            if (password != customer[0].password) {
+                return 'Invalid Email or Password';
+            }
+        }
+        else {
+            return 'Invalid Email or Password';
+        }
+        
+        return customer;
+    }
+
+    login('aaronshehan28@gmail.com', 'password');
+});
+
+it("should retrieve all customers", async () => {
+    async function getCustomers() {
+        let query;
+    
+        await firebase.firestore().collection('Customers').get()
+        .then((snapshot) => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch ((error) => {
+            console.log('Error getting document', error);
+            query = null;
+        });
+        
+        return query;
+    }
+
+    getCustomers();
+});
+
+it("should update customer information", async () => {
+    async function updateCustomerInformation(item) {
+        let isSuccess;
+    
+        await firebase.firestore().collection('Customers').doc(item.id).update(item)
+        .then(() => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            console.error("Error updating Order in database table: ", error);
+            isSuccess = false;
+        });
+    
+        return isSuccess;
+    
+    }
+
+    let Customer = {
+        email:"johndoe@gmail.com",
+        id: "l8qDPeaGzOC4egZMW5hW",
+        name: "John Doe",
+        orderID: ["v6J7iJmyHxW5CIdCosvK"],
+        password: "password"
+    };
+
+    updateCustomerInformation(Customer);
+});
