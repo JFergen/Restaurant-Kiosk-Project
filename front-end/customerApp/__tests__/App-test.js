@@ -788,12 +788,12 @@ it("should add transaction", async () => {
     }
 
     let transaction = {
-            amountDue = 15.00,
-            discount = 0.0,
-            orderTotal = 11.00,
-            paymentMethod = "Credit Card",
-            tips = 4.00,
-            waitstaff = "4MfW9403U5WqT5cSIgbG"
+            amountDue : 15.00,
+            discount : 0.0,
+            orderTotal : 11.00,
+            paymentMethod : "Credit Card",
+            tips : 4.00,
+            waitstaff : "4MfW9403U5WqT5cSIgbG"
         };
     addTransaction(transaction);
 });
