@@ -4,6 +4,7 @@ import Background from './assets/background.jpeg';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import firebase from '@react-native-firebase/app';
 
 import Home from './screens/HomeScreen';
 import Login from './screens/Login';
@@ -12,7 +13,6 @@ import Inventory from './screens/inventory/InventoryManagement';
 import ViewInventory from './screens/inventory/viewInventory';
 import EditInventory from './screens/inventory/editInventory';
 import VendorGuide from './screens/inventory/vendorGuide';
-import NewEmployee from './screens/employees/newEmployee';
 import EditMenu from './screens/menu/editMenu';
 import ViewMenu from './screens/menu/viewMenu';
 import MenuManagement from './screens/menu/MenuManagement';
@@ -27,7 +27,7 @@ const Stack = createStackNavigator();
 
 export function NavStack({ navigation }) {
   return (
-     <Stack.Navigator initialRouteName="Login">
+     <Stack.Navigator initialRouteName="Home">
 
       <Stack.Screen
         name="Login"
@@ -81,13 +81,6 @@ export function NavStack({ navigation }) {
         name="VendorGuide"
         component={VendorGuide}
         options={{ title: 'Vendor Resupply Guide' , headerStyle: {height: 70},
-                                                    headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
-        name="NewEmployee"
-        component={NewEmployee}
-        options={{ title: 'Add New Employee Form' , headerStyle: {height: 70},
                                                     headerTitleAlign: 'center'}}
       />
 
