@@ -8,7 +8,6 @@ import Header from '../components/Header';
 import OrderCard from '../components/OrderCard';
 import firestore from '@react-native-firebase/firestore';
 
-
 const OrdersScreen = () => {
   const [orders, setOrders] = useState(null);
 
@@ -22,18 +21,25 @@ const OrdersScreen = () => {
     firestore()
       .collection('Orders')
       .where('waitstaff', '==', waitStaff.id)
-      .get()
-      .then(snap => {
+      .onSnapshot(snap => {
         let temp = [];
         console.log('orders', snap.size);
         snap.forEach(doc => {
-          temp.push(doc.data());
+          temp.push({...{id: doc.id}, ...doc.data()});
         });
-        console.log(temp);
         setOrders(temp);
-      })
-      .catch(err => console.warn(err.message));
+      });
   };
+
+  const updateOrder = id => {
+    console.log(id);
+    firestore()
+      .collection('Orders')
+      .doc(id)
+      .update({completionStatus: false})
+      .catch(err => console.log(err));
+  };
+
   return (
     <ScrollView
       style={{
@@ -48,7 +54,9 @@ const OrdersScreen = () => {
           paddingRight: 30,
         }}>
         {orders &&
-          orders.map((order, indx) => <OrderCard key={indx} order={order} />)}
+          orders.map((order, indx) => (
+            <OrderCard key={indx} order={order} onDotPress={updateOrder} />
+          ))}
       </View>
     </ScrollView>
   );

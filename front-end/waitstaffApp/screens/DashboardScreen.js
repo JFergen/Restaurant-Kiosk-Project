@@ -24,10 +24,18 @@ const DashboardScreen = ({navigation}) => {
       .onSnapshot(snap => {
         const temp = [];
         snap.forEach(doc => {
-          temp.push(doc.data());
+          temp.push({...{id: doc.id}, ...doc.data()});
         });
         setTables(temp);
       });
+  };
+
+  const toggleNotification = id => {
+    firestore()
+      .collection('Tables')
+      .doc(id)
+      .update({helpNeeded: false})
+      .catch(err => console.log(err));
   };
 
   return (
@@ -53,11 +61,12 @@ const DashboardScreen = ({navigation}) => {
           flexWrap: 'wrap',
         }}>
         {tables &&
-          tables.map(item => (
+          tables.map((item, index) => (
             <TableCard
-              key={item.tableNumber}
+              key={item.id}
               number={item.tableNumber}
               showNotification={item.helpNeeded}
+              onDotPress={() => toggleNotification(item.id)}
             />
           ))}
       </View>

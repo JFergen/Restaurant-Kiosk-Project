@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Header from './Header';
 import Dot from './Dot';
-const OrderCard = ({order}) => {
-  const {tableNumber, orderedItems, completionStatus, requests} = order;
-  const color = completionStatus ? 'green' : ''
+const OrderCard = ({order, onDotPress}) => {
+  const {tableNumber, orderedItems, completionStatus, id} = order;
+  const color = completionStatus ? 'green' : '';
   return (
     <View style={{marginTop: 20}}>
       <View
@@ -17,7 +17,11 @@ const OrderCard = ({order}) => {
           alignItems: 'center',
         }}>
         <Header>Table {tableNumber}</Header>
-        <Dot color={color} />
+        <TouchableOpacity
+          disabled={!completionStatus}
+          onPress={() => onDotPress(id)}>
+          <Dot color={color} />
+        </TouchableOpacity>
       </View>
       {orderedItems &&
         orderedItems.map((item, index) => (
@@ -41,8 +45,8 @@ const ItemRow = ({index, item}) => (
       alignItems: 'center',
     }}>
     <Text style={{fontSize: 16}}>
-      {index + 1}. {item.name}
+      {index + 1}. {item}
     </Text>
-    <Text style={{fontSize: 16, textAlign: 'right'}}>QTY:{item.quantity}</Text>
+    {/* <Text style={{fontSize: 16, textAlign: 'right'}}>QTY:{item.quantity}</Text> */}
   </View>
 );
