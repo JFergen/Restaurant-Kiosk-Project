@@ -245,6 +245,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     let reqs = ' '
     for (i in items) {
         reqs.concat(' ', items[i].requests)
+        console.log(items[i].requests)
     }
     
     

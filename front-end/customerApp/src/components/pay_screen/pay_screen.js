@@ -167,6 +167,8 @@ class PayScreen extends Component {
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
 
+        console.log(this.buyingItems)
+
         if (success != false) {
             var i;
             this.total = 0
@@ -475,7 +477,7 @@ class PayScreen extends Component {
                     visible = {this.state.receiptDialog}
                     dialogAnimation = {new ScaleAnimation()}
                     dialogTitle = {
-                        <DialogTitle title = {"Receipt: Order ID-" + global.orderID}/>
+                        <DialogTitle title = {"Receipt: Order ID-" + this.props.orderID}/>
                     }
                     footer = {
                         <DialogFooter>
