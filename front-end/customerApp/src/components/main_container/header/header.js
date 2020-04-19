@@ -19,7 +19,6 @@ class Header extends Component {
         this.state = {
             serverDialog: false,
             serverCalled: false,
-            drinkOverlay: false,
             gamesOverlay: false,
             showLeftArrow: false,
             showRightArrow: true
@@ -155,7 +154,7 @@ class Header extends Component {
 
                 <TouchableHighlight 
                     style = {styles.buttonBackground}
-                    onPress = {() => this.setState({drinkOverlay: true})}
+                    onPress = {() => this.setState({serverDialog: true})}
                 >
                     <Image source = {DrinkIcon}/>
                 </TouchableHighlight>
@@ -191,16 +190,6 @@ class Header extends Component {
 
 
                 {/* Overlays Here */}
-                <Overlay
-                    visible = {this.state.drinkOverlay}
-                    childrenWrapperStyle = {{width: 600, height: 800, alignSelf: 'center'}}
-                    onClose = {this.onClose}
-                    closeOnTouchOutside = {true}
-                    animationType = {'zoomIn'}
-                >
-                    <Text>This is a test for DRINKS</Text>
-                </Overlay>
-
                 <Overlay
                     visible = {this.state.gamesOverlay}
                     childrenWrapperStyle = {{width: 600, height: 800, alignSelf: 'center'}}

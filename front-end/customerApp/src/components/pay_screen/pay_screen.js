@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, FlatList, TouchableHighlight, Image, TextInput } from 'react-native';
+import { Button } from 'react-native-elements'
 import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
 import Background from '../../assets/background.jpeg';
-import Cancel from '../../assets/pay_screen/cancel.png';
-import UnCancel from '../../assets/pay_screen/uncanceled.png';
+//import Cancel from '../../assets/pay_screen/cancel.png';
+//import UnCancel from '../../assets/pay_screen/uncanceled.png';
 import LeftArrow from '../../assets/header/left-arrow.png';
 import PayButton from '../../assets/pay_screen/dollar.png';
 import { connect } from 'react-redux';
@@ -17,6 +18,10 @@ class PayScreen extends Component {
         super(props);
         this.state = {
             //canceled: false,
+            tenPercentPressed: false,
+            fifteenPercentPressed: false,
+            twentyPercentPressed: true,
+            customPressed: false,
             couponDialog: false,
             couponSuccessDialog: false,
             splitBillDialog: false,
@@ -26,12 +31,16 @@ class PayScreen extends Component {
             receiptDialog: false
         };
         this.buyingItems = this.props.navigation.getParam('items');
+        this.tipPercent = '20%'
+        this.tipAmount = null
         this.numPeople = 1;
         this.total = 0;
         this.tax = 0;
         this.totalWithTax = 0;
         this.couponCode = null;
         this.percentOff = 0;
+        this.totalWithTip = 0;
+        this.waitStaffID = null;
         //this.blackText = styles.blackText
     }
 
@@ -84,6 +93,50 @@ class PayScreen extends Component {
         this.buyingItems[index].requests = text
     }
 
+    pressTenPercent = () => {
+        this.setState({
+            fifteenPercentPressed: false,
+            twentyPercentPressed: false,
+            customPressed: false,
+            tenPercentPressed: true
+        }),
+
+        this.tipPercent = '10%'
+    }
+
+    pressFifteenPercent = () => {
+        this.setState({
+            fifteenPercentPressed: true,
+            twentyPercentPressed: false,
+            customPressed: false,
+            tenPercentPressed: false
+        }),
+
+        this.tipPercent = '15%'
+    }
+
+    pressTwentyPercent = () => {
+        this.setState({
+            twentyPercentPressed: true,
+            fifteenPercentPressed: false,
+            customPressed: false,
+            tenPercentPressed: false
+        })
+
+        this.tipPercent = '20%'
+    }
+
+    updateTip = text => {
+        this.setState({
+            tenPercentPressed: false,
+            fifteenPercentPressed: false,
+            twentyPercentPressed: false,
+            customPressed: true
+        })
+
+        this.tipAmount = text 
+    }
+
     updateCouponCode = (text) => { this.couponCode = text }
 
     updateNumPeople = (text) => {
@@ -114,9 +167,10 @@ class PayScreen extends Component {
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
 
-        if (success) {
+        if (success != false) {
             var i;
             this.total = 0
+            this.waitStaffID = success
 
             for (i = 0; i < this.buyingItems.length; i++) {
                 this.total += this.buyingItems[i].price
@@ -161,7 +215,7 @@ class PayScreen extends Component {
                 <Text style = {styles.receiptText}>
                     Coupons: {this.percentOff}% from coupon code: "{this.couponCode}"
                     {"\n\n"}
-                    New total: ${this.totalWithTax} 
+                    New total: ${this.totalWithTax}
                 </Text>
             )
         }
@@ -177,10 +231,79 @@ class PayScreen extends Component {
                 <Text styles = {styles.receiptText}>
                     {/* {"\n"} */}
                     Number of ways to split check: {this.numPeople}{"\n"}
-                    New total: ${(this.totalWithTax / this.numPeople).toFixed(2)} each
+                    New total: ${(this.totalWithTip / this.numPeople).toFixed(2)} each
                 </Text>
             )
         }
+    }
+
+    renderTipButtons() {
+        return (
+            <View>
+                <View style = {{flexDirection: 'row'}}>
+                    <Text style = {styles.receiptText}>Tip amount:{"\t"}</Text>
+
+                    <Button
+                        buttonStyle = {[
+                            styles.notPressed,
+                            this.state.tenPercentPressed ? {backgroundColor: 'black'} : {}
+                        ]}
+                        title = '10%'
+                        titleStyle = {{color: 'blue'}}
+                        onPress = {() => this.pressTenPercent()}
+                    />
+
+                    <Button
+                        buttonStyle = {[
+                            styles.notPressed,
+                            this.state.fifteenPercentPressed ? {backgroundColor: 'black'} : {}
+                        ]}
+                        title = '15%'
+                        titleStyle = {{color: 'blue'}}
+                        onPress = {() => this.pressFifteenPercent()}
+                    />
+
+                    <Button
+                        buttonStyle = {[
+                            styles.notPressed,
+                            this.state.twentyPercentPressed ? {backgroundColor: 'black'} : {}
+                        ]}
+                        title = '20%'
+                        titleStyle = {{color: 'blue'}}
+                        onPress = {() => this.pressTwentyPercent()}
+                    />
+
+                    <View style = {[
+                        styles.notPressed,
+                        this.state.customPressed ? {backgroundColor: 'black'} : {}
+                    ]}>
+                        <TextInput
+                            style = {{fontSize: 15, color: 'blue', lineHeight: 15}}
+                            placeholder = "Custom $ amount"
+                            onChangeText = {this.updateTip}
+                        />
+                    </View>
+                </View>
+            
+                {this.renderTotalWithTip()}
+            </View>
+        )
+    }
+
+    renderTotalWithTip = () => {
+        if (!this.state.customPressed) {
+            this.tipAmount = (this.totalWithTax * (parseFloat(this.tipPercent) / 100)).toFixed(2)
+            this.totalWithTip = (+this.totalWithTax + +this.tipAmount).toFixed(2)
+        } else {
+            this.tipAmount = (parseFloat(this.tipAmount)).toFixed(2)
+            this.totalWithTip = (+this.totalWithTax + +this.tipAmount).toFixed(2)
+        }
+
+        return (
+            <Text style = {styles.receiptText}>Tip amount: ${this.tipAmount}{"\n"}
+                New total with tip: ${this.totalWithTip}
+            </Text>
+        )
     }
 
     displayCouponDialog = () => {
@@ -196,11 +319,10 @@ class PayScreen extends Component {
         for(i = 0; i < this.numPeople; i++) {
             if (i === 0) {
                 this.setState({ receiptDialog: false })
-                alert('Payment #' + i)
+                
                 this.setState({ howToPayDialog: true })
             } else {
                 this.setState({ howToPayDialog: false })
-                alert('Payment #' + i)
 
                 this.setState({ howToPayDialog: true })
             }
@@ -390,6 +512,8 @@ class PayScreen extends Component {
 
                         {this.renderSplit()}
 
+                        {this.renderTipButtons()}
+
                     </DialogContent>
                 </Dialog>
 
@@ -499,7 +623,7 @@ class PayScreen extends Component {
                     <DialogContent>
                         <Text style = {{fontSize: 20, fontWeight: 'bold'}}>
                             How will you be paying today?
-                            Your total is ${(this.totalWithTax / this.numPeople).toFixed(2)}
+                            Your total is ${(this.totalWithTip / this.numPeople).toFixed(2)}
                         </Text>
                     </DialogContent>
                 </Dialog>

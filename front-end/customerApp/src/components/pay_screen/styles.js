@@ -73,5 +73,16 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15,
         color: 'red'
+    },
+    notPressed: {
+        backgroundColor: 'transparent',
+        marginLeft: 15,
+        marginRight: 15,
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 5
+    },
+    pressed: {
+        backgroundColor: 'black'
     }
 });

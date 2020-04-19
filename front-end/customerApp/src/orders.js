@@ -262,6 +262,6 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         isSuccess = false;
     });
     
-    return isSuccess;
+    return staffID;
     
 }
