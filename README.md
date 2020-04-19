@@ -88,7 +88,13 @@ Once you have that clone our project and follow the below steps
 
 3.) The file for unit test is located in the following directory: 
      
-    'Restaurant-Kiosk-Project\front-end\customerApp\__tests__' 
+    'Restaurant-Kiosk-Project\front-end\customerApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\kitchenApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\managerApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\waitstaffApp\__tests__'
     
     The file is called 'App-test.js'
 
