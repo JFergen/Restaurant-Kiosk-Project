@@ -242,14 +242,20 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     
     staffID = staffID[0];
     
+    let reqs = ' '
+    for (i in items) {
+        reqs.concat(' ', items[i].requests)
+    }
+    
+    
     let completeOrder = {
         completionStatus: false,
         customerID: custID,
-        waitstaff: staffID,
+        waitstaffID: staffID,
         orderID: ordID,
         orderedItems: finalizedOrder,
         price: totalPrice,
-        requests: 'none',
+        requests: reqs,
         tableNumber: tableNum
     };
     
