@@ -81,6 +81,14 @@ Once you have that clone our project and follow the below steps
 1.) To run: unit tests you must cd into in the following directory: 
     
     'Restaurant-Kiosk-Project\front-end\customerApp'
+    
+    'Restaurant-Kiosk-Project\front-end\kitchenApp'
+    
+    'Restaurant-Kiosk-Project\front-end\managerApp'
+    
+    'Restaurant-Kiosk-Project\front-end\waitstaffApp'
+    
+    
 
 2.) Then run: 
 
