@@ -244,7 +244,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     
     let reqs = ' '
     for (i in items) {
-        req.concat(' ', items[i].requests)
+        reqs.concat(' ', items[i].requests)
     }
     
     
@@ -255,7 +255,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         orderID: ordID,
         orderedItems: finalizedOrder,
         price: totalPrice,
-        requests: 'none',
+        requests: reqs,
         tableNumber: tableNum
     };
     
