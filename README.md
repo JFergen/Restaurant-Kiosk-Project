@@ -35,17 +35,19 @@ Once you have that clone our project and follow the below steps
     
     3.8) npm i react-native-gesture-handler
     
-    3.8) npm i 'react-navigation'
+    3.9) npm i 'react-navigation'
 
-    3.8) npm i 'react-navigation-stack'
+    3.10) npm i 'react-navigation-stack'
   
-    3.8) npm i '@react-native-community/async-storage'
+    3.11) npm i '@react-native-community/async-storage'
     
-    3.8) npm i 'react-native'
+    3.12) npm i 'react-native'
 
-    3.8) npm i 'react'
+    3.13) npm i 'react'
 
-    3.8) npm i '@react-native-firebase/app'
+    3.14) npm i '@react-native-firebase/app'
+    
+    3.15) npm i '@firebase/testing'
 
     
     
