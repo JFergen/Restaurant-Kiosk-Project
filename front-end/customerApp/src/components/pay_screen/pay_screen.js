@@ -167,6 +167,8 @@ class PayScreen extends Component {
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
 
+        console.log(this.buyingItems)
+
         if (success != false) {
             var i;
             this.total = 0
