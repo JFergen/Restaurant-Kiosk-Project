@@ -1,3 +1,4 @@
+# Set-up React Native
 To setup react native follow the steps on the link below
 
     https://reactnative.dev/docs/environment-setup
@@ -7,7 +8,7 @@ To setup react native follow the steps on the link below
     All the other apps use android 9 and Windows
    
   
-    
+ # Setup the apps   
 Once you have that clone our project and follow the below steps
 
 1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
@@ -77,7 +78,7 @@ Once you have that clone our project and follow the below steps
 6.) if all goes well you should see your app on your virtual device and you can add data through the firebase console. Go to database and on the top left select Cloud Firestore
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+# Unit Test
 1.) To run: unit tests you must cd into in the following directory: 
     
     'Restaurant-Kiosk-Project\front-end\customerApp'
