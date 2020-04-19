@@ -17,7 +17,7 @@ export async function createOrder(custID, tableNum) {
 
     await firebase.firestore().collection('Orders').doc(autoID).set({
         customerID: custID,
-        waitstaffID: null,
+        waitstaffId: null,
         tableNumber: tableNum,
         completionStatus: false,
         orderedItems: null,
@@ -251,7 +251,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     let completeOrder = {
         completionStatus: false,
         customerID: custID,
-        waitstaffID: staffID,
+        waitstaffId: staffID,
         orderID: ordID,
         orderedItems: finalizedOrder,
         price: totalPrice,
