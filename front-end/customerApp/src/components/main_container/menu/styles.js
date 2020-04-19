@@ -15,5 +15,9 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         fontStyle: 'italic'
+    },
+    infoText: {
+        fontSize: 20,
+        color:  'black'
     }
 });

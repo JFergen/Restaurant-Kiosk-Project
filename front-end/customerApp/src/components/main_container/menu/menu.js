@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import { View, Image, FlatList, Text, TouchableHighlight } from 'react-native';
+import { View, Image, FlatList, Text, TouchableHighlight, ImageBackground } from 'react-native';
+import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
 import { connect } from 'react-redux';
 import { setAppetizers, setBeverages, setDesserts, setEntrees } from '../../../store/actions/menu_actions';
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
+import InfoIcon from '../../../assets/menu/Info-Icon.png';
 import styles from './styles.js';
 
 class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: props.menuList
+            items: props.menuList,
+            infoDialog: false
         };
         this.type = null;
+        this.index = 0;
     }
 
     componentDidMount() {
@@ -79,8 +83,38 @@ class Menu extends Component {
         this.updateArray(this.type)
     }
 
+    displayInfoOverlay = (name) => {
+        let newItems = [...this.state.items];
+
+        var i;
+        for(i = 0; i < newItems.length; ++i) {
+            if(newItems[i].name === name) {
+                this.index = i
+                break;
+            }
+        }
+
+        this.setState({ infoDialog: true })
+    }
+
+    renderInfo = () => {
+        return (
+            <Text style = {styles.infoText}>
+                Common allergens:{'\t\t'}{this.state.items[this.index].allergens.join(', ')}{'\n'}
+                Calories:{'\t\t'}{this.state.items[this.index].calories}{'\n'}
+                Ingredients:{'\t\t'}{this.state.items[this.index].ingredients.join(', ')}{'\n'}
+                Price:{'\t\t'}${this.state.items[this.index].price}{'\n'}
+            </Text>
+        )
+    }
+
+    dismissInfoDialog = () => {
+        this.setState({ infoDialog: false })
+    }
+
     render() {
         return (
+            <>
             <FlatList
                 data = {this.props.menuList}
                 renderItem = {({item}) => (
@@ -88,11 +122,20 @@ class Menu extends Component {
                         <View style = {{flex: 1}}>
                             <Text style = {styles.itemName}>{item.name} - ${item.price}</Text>
                             
-                            <Image
+                            <ImageBackground
                                 style = {{height: 110, width: 150}}
                                 source = {{uri: item.uri}}
-                            />
-                        </View>
+                            >
+
+                                <TouchableHighlight
+                                    underlayColor = 'transparent'
+                                    onPress = {() => this.displayInfoOverlay(item.name)}
+                                >
+                                    <Image source = {InfoIcon}/>
+                                </TouchableHighlight>
+
+                        </ImageBackground>
+                    </View>
     
                         <View style = {{flex: 10, alignItems: 'flex-end'}}>
                             <Text style = {{fontSize: 45, marginRight: 55}}>{item.quantity}</Text>
@@ -118,10 +161,40 @@ class Menu extends Component {
                                 </TouchableHighlight>
                             </View>
                         </View>
+
+                        
                     </View>
                 )}
                 keyExtractor = {(item, index) => index.toString()}
             />
+
+
+
+
+
+
+
+            {/* Dialog Boxes Here */}
+            <Dialog
+                visible = {this.state.infoDialog}
+                dialogAnimation = {new ScaleAnimation()}
+                dialogTitle = {
+                    <DialogTitle title = {'Item Information'}/>
+                }
+                footer = {
+                    <DialogFooter>
+                        <DialogButton
+                            text = "DISMISS"
+                            onPress = {this.dismissInfoDialog}
+                        />
+                    </DialogFooter>
+                }
+            >
+                <DialogContent>
+                    {this.renderInfo()}
+                </DialogContent>
+            </Dialog>
+        </>
         )
     }
 };

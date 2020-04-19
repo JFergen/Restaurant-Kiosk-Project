@@ -8,8 +8,8 @@ import Background from '../../assets/background.jpeg';
 import LeftArrow from '../../assets/header/left-arrow.png';
 import PayButton from '../../assets/pay_screen/dollar.png';
 import { connect } from 'react-redux';
-import { callServer } from '../../callServer';
 import { confirmOrder } from '../../orders';
+import { addTransaction } from '../../transactions';
 import { validateCoupon } from '../../coupon';
 import styles from './styles';
 
@@ -28,9 +28,11 @@ class PayScreen extends Component {
             howToPayDialog: false,
             creditCardDialog: false,
             serverCalledDialog: false,
-            receiptDialog: false
+            receiptDialog: false,
+            successDialog: false
         };
         this.buyingItems = this.props.navigation.getParam('items');
+        this.navigation = this.props.navigation.getParam('navigation');
         this.tipPercent = '20%'
         this.tipAmount = null
         this.numPeople = 1;
@@ -39,8 +41,10 @@ class PayScreen extends Component {
         this.totalWithTax = 0;
         this.couponCode = null;
         this.percentOff = 0;
+        this.discount = 0;
         this.totalWithTip = 0;
         this.waitStaffID = null;
+        this.randomNum = Math.floor(Math.random() * 5) + 1;
         //this.blackText = styles.blackText
     }
 
@@ -90,7 +94,10 @@ class PayScreen extends Component {
     // }
 
     updateRequests = index => text => {
+        console.log(index, text)
         this.buyingItems[index].requests = text
+
+        console.log(this.buyingItems[0].requests = text)
     }
 
     pressTenPercent = () => {
@@ -167,8 +174,6 @@ class PayScreen extends Component {
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
 
-        console.log(this.buyingItems)
-
         if (success != false) {
             var i;
             this.total = 0
@@ -212,6 +217,9 @@ class PayScreen extends Component {
         } else {
             this.totalWithTax = (this.total)*(parseFloat(this.percentOff) / 100.0) + +(.08)*(this.total)
             this.totalWithTax = this.totalWithTax.toFixed(2)
+
+            this.discount = (this.total)*(parseFloat(this.percentOff) / 100.0)
+            this.discount = this.discount.toFixed(2)
 
             return (
                 <Text style = {styles.receiptText}>
@@ -308,6 +316,116 @@ class PayScreen extends Component {
         )
     }
 
+    payWithCard = async () => {
+        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount)
+
+        let transaction = {
+            amountDue: amountDueCheck,
+            tax: this.tax,
+            discount: this.discount,
+            orderTotal: this.total,
+            paymentMethod: "Credit Card",
+            tips: this.tipAmount,
+            waitstaff: this.waitStaffID
+        }
+
+        let success = await addTransaction(transaction)
+
+        if (success === false) {
+            alert('Transaction failed. Try again')
+        } else {
+            this.setState({
+                creditCardDialog: false,
+                successDialog: true
+            })
+        }
+    }
+
+    payWithCash = async () => {
+        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount)
+
+        let transaction = {
+            amountDue: amountDueCheck,
+            tax: this.tax,
+            discount: this.discount,
+            orderTotal: this.total,
+            paymentMethod: "Credit Card",
+            tips: this.tipAmount,
+            waitstaff: this.waitStaffID
+        }
+
+        let success = await addTransaction(transaction)
+
+        if (success === false) {
+            alert('Transaction failed. Try again')
+        } else {
+            this.setState({
+                howToPayDialog: false,
+                successDialog: true
+            })
+        }
+    }
+
+    pressButtonOne = () => {
+        if (1 === this.randomNum) {
+            alert('You have won a free dessert!')
+        } else {
+            alert('You have not won a free dessert')
+        }
+
+        this.setState({ successDialog: false })
+
+        this.navigation.navigate('Load')
+    }
+
+    pressButtonTwo = () => {
+        if (2 === this.randomNum) {
+            alert('You have won a free dessert!')
+        } else {
+            alert('You have not won a free dessert')
+        }
+
+        this.setState({ successDialog: false })
+
+        this.navigation.navigate('Load')
+    }
+
+    pressButtonThree = () => {
+        if (3 === this.randomNum) {
+            alert('You have won a free dessert!')
+        } else {
+            alert('You have not won a free dessert')
+        }
+
+        this.setState({ successDialog: false })
+
+        this.navigation.navigate('Load')
+    }
+
+    pressButtonFour = () => {
+        if (4 === this.randomNum) {
+            alert('You have won a free dessert!')
+        } else {
+            alert('You have not won a free dessert')
+        }
+
+        this.setState({ successDialog: false })
+
+        this.navigation.navigate('Load')
+    }
+
+    pressButtonFive() {
+        if (5 === this.randomNum) {
+            alert('You have won a free dessert!')
+        } else {
+            alert('You have not won a free dessert')
+        }
+
+        this.setState({ successDialog: false })
+
+        this.navigation.navigate('Load')
+    }
+
     displayCouponDialog = () => {
         this.setState({
             receiptDialog: false,
@@ -344,22 +462,6 @@ class PayScreen extends Component {
             receiptDialog: false,
             splitBillDialog: true
         })
-    }
-
-    alertServer = async () => {
-        let callServerSuc;
-
-        callServerSuc = await callServer(global.tableNumber);
-
-        if (callServerSuc == true) {
-            this.setState({
-                howToPayDialog: false,
-                serverCalledDialog: true
-            })
-        } else {
-            this.setState({ howToPayDialog: false })
-            alert('Server could not be called. Try again.')
-        }
     }
 
     dismissReceiptDialog = () => {
@@ -613,7 +715,7 @@ class PayScreen extends Component {
                             />
                             <DialogButton
                                 text = "CASH"
-                                onPress = {this.alertServer}
+                                onPress = {this.payWithCash}
                             />
                             <DialogButton
                                 text = "DISMISS"
@@ -640,7 +742,7 @@ class PayScreen extends Component {
                         <DialogFooter>
                             <DialogButton
                                 text = "SWIPE"
-                                //onPress = {this.displayCreditCardDialog} (make this work with backend)
+                                onPress = {this.payWithCard}
                             />
                             <DialogButton
                                 text = "DISMISS"
@@ -650,24 +752,58 @@ class PayScreen extends Component {
                     }
                 >
                     <DialogContent>
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Your total is: ${this.total}</Text>
+                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Your total is: ${this.totalWithTip / this.numPeople}</Text>
                     </DialogContent>
                 </Dialog>
 
                 <Dialog
-                    visible = {this.state.serverCalledDialog}
+                    visible = {this.state.successDialog}
                     dialogAnimation = {new ScaleAnimation()}
-                    footer = {
-                        <DialogFooter>
-                            <DialogButton
-                                text = "DISMISS"
-                                onPress = {this.dismissServerCalledDialog}
-                            />
-                        </DialogFooter>
+                    dialogTitle = {
+                        <DialogTitle title = "Free DESSERT (Order has been receieved by the kitchen)"/>
                     }
                 >
                     <DialogContent>
-                        <Text style = {{fontWeight: 'bold', fontSize: 25}}>A server has been called.</Text>
+                        <View>
+                            <View style = {{flexDirection: 'row'}}>
+                                <Text style = {styles.receiptText}>Pick a number 1-5, if you guess the right one, you will get a FREE DESSERT!{"\t"}</Text>
+
+                                <Button
+                                    buttonStyle = {styles.notPressed}
+                                    title = '1'
+                                    titleStyle = {{color: 'blue'}}
+                                    onPress = {() => this.pressButtonOne()}
+                                />
+
+                                <Button
+                                    buttonStyle = {styles.notPressed}
+                                    title = '2'
+                                    titleStyle = {{color: 'blue'}}
+                                    onPress = {() => this.pressButtonTwo()}
+                                />
+
+                                <Button
+                                    buttonStyle = {styles.notPressed}
+                                    title = '3'
+                                    titleStyle = {{color: 'blue'}}
+                                    onPress = {() => this.pressButtonThree()}
+                                />
+
+                                <Button
+                                    buttonStyle = {styles.notPressed}
+                                    title = '4'
+                                    titleStyle = {{color: 'blue'}}
+                                    onPress = {() => this.pressButtonFour()}
+                                />
+
+                                <Button
+                                    buttonStyle = {styles.notPressed}
+                                    title = '5'
+                                    titleStyle = {{color: 'blue'}}
+                                    onPress = {() => this.pressButtonFive()}
+                                />
+                            </View>
+                        </View>
                     </DialogContent>
                 </Dialog>
                 

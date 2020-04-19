@@ -119,7 +119,8 @@ class Header extends Component {
             alert('Shopping Cart is empty. Use \'+\' and \'-\' to order items')
         } else {
             this.props.navigation.navigate('Pay', {
-                items: buyingItems
+                items: buyingItems,
+                navigation: this.props.navigation
             })
         }
     }
