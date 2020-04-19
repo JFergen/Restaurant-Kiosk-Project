@@ -1,3 +1,9 @@
+To setup react native follow the steps on the link below
+
+    https://reactnative.dev/docs/environment-setup
+    
+Once you have that clone our project and follow the below steps
+
 1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
   
     1.1) open your virtual device make sure it is running
