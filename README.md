@@ -99,6 +99,9 @@ Latest BACKEND CODE IS LOCATED AT https://github.com/JFergen/Restaurant-Kiosk-Pr
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Unit Test
+
+We use firebase emulator along with Jest to run our unit test. The results for this test are located in Restaurant-Kiosk-Project folder and is in a file called unitTest.txt
+
 1.) To run: unit tests you must cd into in the following directory: 
     
     'Restaurant-Kiosk-Project\front-end\customerApp'
