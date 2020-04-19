@@ -2,6 +2,12 @@ To setup react native follow the steps on the link below
 
     https://reactnative.dev/docs/environment-setup
     
+    The kitchen app uses ios and MAC
+    
+    All the other apps use android 9 and Windows
+   
+  
+    
 Once you have that clone our project and follow the below steps
 
 1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
