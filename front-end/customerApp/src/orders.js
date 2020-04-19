@@ -17,10 +17,10 @@ export async function createOrder(custID, tableNum) {
 
     await firebase.firestore().collection('Orders').doc(autoID).set({
         customerID: custID,
-        order: null,
-        waitstaff: null,
+        waitstaffID: null,
         tableNumber: tableNum,
         completionStatus: false,
+        orderedItems: null,
         price: null,
         requests: null,
         orderId: autoID 
