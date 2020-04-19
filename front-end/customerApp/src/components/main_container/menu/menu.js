@@ -1,98 +1,149 @@
 import React, { Component } from 'react';
-import { View, Image, FlatList, Text, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Image, FlatList, Text, TouchableHighlight, ImageBackground } from 'react-native';
+import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
+import { connect } from 'react-redux';
+import { setAppetizers, setBeverages, setDesserts, setEntrees } from '../../../store/actions/menu_actions';
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
+import InfoIcon from '../../../assets/menu/Info-Icon.png';
 import styles from './styles.js';
 
-let DATA = [
-    {
-        id: '1',
-        title: 'Cheese burger',
-        price: 8,
-        qty: 0,
-        uri: 'https://cdn.foodbeast.com/wp-content/uploads/2017/06/Webp.net-compress-image.jpg'
-    },
-    {
-        id: '2',
-        title: 'Hot dog',
-        price: 4,
-        qty: 0,
-        uri: 'https://awrestaurants.com/sites/default/files/hotdog_0.png'
-    },
-    {
-        id: '3',
-        title: 'Sandwich',
-        price: 5,
-        qty: 0,
-        uri: 'https://image.shutterstock.com/image-photo/sandwich-ham-cheese-tomatoes-lettuce-600w-1027873330.jpg'
-    },
-];
-
 class Menu extends Component {
-    constructor() {
-        super();
-        this.state = {items: DATA};
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: props.menuList,
+            infoDialog: false
+        };
+        this.type = null;
+        this.index = 0;
     }
 
-    incrementQty = (id) => {
-        let newItems = [...this.state.items];
+    componentDidMount() {
+        let testType = this.state.items[0].type
 
-        var i;
+        if (testType === 'appetizer') {
+            this.type = 'appetizer'
+        } else if (testType === 'beverage') {
+            this.type = 'beverage'
+        } else if (testType === 'entree') {
+            this.type = 'entree'
+        } else if (testType === 'dessert') {
+            this.type = 'dessert'
+        } else {
+            alert('monkaS')
+        }
+    }
+
+    updateArray = (type) => {
+        if (type === 'appetizer') {
+            this.props.setAppetizers(this.state.items)
+        } else if (type === 'beverage') {
+            this.props.setBeverages(this.state.items)
+        } else if (type === 'entree') {
+            this.props.setEntrees(this.state.items)
+        } else if (type === 'dessert') {
+            this.props.setDesserts(this.state.items)
+        } else {
+            alert('monkaS')
+        }
+    }
+
+    incrementQty = (name) => {
+        let newItems = [...this.state.items]
+
         for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                ++newItems[i].qty;
+            if(newItems[i].name === name) {
+                ++newItems[i].quantity;
                 break;
             }
         }
 
         this.setState({items: newItems});
+        this.updateArray(this.type)
     }
 
-    decrementQty = (id) => {
+    decrementQty = (name) => {
         let newItems = [...this.state.items];
 
         var i;
         for(i = 0; i < newItems.length; ++i) {
-            if(newItems[i].id === id) {
-                if (newItems[i].qty == 0) {
+            if(newItems[i].name === name) {
+                if (newItems[i].quantity == 0) {
                     alert("Can not go below 0");
                     break;
                 }
                 
-                --newItems[i].qty;
+                --newItems[i].quantity;
                 break;
             }
         }
 
         this.setState({items: newItems});
+        this.updateArray(this.type)
+    }
+
+    displayInfoOverlay = (name) => {
+        let newItems = [...this.state.items];
+
+        var i;
+        for(i = 0; i < newItems.length; ++i) {
+            if(newItems[i].name === name) {
+                this.index = i
+                break;
+            }
+        }
+
+        this.setState({ infoDialog: true })
+    }
+
+    renderInfo = () => {
+        return (
+            <Text style = {styles.infoText}>
+                Common allergens:{'\t\t'}{this.state.items[this.index].allergens.join(', ')}{'\n'}
+                Calories:{'\t\t'}{this.state.items[this.index].calories}{'\n'}
+                Ingredients:{'\t\t'}{this.state.items[this.index].ingredients.join(', ')}{'\n'}
+                Price:{'\t\t'}${this.state.items[this.index].price}{'\n'}
+            </Text>
+        )
+    }
+
+    dismissInfoDialog = () => {
+        this.setState({ infoDialog: false })
     }
 
     render() {
         return (
+            <>
             <FlatList
-                data = {DATA}
+                data = {this.props.menuList}
                 renderItem = {({item}) => (
                     <View style = {styles.container}>
                         <View style = {{flex: 1}}>
-                            <Text style = {{fontSize: 20}}>{item.title} - ${item.price}</Text>
-                            <TouchableHighlight
-                                onPress = {() => alert(item.title)}
-                                underlayColor = 'transparent'
+                            <Text style = {styles.itemName}>{item.name} - ${item.price}</Text>
+                            
+                            <ImageBackground
+                                style = {{height: 110, width: 150}}
+                                source = {{uri: item.uri}}
                             >
-                                <Image
-                                    style = {{height: 110, width: 150}}
-                                    source = {{uri: item.uri}}
-                                />
-                            </TouchableHighlight>
-                        </View>
+
+                                <TouchableHighlight
+                                    underlayColor = 'transparent'
+                                    onPress = {() => this.displayInfoOverlay(item.name)}
+                                >
+                                    <Image source = {InfoIcon}/>
+                                </TouchableHighlight>
+
+                        </ImageBackground>
+                    </View>
     
                         <View style = {{flex: 10, alignItems: 'flex-end'}}>
-                            <Text style = {{fontSize: 45, marginRight: 55}}>{item.qty}</Text>
+                            <Text style = {{fontSize: 45, marginRight: 55}}>{item.quantity}</Text>
                             
                             <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <TouchableHighlight
                                     underlayColor = 'transparent'
-                                    onPress = {() => this.incrementQty(item.id)}
+                                    onPress = {() => this.incrementQty(item.name)}
 
                                 >
                                     <Image 
@@ -103,19 +154,56 @@ class Menu extends Component {
                     
                                 <TouchableHighlight
                                     underlayColor = 'transparent'
-                                    onPress = {() => this.decrementQty(item.id)}
+                                    onPress = {() => this.decrementQty(item.name)}
                                     style = {{marginRight: 5}}
                                 >
                                     <Image source = {RedMinus}/>
                                 </TouchableHighlight>
                             </View>
                         </View>
+
+                        
                     </View>
                 )}
-                keyExtractor = {item => item.id}
+                keyExtractor = {(item, index) => index.toString()}
             />
+
+
+
+
+
+
+
+            {/* Dialog Boxes Here */}
+            <Dialog
+                visible = {this.state.infoDialog}
+                dialogAnimation = {new ScaleAnimation()}
+                dialogTitle = {
+                    <DialogTitle title = {'Item Information'}/>
+                }
+                footer = {
+                    <DialogFooter>
+                        <DialogButton
+                            text = "DISMISS"
+                            onPress = {this.dismissInfoDialog}
+                        />
+                    </DialogFooter>
+                }
+            >
+                <DialogContent>
+                    {this.renderInfo()}
+                </DialogContent>
+            </Dialog>
+        </>
         )
     }
 };
 
-export default Menu;
+const mapStateToProps = (state) => ({
+    appetizers: state.menReducer.appetizers,
+    beverages:  state.menReducer.beverages,
+    entrees:    state.menReducer.entrees,
+    desserts:   state.menReducer.desserts
+})
+
+export default connect(mapStateToProps, { setAppetizers, setBeverages, setEntrees, setDesserts })(Menu);

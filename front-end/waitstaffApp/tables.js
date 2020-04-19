@@ -123,4 +123,8 @@ export async function markTableOrderStatusAsTrue(tableNum) {
      
     });
     return isSuccess;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> JosephBranch

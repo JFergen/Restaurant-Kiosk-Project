@@ -1,29 +1,50 @@
 import React, {Component} from 'react';
-import { ImageBackground } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import Background from './assets/background.jpeg';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
+import Loading from './components/loading/loading';
 import MainContainer from './components/main_container/main_container';
+import Registration from './components/register/registration';
+import Login from './components/register/login/login';
+import PayScreen from './components/pay_screen/pay_screen';
+import firebase from '@react-native-firebase/app';
+import { Provider } from 'react-redux';
+import store from './store';
+import '@react-native-firebase/functions';
+import '@react-native-firebase/auth';
+
+firebase.functions().useFunctionsEmulator('http://localhost:5000');
+
+global.tableNumber = '1';
+
+// Navigation
+const RootNavigator = createStackNavigator({
+  Load: Loading,
+  Menu: MainContainer,
+  Register: Registration,
+  Login: Login,
+  Pay: PayScreen
+},
+{ 
+  initialRouteName: 'Register',
+  headerMode: 'none',
+  defaultNavigationOptions: {
+    cardStyle: {
+      backgroundColor: '#f7cac9'
+    },
+    ...TransitionPresets.ScaleFromCenterAndroid
+  }
+});
+
+const AppContainer = createAppContainer(RootNavigator);
 
 export default class App extends Component {
   render() {
     return (
-      <ImageBackground
-        source = {Background}
-        style = {{ height: '100%', width: '100%' }}
-      >
+      <Provider store = {store}>
         <AppContainer/>
-      </ImageBackground>
+      </Provider>
     )
   }
 }
 
-// Navigation
-const rootNavigator = createSwitchNavigator({
-  Menu: MainContainer,
-  //Login: Login,
-  //Pay: PayScreen
-},
-{ initialRouteName: 'Menu' },
-{ headerMode: 'none' })
-
-const AppContainer = createAppContainer(rootNavigator);
+console.disableYellowBox = true

@@ -1,47 +1,70 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ImageBackground, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import Background from '../../assets/background.jpeg';
 import Header from './header/header';   // Header of different buttons
 import Menu from './menu/menu';
 import styles from './styles';
 
 class MainContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <View style = {styles.container}>
+            <ImageBackground
+                source = {Background}
+                style = {styles.container}
+            >
                 {/* Header */}
                 <View style = {styles.headerContainer}>
                     <Header navigation = {this.props.navigation}/>
                 </View>
+        
+                <Text style = {styles.menuText}>Menu:</Text>
+        
+                <ScrollView
+                    ref = {ref => {global.scroll = ref}}
+                    horizontal = {true}
+                >
+                    {/* Menu */}
+                    <View style = {styles.menuContainer}>
+                            {/* Beverages */}
+                            <View style = {styles.firstMenu}>
+                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
+                                <Text style = {styles.menuText}>Drinks</Text>
+                                <Menu menuList = {this.props.beverages}/>
+                            </View>
 
-                <Text style = {{fontSize: 32, fontWeight: 'bold', alignSelf: 'center'}}>Menu:</Text>
+                            {/* Appetizers */}
+                            <View style = {styles.menu}>
+                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
+                                <Text style = {styles.menuText}>Appetizers</Text>
+                                <Menu menuList = {this.props.appetizers}/>
+                            </View>
 
-                {/* Menu */}
-                <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginLeft: 40, marginRight: 40}}>
-                    {/* Entrees */}
-                    <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
-                        {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                        <Menu/>
+                            {/* Entrees */}
+                            <View style = {styles.menu}>
+                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
+                                <Text style = {styles.menuText}>Entrees</Text>
+                                <Menu menuList = {this.props.entrees}/>
+                            </View>
+
+                            {/* Desserts */}
+                            <View style = {styles.lastMenu}>
+                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
+                                <Text style = {styles.menuText}>Desserts</Text>
+                                <Menu menuList = {this.props.desserts}/>
+                            </View>
                     </View>
-
-                    {/* Sides */}
-                    <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
-                        {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                        <Menu/>
-                    </View>
-
-                    {/* Drinks? */}
-                    <View style = {{height: 600, width: 325, borderWidth: 5, borderColor: 'black'}}>
-                        {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                        <Menu/>
-                    </View>
-                </View>
-            </View>
+                </ScrollView>
+            </ImageBackground>
         );
     }
 }
 
-export default MainContainer;
+const mapStateToProps = (state) => ({
+    beverages: state.menReducer.beverages,
+    appetizers: state.menReducer.appetizers,
+    entrees: state.menReducer.entrees,
+    desserts: state.menReducer.desserts
+})
+
+export default connect(mapStateToProps)(MainContainer);
