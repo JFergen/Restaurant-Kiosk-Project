@@ -252,7 +252,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         completionStatus: false,
         customerID: custID,
         waitstaffId: staffID,
-        orderID: ordID,
+        orderId: ordID,
         orderedItems: finalizedOrder,
         price: totalPrice,
         requests: reqs,
