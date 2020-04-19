@@ -17,13 +17,13 @@ export async function createOrder(custID, tableNum) {
 
     await firebase.firestore().collection('Orders').doc(autoID).set({
         customerID: custID,
-        order: null,
         waitstaff: null,
         tableNumber: tableNum,
         completionStatus: false,
+        orderedItems: null,
         price: null,
         requests: null,
-        orderId: autoID 
+        orderID: autoID 
     })
     .then(() => {
         console.log("Successfully created order.");
@@ -169,8 +169,10 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     
     let newArray = []; 
     let uniqueObject = {}; 
-    
+    let reqs = ' '
+ 
     for (i in items) { 
+        reqs += ' ' + items[i].requests + ','
         let objTitle = items[i]['name'];  
         uniqueObject[objTitle] = items[i]; 
     } 
@@ -240,7 +242,8 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         return false;
     }
     
-    staffID = staffID[0];
+    staffID = staffID[0].waitstaff;
+       
     
     let completeOrder = {
         completionStatus: false,
@@ -249,7 +252,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         orderID: ordID,
         orderedItems: finalizedOrder,
         price: totalPrice,
-        requests: 'none',
+        requests: reqs,
         tableNumber: tableNum
     };
     
@@ -262,6 +265,6 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         isSuccess = false;
     });
     
-    return isSuccess;
+    return staffID;
     
 }

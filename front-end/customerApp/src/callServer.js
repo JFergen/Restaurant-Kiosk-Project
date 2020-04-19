@@ -7,10 +7,10 @@ export async function callServer(tableNumber) {
     let isSuccess;
     let call = {
         tableNumber: tableNumber,
-        callServer: true
+        helpNeeded: true
     };
     
-    await firebase.firestore().collection('CallServer').doc(call.tableNumber).update(call)
+    await firebase.firestore().collection('Tables').doc(call.tableNumber).update(call)
     .then(() => {
         isSuccess = true;
     })
