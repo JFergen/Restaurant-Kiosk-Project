@@ -10,7 +10,7 @@ import Home from './screens/HomeScreen';
 import Login from './screens/Login';
 import EmployeeManagement from './screens/employees/EmployeeManagement';
 import Inventory from './screens/inventory/InventoryManagement';
-import ViewInventory from './screens/inventory/viewInventory';
+import NewInventoryItem from './screens/inventory/newInventoryItem';
 import EditInventory from './screens/inventory/editInventory';
 import VendorGuide from './screens/inventory/vendorGuide';
 import EditMenu from './screens/menu/editMenu';
@@ -22,6 +22,7 @@ import CompMeals from './screens/metrics/compMeals';
 import MetricsPage from './screens/metrics/MetricsPage';
 import TotalOrders from './screens/metrics/totalOrders';
 import SignUp from './screens/SignUp';
+import NewMenuItem from './screens/menu/newMenuItem';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,20 @@ export function NavStack({ navigation }) {
         component={Login}
         options={{ title: 'Login', headerStyle: {height: 70},
                                    headerTitleAlign: 'center'}}
+      />
+
+      <Stack.Screen
+              name="NewMenuItem"
+              component={NewMenuItem}
+              options={{ title: 'New Menu Item', headerStyle: {height: 70},
+                                         headerTitleAlign: 'center'}}
+      />
+
+      <Stack.Screen
+        name="NewInventoryItem"
+        component={NewInventoryItem}
+        options={{ title: 'NewInventoryItem', headerStyle: {height: 70},
+                                                headerTitleAlign: 'center'}}
       />
 
       <Stack.Screen
@@ -61,13 +76,6 @@ export function NavStack({ navigation }) {
        component={Inventory}
        options={{ title: 'Inventory' , headerStyle: {height: 70},
                                        headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
-        name="ViewInventory"
-        component={ViewInventory}
-        options={{ title: 'View Current Inventory' , headerStyle: {height: 70},
-                                                     headerTitleAlign: 'center'}}
       />
 
       <Stack.Screen
