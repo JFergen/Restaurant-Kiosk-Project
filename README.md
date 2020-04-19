@@ -111,13 +111,6 @@ Once you have that clone our project and follow the below steps
 
 
 
-1.) Documentation for database usage: https://firebase.google.com/docs/firestore
-
-2.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
-
-
-
-
 # Backend Function Usage
 ## Promises
 Every backend function returns a promise. A promise is an object that represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
