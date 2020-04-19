@@ -60,7 +60,7 @@ export default class OrderContainer extends React.Component {
     const emptyString = <Text> </Text>
     const map = this.state.tableNumbers.map(element => {
       return (
-        <View key={(element.tableNumber)}>
+        <View key={element.tableNumber}>
           <Text> TABLE {element.tableNumber} </Text>
           <Button
             title='View table'
@@ -78,8 +78,8 @@ export default class OrderContainer extends React.Component {
       <View style={styles.container}>
         {map}
         <Text>{this.state.ready}</Text>
-        <Table borderStyle={{ borderWidth: 1 }}></Table>
-        <Table borderStyle={{ borderWidth: 1 }}></Table>
+        <Table borderStyle={{ borderWidth: 2 }}></Table>
+        <Table borderStyle={{ borderWidth: 2 }}></Table>
         {this.state.open ? (
           <TableView
             handlePress={this.handlePress}
