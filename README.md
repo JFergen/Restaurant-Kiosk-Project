@@ -22,6 +22,19 @@
     
     3.8) npm i react-native-gesture-handler
     
+    3.8) npm i 'react-navigation'
+
+    3.8) npm i 'react-navigation-stack'
+  
+    3.8) npm i '@react-native-community/async-storage'
+    
+    3.8) npm i 'react-native'
+
+    3.8) npm i 'react'
+
+    3.8) npm i '@react-native-firebase/app'
+
+    
     
 
 4.) in andriod studio
