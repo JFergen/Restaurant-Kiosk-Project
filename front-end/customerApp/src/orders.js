@@ -172,7 +172,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     let reqs = ' '
  
     for (i in items) { 
-        reqs.concat(' ', items[i].requests)
+        reqs.concat(' ', items[i].requests, ',')
         let objTitle = items[i]['name'];  
         uniqueObject[objTitle] = items[i]; 
     } 
