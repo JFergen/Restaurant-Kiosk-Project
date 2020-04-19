@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, TextInput, Text, Button, Alert, TouchableHighlight, ScrollScreen } from 'react-native';
 
 /*This function needs to use the 'addToInventory' function to add items to the
   inventory database

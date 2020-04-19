@@ -1,12 +1,34 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
-import './employees/employees';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-const SignUp = ({navigation}) => {
+export default class EmployeeManangement extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            query: [],
+        }
+    }
+
+    OnUpdate = async (empID, newData) => {
+        const updateEmp = { empID, newData }
+        // Backend function call.
+        let completion = await updateEmployeeInformation(updateEmp)
+        /* This is in function so that when the user clicks 'Ready'
+         the order will disappear from the screen.*/
+        let newEmpDetails = await getEmployees(this.props.id).then(
+          emp1 => {
+            this.setState({ orderDetails: emp1 }, function () {
+              console.log(this.state.orderDetails);
+            })
+          }
+        )
+      }
+
+
+
+
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');

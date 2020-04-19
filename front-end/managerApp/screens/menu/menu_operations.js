@@ -2,7 +2,7 @@ import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
-import { getIngredientQuantity } from '../inventory/inventoryFunc';
+import { getIngredientQuantity } from '../inventory/inventory';
 
 
 //this function is used to get the items on the menu based on their type

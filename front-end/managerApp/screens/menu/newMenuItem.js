@@ -1,12 +1,12 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
-import './employees/employees';
+import menu_operations from './menu_operations';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-const SignUp = ({navigation}) => {
+const newMenuItem = ({navigation}) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ const SignUp = ({navigation}) => {
     const [role, setRole] = useState('');
     const [DOB, setDOB] = useState('');
 
-    const _onNewEmployeePressed = () => {
+    const _onNewItemPressed = () => {
 
             if (name === '') return alert('Enter Name');
             if (email === '') return alert('Enter Email');
@@ -22,7 +22,7 @@ const SignUp = ({navigation}) => {
             if (role === '') return alert('Enter Role');
             if (DOB === '') return alert('Enter DOB');
 
-            const employee = {
+            const newItem = {
                 dob: DOB,
                 email: email,
                 hourlyRate: 15.5,
@@ -32,7 +32,7 @@ const SignUp = ({navigation}) => {
                 role: role,
             }
 
-            addEmployee(employee);
+            addToMenu(newItem);
     }
 
     async function addEmployee(employee) {
@@ -125,14 +125,14 @@ const SignUp = ({navigation}) => {
 
                 <Button
                 style={styles.addPosition}
-                title="Register" onPress = {_onNewEmployeePressed}>
+                title="Register" onPress = {_onNewItemPressed}>
                 </Button>
             </View>
         );
     }
 
 
-export default SignUp;
+export default newMenuItem;
 
 const styles = StyleSheet.create({
     container: {

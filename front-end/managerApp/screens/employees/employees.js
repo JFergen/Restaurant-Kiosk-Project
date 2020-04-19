@@ -68,6 +68,7 @@ export async function deleteEmployee(employeeID) {
     await firebase.firestore().collection('Employees').doc(employeeID).delete()
     .then(() => {
         isSuccess = true;
+        alert('Employee Removed, Update the page to view changes');
     })
     .catch((error) => {
         console.error("Error deleting Employee from Employees table: ", error);
@@ -125,8 +126,8 @@ export async function updateEmployeeInformation(item) {
     });
 
     return isSuccess;
-
 }
+
 
 //this function stores the employees email and password to the database
 //the function parameter is a email and password which are both strings

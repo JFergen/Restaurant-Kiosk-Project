@@ -44,7 +44,7 @@ import firestore from '@react-native-firebase/firestore'
 //this will update the first three days of january
 //the year will stay the same
 //updateDailyRevenue(revenue)
-export async function updateDailyyRevenue(revenue) {
+export async function updateDailyRevenue(revenue) {
     let isSuccess;
 
     await firebase.firestore().collection('DailyRevenue').doc(revenue.year).update(revenue)
