@@ -64,10 +64,27 @@
 
 6.) if all goes well you should see your app on your virtual device and you can add data through the firebase console. Go to database and on the top left select Cloud Firestore
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-7.) Documentation for database usage: https://firebase.google.com/docs/firestore
+1.) To run: unit tests you must cd into in the following directory: 
+    
+    'Restaurant-Kiosk-Project\front-end\customerApp'
 
-8.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
+2.) Then run: 
+
+    firebase emulators:exec --only firestore 'npm test'
+
+3.) The file for unit test is located in the following directory: 
+     
+    'Restaurant-Kiosk-Project\front-end\customerApp\__tests__' 
+    
+    The file is called 'App-test.js'
+
+
+
+1.) Documentation for database usage: https://firebase.google.com/docs/firestore
+
+2.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
 
 
 
@@ -99,3 +116,4 @@ To handle a promise:
   uri: 'image link'
   }
   ```
+  
