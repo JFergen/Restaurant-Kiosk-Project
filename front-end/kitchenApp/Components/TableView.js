@@ -5,7 +5,8 @@ import {
   View,
   Button,
   ImageBackground,
-  Modal
+  Modal,
+  ScrollView
 } from 'react-native'
 import firebase from '@react-native-firebase/app'
 /* Importing functions and components
@@ -15,6 +16,7 @@ import OrderContainer from './OrderContainer.js'
 import styles from '../Styles/Stylesheet.js'
 import { getTableOrders, updateOrderInformation } from './orders.js'
 import { callServer } from './callServer.js'
+import { getInventory, updateInventory } from './inventory.js'
 export default class TableView extends Component {
   constructor (props) {
     super(props)
@@ -23,20 +25,24 @@ export default class TableView extends Component {
       toggle: false,
       toggle2: false,
       orderView: false,
+      inventoryView: false,
+      inventoryView2: false,
       open: false,
       orderDetails: [],
-      orderSuc: false
+      inventoryItems: [],
+      orderSuc: false,
+      ingredient: '',
+      quantity: 0
     }
   }
-componentDidUpdate(){
-  if (this.state.orderDetails.length > 0 ){
-      //console.log(this.state.orderDetails)
-   //const iterator1 = this.state.orderDetails.orderedItems.keys()
-    //console.log((iterator1.next().value)) 
-    console.log(this.state.orderDetails[0].orderedItems)
-    }
 
-}
+  // Funciton to get the inventory
+  getInven = async () => {
+    let newInventoryItems = await getInventory().then(data => {
+      this.setState({ inventoryItems: data })
+      console.log(data)
+    })
+  }
   /* Creatig a function that calls the backend function which grabs
  all table orders  and setting it equal to a variable.*/
   getOrder = async () => {
@@ -66,9 +72,23 @@ componentDidUpdate(){
     let neworderDetails = await getTableOrders(this.props.tableId).then(
       order1 => {
         this.setState({ orderDetails: order1 }, function () {
-    //console.log(this.state.orderDetails);
-});
-      })}
+          //console.log(this.state.orderDetails);
+        })
+      }
+    )
+  }
+  // Handle the toggle states for inventory
+  handleInventoryView = () => {
+    this.setState({
+      inventoryView: !this.state.inventoryView
+    })
+    this.getInven()
+  }
+  handleInventoryView2 = () => {
+    this.setState({
+      inventoryView2: !this.state.inventoryView2
+    })
+  }
   // Setting the toggle view when the user clicks ' View Table'
   handleOrderView = () => {
     this.setState({
@@ -76,22 +96,7 @@ componentDidUpdate(){
     })
     // This funciton is called to display all the tables.
     this.getOrder()
-    this.setState({ orderSuc: true})
-  }
-  
-  printOrders = () => {
-    //console.log( this.state.orderDetails[0].orderedItems[0].name)
-    for (var i =0; i < this.state.orderDetails[0].orderedItems.length; i++){
-      console.log(this.state.orderDetails[0].orderedItems[i].name)
-      console.log('hello')
-      
-      //console.log(this.state.orderDetails[0].orderedItems.length)
-    return(
-       <View><Text>{this.state.orderDetails[0].orderedItems[i].name} </Text></View>
-    )
-    
-    }
-    
+    this.setState({ orderSuc: true })
   }
 
   render () {
@@ -99,43 +104,42 @@ componentDidUpdate(){
     const { toggle2 } = this.state
     // Setting variables equal to what we want the toggle state to display.
     const newText2 = toggle2 ? 'Order is marked as ready' : 'READY'
-    const newColor2 = toggle2 ? 'red' : 'white'
     const newText = toggle ? 'Server is called' : 'Call server'
-    const NewColor = toggle ? 'white' : 'white'
     const emptyString = <Text></Text>
-    
-   // console.log((iterator1.next().value))
-    //console.log(this.state.orderDetails)
 
     /* The 'map' funciton will map the array of objects returned 
 from the back end and display them on the front end. */
-    const map = this.state.orderDetails.map((element) => {
+    const map = this.state.orderDetails.map(element => {
       //console.log(typeof element.orderedItems[0].name)
 
-       
       return (
-        <View
-          style={styles.container}
-          key={element.orderedItems}
-        >
+        <View style={styles.container} key={element.orderID}>
           <Text style={styles.textOrders}> TABLE: {element.tableNumber} </Text>
           <View style={styles.containter}>
-          
-            <Text style={styles.textOrders} >
-               {element.orderedItems.join(' \n')}
-              
-            </Text> 
-            
+            <Text style={styles.textOrders}>
+              {element.orderedItems.join(' \n')}
+            </Text>
           </View>
           <Text style={styles.textOrders}>REQUESTS: {element.requests}</Text>
           <Text> {element.completionStatus} </Text>
           <Button
             title={newText2}
-            color={newColor2}
+            color={'black'}
             onPress={() =>
               this.OnButtonPress(element.orderID, !element.completionStatus)
             }
           ></Button>
+        </View>
+      )
+    })
+
+    // Mapping and displaying the inventory
+    const mapInventory = this.state.inventoryItems.map(index => {
+      return (
+        <View key={index.ingredientName}>
+          <Text style={styles.textOrders}>
+            {index.ingredientName} {index.ingredientQuantity}
+          </Text>
         </View>
       )
     })
@@ -146,20 +150,60 @@ from the back end and display them on the front end. */
         <Text>TABLE {this.props.tableId}</Text>
         <Button
           title={newText}
-          color={NewColor}
+          color={'black'}
           onPress={this.serverCall}
         ></Button>
         <Button
           title={'Order details'}
-          color={NewColor}
+          color={'black'}
           onPress={this.handleOrderView}
         ></Button>
-        <Button title='Cancel' onPress={this.props.handlePress}></Button>
+
+        <Button
+          title='Cancel'
+          color='black'
+          onPress={this.props.handlePress}
+        ></Button>
         <Modal visible={this.state.orderView}>
           <View style={styles.modalBackground}>
-            <Text>Order details </Text>
-            {map}
-            <Button title='Go Back' onPress={this.handleOrderView}></Button>
+            <Text style={styles.textOrders}> Order details </Text>
+            <ScrollView>{map}</ScrollView>
+            <Button
+              title='Go Back'
+              color='black'
+              onPress={this.handleOrderView}
+            ></Button>
+            <Button
+              title={'Inventory'}
+              color={'black'}
+              onPress={this.handleInventoryView}
+            ></Button>
+            <Modal visible={this.state.inventoryView}>
+              <View style={styles.modalBackground}>
+                <Button
+                  title='Update the inventory'
+                  color='black'
+                  onPress={this.handleInventoryView2}
+                ></Button>
+                <Modal visible={this.state.inventoryView2}>
+                  <View style={styles.modalBackground}>
+                    <Button
+                      title='Go Back'
+                      color='black'
+                      onPress={this.handleInventoryView2}
+                    ></Button>
+                  </View>
+                </Modal>
+
+                {mapInventory}
+
+                <Button
+                  title='Go Back'
+                  color='black'
+                  onPress={this.handleInventoryView}
+                ></Button>
+              </View>
+            </Modal>
           </View>
         </Modal>
       </View>
