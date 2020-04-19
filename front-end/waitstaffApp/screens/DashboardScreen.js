@@ -1,17 +1,43 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Background from '../components/Background';
 import Header from '../components/Header';
 import TableCard from '../components/TableCard';
 import {theme} from '../constants/theme';
 import Button from '../components/Button';
-//import '../inventory.js'
-//import { addToInventory } from '../inventory.js';
+import firestore from '@react-native-firebase/firestore';
+
 const DashboardScreen = ({navigation}) => {
- // let item = {
-   // hello: "hello"
-  //}
-  //addToInventory(item)
+  const [tables, setTables] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    let waitStaff = await AsyncStorage.getItem('user');
+    waitStaff = JSON.parse(waitStaff);
+    firestore()
+      .collection('Tables')
+      .where('waitstaff', '==', waitStaff.id)
+      .onSnapshot(snap => {
+        const temp = [];
+        snap.forEach(doc => {
+          temp.push({...{id: doc.id}, ...doc.data()});
+        });
+        setTables(temp);
+      });
+  };
+
+  const toggleNotification = id => {
+    firestore()
+      .collection('Tables')
+      .doc(id)
+      .update({helpNeeded: false})
+      .catch(err => console.log(err));
+  };
+
   return (
     <View style={styles.container}>
       <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
@@ -19,7 +45,11 @@ const DashboardScreen = ({navigation}) => {
           <Header>Tables</Header>
         </View>
         <View style={{flex: 1}}>
-          <Button mode="contained" onPress={() => {navigation.navigate('Orders')}}>
+          <Button
+            mode="contained"
+            onPress={() => {
+              navigation.navigate('Orders');
+            }}>
             Orders
           </Button>
         </View>
@@ -30,11 +60,15 @@ const DashboardScreen = ({navigation}) => {
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}>
-        <TableCard number={1} />
-        <TableCard number={2} />
-        <TableCard number={3} showNotification={true} />
-        <TableCard number={4} />
-        <TableCard number={5} showNotification={true} />
+        {tables &&
+          tables.map((item, index) => (
+            <TableCard
+              key={item.id}
+              number={item.tableNumber}
+              showNotification={item.helpNeeded}
+              onDotPress={() => toggleNotification(item.id)}
+            />
+          ))}
       </View>
     </View>
   );

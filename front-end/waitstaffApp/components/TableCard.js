@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {theme} from '../constants/theme';
 import Dot from './Dot';
-const TableCard = ({number, showNotification}) => {
+const TableCard = ({number, showNotification, onDotPress}) => {
   return (
     <View
       style={{
@@ -21,7 +21,11 @@ const TableCard = ({number, showNotification}) => {
           borderColor: 'grey',
           backgroundColor: 'white',
         }}>
-        <Dot color={showNotification? theme.colors.secondary : "transparent"} />
+        <TouchableOpacity onPress={onDotPress}>
+          <Dot
+            color={showNotification ? theme.colors.secondary : 'transparent'}
+          />
+        </TouchableOpacity>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             source={require('../assets/table_icon.png')}

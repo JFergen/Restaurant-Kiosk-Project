@@ -16,7 +16,7 @@ import firestore from '@react-native-firebase/firestore'
 //}
 //this will update the revenue for April through March
 //the year will stay the same
-//updateMonthlyRevenue(renvenue)
+//updateMonthlyRevenue(revenue)
       export async function updateMonthlyRevenue(revenue) {
         let isSuccess;
     
@@ -44,7 +44,7 @@ import firestore from '@react-native-firebase/firestore'
 //this will update the first three days of january
 //the year will stay the same
 //updateDailyRevenue(revenue)
-export async function updateDailyyRevenue(revenue) {
+export async function updateDailyRevenue(revenue) {
     let isSuccess;
 
     await firebase.firestore().collection('DailyRevenue').doc(revenue.year).update(revenue)
@@ -59,7 +59,6 @@ export async function updateDailyyRevenue(revenue) {
     return isSuccess;
 
 }
-
 
 //gets the daily revenue in the database
 export async function getDailyRevenue() {

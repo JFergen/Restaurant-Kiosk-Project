@@ -3,7 +3,7 @@ import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
-//hi
+//hello
 //function will add a order to the database
 //the function will return the orderID
 //the functions parameter is a string which is the customerID

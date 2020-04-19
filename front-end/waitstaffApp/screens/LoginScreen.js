@@ -1,26 +1,45 @@
 import React, {memo, useState} from 'react';
-import { StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, ActivityIndicator} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import TextInput from '../components/TextInput';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import {theme} from '../constants/theme';
 import Header from '../components/Header';
+import firestore from '@react-native-firebase/firestore';
 
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState({value: '', error: ''});
-  const [password, setPassword] = useState({value: '', error: ''});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const _onLoginPressed = () => {
-    // const emailError = emailValidator(email.value);
-    // const passwordError = passwordValidator(password.value);
 
-    // if (emailError || passwordError) {
-    //   setEmail({...email, error: emailError});
-    //   setPassword({...password, error: passwordError});
-    //   return;
-    // }
+    if (email === '') return alert('Enter Email');
+    if (password === '') return alert('Enter Password');
 
-    navigation.navigate('Dashboard');
+    firestore()
+      .collection('Employees')
+      .where('email', '==', email)
+      .get()
+      .then(snap => {
+        if (snap.empty) {
+          return alert('Invalid Email or Password');
+        } else {
+          snap.forEach(doc => {
+            const user = doc.data();
+            if (user.password !== password) {
+              return alert('Invalid Email or Password');
+            } else {
+              AsyncStorage.setItem(
+                'user',
+                JSON.stringify({name: user.name, id: doc.id}),
+              );
+              navigation.navigate('Dashboard');
+            }
+          });
+        }
+      })
+      .catch(err => console.log(err.message));
   };
 
   return (
@@ -28,24 +47,14 @@ const LoginScreen = ({navigation}) => {
       <Header>Welcome Back.</Header>
       <TextInput
         label="Email"
-        returnKeyType="next"
         value={email.value}
-        onChangeText={(text) => setEmail({value: text, error: ''})}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
+        onChangeText={text => setEmail(text)}
       />
 
       <TextInput
         label="Password"
-        returnKeyType="done"
         value={password.value}
-        onChangeText={(text) => setPassword({value: text, error: ''})}
-        error={!!password.error}
-        errorText={password.error}
+        onChangeText={text => setPassword(text)}
         secureTextEntry
       />
 

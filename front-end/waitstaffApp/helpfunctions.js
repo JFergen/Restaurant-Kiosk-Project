@@ -20,6 +20,7 @@ export async function tableHelpStatus() {
 }
 
 // function to mark a table needing help
+// sets helpNeeded to 1 for table represented by table_number
 export async function tableNeedsHelp(table_number) {
     let isSuccess;
 
@@ -37,11 +38,12 @@ export async function tableNeedsHelp(table_number) {
 }
 
 // function to mark a table as no longer needing help
+// sets helpNeeded to 0 for table represented by table_number
 export async function tableHelped(table_number) {
     let isSuccess;
 
     await firebase.firestore().collection('Help').doc(table_number)
-    .update({helpNeeded: 1})
+    .update({helpNeeded: 0})
         .then(() => {
             isSuccess = true;
         })

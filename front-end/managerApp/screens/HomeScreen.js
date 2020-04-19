@@ -1,85 +1,81 @@
 import React, {Component, useState} from 'react';
-import { StyleSheet, ImageBackground, Text, View, Button, Alert, TouchableHighlight, NavigationContainer } from 'react-native';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { StyleSheet, ImageBackground, Text, View, Button, TouchableHighlight,} from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Background from './assets/background.jpeg';
-import MainContainer from './components/main_container/main_container';
-import Login from '../login/Login';
-//import inventory from './inventory/inventory';
-//import menu from './menu/menu';
+import Background from '../assets/background.jpeg';
 
-
-export default class App extends Component {
-  
-  render() {
-    
-    //const Stack = createStackNavigator
-
-     const onPress = () => {
-          alert('Button Pressed');
-     };
-
+function HomeScreen ({ navigation }) {
     return (
-    // <View style= {{flex: 1}}>
-        <Login/>
-        /* <ImageBackground source = {Background} style={styles.image}>
-            <TouchableHighlight style={styles.logoutButton} onPress={onPress}>
+    <View style= {{flex: 1}}>
+        <View style ={styles.background}>
+            <TouchableHighlight style={styles.logoutButton}
+             onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.logoutText}>
                     LOGOUT
                 </Text>
             </TouchableHighlight>
 
             <View style={styles.mainMenu}>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('Inventory')}>
                          <Text style = {styles.menuText}>
                              Inventory
                          </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('MenuManagement')}>
                          <Text style = {styles.menuText}>
-                             Menu
+                             Menu Management
                          </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('MetricsPage')}>
                          <Text style = {styles.menuText}>
                              Metrics
                          </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('ApproveTimes')}>
                          <Text style = {styles.menuText}>
                              Approve Times
                          </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('ManageTips')}>
                          <Text style = {styles.menuText}>
                              Manage Tips
                          </Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton} onPress={onPress}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('EmployeeManagement')}>
                          <Text style = {styles.menuText}>
                              Manage Employees
                          </Text>
+<<<<<<< HEAD:front-end/managerApp/src/App.js
                     </TouchableHighlight> */
             /* </View>
     //    </ImageBackground>
     <View>*/
+=======
+                    </TouchableHighlight>
+            </View>
+       </View>
+    </View>
+>>>>>>> 76414c138e133c8d21a515cd3b4c3fdc81b5c307:front-end/managerApp/screens/HomeScreen.js
     )
-  }
 }
-
 
 
 const styles = StyleSheet.create({
 
-    image: {
+    background: {
         flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
+        backgroundColor: '#3498db'
     },
 
     logoutButton: {
         justifyContent: 'flex-start',
-        height: 160,
+        height: 100,
         width: 160,
         margin: 20,
         backgroundColor: '#990000',
@@ -100,18 +96,18 @@ const styles = StyleSheet.create({
     },
 
     menuButton: {
-        width: 200,
+        width: 220,
         height: 160,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 30,
+        margin: 20,
         padding: 5,
         backgroundColor: '#3333ff'
     },
 
     menuText: {
-        fontSize: 20,
-
+        fontSize: 21,
+        color: '#ffffff',
     },
 
     logoutText: {
@@ -120,17 +116,4 @@ const styles = StyleSheet.create({
         },
 })
 
-// Navigation
-//const rootNavigator = createSwitchNavigator({
-  //Homescreen: MainContainer,
-  //Inventory: Inventory,
-  //Menu: PayScreen,
-  //Metrics: Metrics,
-  //ApTimes: ApTimes,
-  //ManTips: ManTips,
-  //ManEmps: ManEmps
-//},
-//{ initialRouteName: 'Homescreen' },
-//{ headerMode: 'none' })
-
-//const AppContainer = createAppContainer(rootNavigator);
+export default HomeScreen;

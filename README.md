@@ -1,3 +1,16 @@
+# Set-up React Native
+To setup react native follow the steps on the link below
+
+    https://reactnative.dev/docs/environment-setup
+    
+    The kitchen app uses ios and MAC
+    
+    All the other apps use android 9 and Windows
+   
+  
+ # Setup the apps   
+Once you have that clone our project and follow the below steps
+
 1.) open andriod studio to the app you want work on for example:C:\Users\Het Patel\Restaurant-Kiosk-Project\front-end\customerApp
   
     1.1) open your virtual device make sure it is running
@@ -21,6 +34,21 @@
     3.7) npm i '@react-native-firebase/auth'
     
     3.8) npm i react-native-gesture-handler
+    
+    3.9) npm i 'react-navigation'
+
+    3.10) npm i 'react-navigation-stack'
+  
+    3.11) npm i '@react-native-community/async-storage'
+    
+    3.12) npm i 'react-native'
+
+    3.13) npm i 'react'
+
+    3.14) npm i '@react-native-firebase/app'
+    
+    3.15) npm i '@firebase/testing'
+
     
     
 
@@ -51,11 +79,35 @@
 
 6.) if all goes well you should see your app on your virtual device and you can add data through the firebase console. Go to database and on the top left select Cloud Firestore
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Unit Test
+1.) To run: unit tests you must cd into in the following directory: 
+    
+    'Restaurant-Kiosk-Project\front-end\customerApp'
+    
+    'Restaurant-Kiosk-Project\front-end\kitchenApp'
+    
+    'Restaurant-Kiosk-Project\front-end\managerApp'
+    
+    'Restaurant-Kiosk-Project\front-end\waitstaffApp'
+    
+    
 
-7.) Documentation for database usage: https://firebase.google.com/docs/firestore
+2.) Then run: 
 
-8.) Documentation for Firebase user authentication: https://firebase.google.com/docs/auth/android/firebaseui
+    firebase emulators:exec --only firestore 'npm test'
 
+3.) The file for unit test is located in the following directory: 
+     
+    'Restaurant-Kiosk-Project\front-end\customerApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\kitchenApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\managerApp\__tests__'
+    
+    'Restaurant-Kiosk-Project\front-end\waitstaffApp\__tests__'
+    
+    The file is called 'App-test.js'
 
 
 
@@ -86,3 +138,4 @@ To handle a promise:
   uri: 'image link'
   }
   ```
+  
