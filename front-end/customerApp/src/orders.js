@@ -243,12 +243,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
     }
     
     staffID = staffID[0].waitstaff;
-    
-    let reqs = ' '
-    for (i in items) {
-        reqs.concat(' ', items[i].requests)
-    }
-    
+       
     
     let completeOrder = {
         completionStatus: false,
