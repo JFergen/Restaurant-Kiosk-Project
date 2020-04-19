@@ -6,7 +6,7 @@ Latest BACKEND CODE IS LOCATED AT https://github.com/JFergen/Restaurant-Kiosk-Pr
 
 2.) Then run: 
 
-    firebase emulators: exec --only firestore 'npm test'
+    firebase emulators:exec --only firestore 'npm test'
 
 3.) The file for unit test is located in the following directory: 
      
