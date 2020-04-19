@@ -240,7 +240,7 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         return false;
     }
     
-    staffID = staffID[0];
+    staffID = staffID[0].waitstaff;
     
     let reqs = ' '
     for (i in items) {
