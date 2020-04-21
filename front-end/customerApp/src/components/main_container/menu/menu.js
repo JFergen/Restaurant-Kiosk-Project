@@ -9,6 +9,7 @@ import * as menuOperations from '../../../menu_operations.js'
 import * as employees from '../../../employees.js'
 import * as tables from '../../../tables.js'
 import * as inventory from '../../../inventory.js'
+import * as question from '../../../question.js'
 
 
 let DATA = [
@@ -58,7 +59,14 @@ class Menu extends Component {
         //     waitstaff: '4MfW9403U5WqT5cSIgbG'
         // }
         // orders.updateOrderInformation(orderobj)
-        inventory.addToInventory(orderobj)
+        // let doc = {
+        //     orderID: '03se9wEgk4rYmbBB9Bv4',
+        //     questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
+        //     review: ['poor', 'it sucked','meh']
+        // }
+        
+        // question.addQuestionDoc(doc)
+        question.getQuestionDocs()
         .then(function(orders) {
             console.log(orders);
         })
