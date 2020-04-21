@@ -36,6 +36,7 @@ class PayScreen extends Component {
         this.tipPercent = '20%'
         this.tipAmount = null
         this.numPeople = 1;
+        this.peoplePaid = 0;
         this.total = 0;
         this.tax = 0;
         this.totalWithTax = 0;
@@ -94,10 +95,11 @@ class PayScreen extends Component {
     // }
 
     updateRequests = index => text => {
-        console.log(index, text)
+        console.log(this.buyingItems)
+        //console.log(index, text)
         this.buyingItems[index].requests = text
 
-        console.log(this.buyingItems[0].requests = text)
+        console.log(this.buyingItems[0].requests)
     }
 
     pressTenPercent = () => {
@@ -174,6 +176,8 @@ class PayScreen extends Component {
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
 
+        console.log(this.buyingItems)
+
         if (success != false) {
             var i;
             this.total = 0
@@ -212,7 +216,7 @@ class PayScreen extends Component {
     renderCoupon() {
         if (this.percentOff === 0) {
             return (
-                <Text style = {styles.receiptText}>Total with Tax: ${this.totalWithTax}</Text>
+                <Text style = {styles.receiptText}>Total with Tax: ${this.totalWithTax}{'\n'}</Text>
             )
         } else {
             this.totalWithTax = (this.total)*(parseFloat(this.percentOff) / 100.0) + +(.08)*(this.total)
@@ -225,7 +229,7 @@ class PayScreen extends Component {
                 <Text style = {styles.receiptText}>
                     Coupons: {this.percentOff}% from coupon code: "{this.couponCode}"
                     {"\n\n"}
-                    New total: ${this.totalWithTax}
+                    New total: ${this.totalWithTax}{'\n'}
                 </Text>
             )
         }
@@ -317,15 +321,15 @@ class PayScreen extends Component {
     }
 
     payWithCard = async () => {
-        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount)
+        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount) / this.numPeople
 
         let transaction = {
-            amountDue: amountDueCheck,
-            tax: this.tax,
-            discount: this.discount,
-            orderTotal: this.total,
+            amountDue: amountDueCheck.toFixed(2),
+            tax: (this.tax / this.numPeople).toFixed(2),
+            discount: (this.discount / this.numPeople).toFixed(2),
+            orderTotal: (this.total / this.numPeople).toFixed(2),
             paymentMethod: "Credit Card",
-            tips: this.tipAmount,
+            tips: (this.tipAmount / this.numPeople).toFixed(2),
             waitstaff: this.waitStaffID
         }
 
@@ -342,15 +346,15 @@ class PayScreen extends Component {
     }
 
     payWithCash = async () => {
-        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount)
+        let amountDueCheck = (+this.total + +this.tipAmount + +this.tax - this.discount) / this.numPeople
 
         let transaction = {
-            amountDue: amountDueCheck,
-            tax: this.tax,
-            discount: this.discount,
-            orderTotal: this.total,
+            amountDue: amountDueCheck.toFixed(2),
+            tax: (this.tax / this.numPeople).toFixed(2),
+            discount: (this.discount / this.numPeople).toFixed(2),
+            orderTotal: (this.total / this.numPeople).toFixed(2),
             paymentMethod: "Credit Card",
-            tips: this.tipAmount,
+            tips: (this.tipAmount / this.numPeople).toFixed(2),
             waitstaff: this.waitStaffID
         }
 
@@ -374,8 +378,13 @@ class PayScreen extends Component {
         }
 
         this.setState({ successDialog: false })
-
-        this.navigation.navigate('Load')
+        ++this.peoplePaid
+        
+        if (this.peoplePaid === this.numPeople) {
+            this.navigation.navigate('Load')
+        } else {
+            this.setState({ howToPayDialog: true })
+        }
     }
 
     pressButtonTwo = () => {
@@ -386,8 +395,13 @@ class PayScreen extends Component {
         }
 
         this.setState({ successDialog: false })
-
-        this.navigation.navigate('Load')
+        ++this.peoplePaid
+        
+        if (this.peoplePaid === this.numPeople) {
+            this.navigation.navigate('Load')
+        } else {
+            this.setState({ howToPayDialog: true })
+        }
     }
 
     pressButtonThree = () => {
@@ -398,8 +412,13 @@ class PayScreen extends Component {
         }
 
         this.setState({ successDialog: false })
-
-        this.navigation.navigate('Load')
+        ++this.peoplePaid
+        
+        if (this.peoplePaid === this.numPeople) {
+            this.navigation.navigate('Load')
+        } else {
+            this.setState({ howToPayDialog: true })
+        }
     }
 
     pressButtonFour = () => {
@@ -410,8 +429,13 @@ class PayScreen extends Component {
         }
 
         this.setState({ successDialog: false })
-
-        this.navigation.navigate('Load')
+        ++this.peoplePaid
+        
+        if (this.peoplePaid === this.numPeople) {
+            this.navigation.navigate('Load')
+        } else {
+            this.setState({ howToPayDialog: true })
+        }
     }
 
     pressButtonFive() {
@@ -422,8 +446,13 @@ class PayScreen extends Component {
         }
 
         this.setState({ successDialog: false })
-
-        this.navigation.navigate('Load')
+        ++this.peoplePaid
+        
+        if (this.peoplePaid === this.numPeople) {
+            this.navigation.navigate('Load')
+        } else {
+            this.setState({ howToPayDialog: true })
+        }
     }
 
     displayCouponDialog = () => {
@@ -614,9 +643,9 @@ class PayScreen extends Component {
 
                         {this.renderCoupon()}
 
-                        {this.renderSplit()}
-
                         {this.renderTipButtons()}
+
+                        {this.renderSplit()}
 
                     </DialogContent>
                 </Dialog>
@@ -752,7 +781,7 @@ class PayScreen extends Component {
                     }
                 >
                     <DialogContent>
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Your total is: ${this.totalWithTip / this.numPeople}</Text>
+                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Your total is: ${(this.totalWithTip / this.numPeople).toFixed(2)}</Text>
                     </DialogContent>
                 </Dialog>
 

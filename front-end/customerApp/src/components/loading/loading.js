@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { getMenu } from '../../menu_operations';
 import { connect } from 'react-redux';
-import { setMenu } from '../../store/actions/menu_actions'
+import { setMenu, setDesserts } from '../../store/actions/menu_actions'
 import styles from './styles';
 import MainContainer from '../main_container/main_container';
 
@@ -14,8 +14,8 @@ class Loading extends Component {
   getData = async () => {
     let newEntrees = await getMenu('entree');
     let newBeverages = await getMenu('beverage');
-    let newDesserts = await getMenu('dessert');
     let newAppetizers = await getMenu('appetizer');
+    let newDesserts = await getMenu('dessert');
 
     this.props.setMenu(newEntrees, newBeverages, newDesserts, newAppetizers)  // Set it in redux
   }
@@ -57,4 +57,4 @@ const mapStateToProps = (state) => ({
   desserts:   state.menReducer.desserts
 })
 
-export default connect(mapStateToProps, { setMenu })(Loading);
+export default connect(mapStateToProps, { setMenu, setDesserts })(Loading);
