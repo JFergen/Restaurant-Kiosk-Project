@@ -20,11 +20,11 @@ export async function resetPopularItems() {
     if (!isSuccess) {
         return false;
     }
-
+    
     for (i in query) {
         if (query[i].popular) {
-            query[i].popular == false;
-
+            query[i].popular = false;
+    
             await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
             .then(snapshot => {
                 console.log('Succesfully updated document.');
@@ -48,7 +48,11 @@ export async function resetPopularItems() {
 export async function setPopularItems() {
     let query;
     let isSuccess = true;
+<<<<<<< HEAD
+    await firebase.firestore().collection('Menu').orderBy('orderTotal','desc').get()
+=======
     await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
+>>>>>>> 9513cb2629772685a93c97dfaa3360b1d6e0605e
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
@@ -56,11 +60,11 @@ export async function setPopularItems() {
         console.log('Error getting documents', error);
         isSuccess = false;
     });
-
+    
     if (!isSuccess) {
         return false;
     }
-
+    
 
     for (let i = 0; i < 5; i++) {
         query[i].popular = true;
