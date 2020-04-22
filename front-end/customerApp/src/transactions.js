@@ -45,6 +45,10 @@ export async function addTransaction(transaction) {
     dailyRev += parseFloat(transaction.orderTotal);
         
     let arr = Array.apply(0, Array(21)).map(function () {});
+    for (int i = 0; i < 22; i++) {
+        arr.push(0);
+    }
+    
     arr[21] = dailyRev;
         
      await firebase.firestore().collection('DailyRevenue').doc('2020').set({April: arr, year: '2020'} )
