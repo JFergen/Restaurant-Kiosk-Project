@@ -6,6 +6,7 @@ import { getIngredientQuantity } from './inventory';
 
 export async function resetPopularItems() {
     let query;
+    let isSuccess = true;
 
     await firebase.firestore().collection('Menu').get()
     .then(snapshot => {
@@ -13,10 +14,10 @@ export async function resetPopularItems() {
     })
     .catch (error => {
         console.log('Error getting documents', error);
-        query = null;
+        isSuccess = false;
     });
 
-    if (query == null) {
+    if (!isSuccess) {
         return false;
     }
 
@@ -30,13 +31,12 @@ export async function resetPopularItems() {
             })
             .catch (error => {
                 console.log('Error getting documents', error);
-                query = null;
-                break;
+                isSuccess = false;
             });
         }
     }
-
-    if (query == null) {
+    
+    if (!isSuccess) {
         return false;
     }
 
@@ -47,18 +47,17 @@ export async function resetPopularItems() {
 
 export async function setPopularItems() {
     let query;
-
+    let isSuccess = true;
     await firebase.firestore().collection('Menu').orderBy('orderTotal')
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
     .catch (error => {
         console.log('Error getting documents', error);
-        query = null;
-        break;
+        isSuccess = false;
     });
 
-    if (query == null) {
+    if (!isSuccess) {
         return false;
     }
 
@@ -72,12 +71,11 @@ export async function setPopularItems() {
         })
         .catch (error => {
             console.log('Error getting documents', error);
-            query = null;
-            break;
+            isSuccess = false;
         });
     }
 
-    if (query == null) {
+    if (!isSuccess) {
         return false;
     }
 
