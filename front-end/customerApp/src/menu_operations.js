@@ -4,6 +4,47 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 import { getIngredientQuantity } from './inventory';
 
+export async function resetPopularItems() {
+    let query;
+
+    await firebase.firestore().collection('Menu').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        query = null;
+    });
+
+    if (query == null) {
+        return false;
+    }
+
+    for (i in query) {
+        if (query[i].popular) {
+            query[i].popular == false;
+
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                query = snapshot.docs.map(doc => doc.data());
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                query = null;
+                break;
+            });
+        }
+    }
+
+    if (query == null) {
+        return false;
+    }
+
+    return true;
+
+}
+
+
 export async function setPopularItems() {
     let query;
 
