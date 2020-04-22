@@ -54,8 +54,6 @@ export async function addTransaction(transaction) {
         isSuccess = false;
     });
     
-    let monthlyRev;
-    
     await firebase.firestore().collection('MonthlyRevenue').where('year', '==', '2020').get()
     .then((snapshot) => {
         console.log("Successfully retreived daily revenue");
@@ -68,10 +66,8 @@ export async function addTransaction(transaction) {
         errorMessage = error;
     });
     
-    monthlyRev = monthlyRev[0].April;
-    monthlyRev += dailyRev;
     
-    await firebase.firestore().collection('MonthlyRevenue').doc('2020').set({January: 11231, February: 26452, March: 454845, April: monthlyRev, year: '2020'} )
+    await firebase.firestore().collection('MonthlyRevenue').doc('2020').set({January: 11231, February: 26452, March: 454845, April: dailyRev, year: '2020'} )
     .then(() => {
         console.log("Employee added Successfully");
         isSuccess = true;
