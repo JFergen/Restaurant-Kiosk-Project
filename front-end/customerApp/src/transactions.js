@@ -29,7 +29,7 @@ export async function addTransaction(transaction) {
     
    let dailyRev;
     
-    await firebase.firestore().collection('DailyRevenue').doc('2020')
+    await firebase.firestore().collection('DailyRevenue').doc('2020').get()
     .then((snapshot) => {
         console.log("Successfully retreived daily revenue");
         isSuccess = true;
