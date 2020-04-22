@@ -4,7 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="transactions.js and app-test.js: added+edited example">
+    <list default="true" id="0a214da2-97ca-4556-9cb8-d84f2a411107" name="Default Changelist" comment="app-test.js: attempts to test error handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js" afterDir="false" />
     </list>
@@ -18,12 +18,12 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="819">
-              <caret line="2728" column="93" selection-start-line="2728" selection-start-column="93" selection-end-line="2728" selection-end-column="93" />
+            <state relative-caret-position="836">
+              <caret line="2835" column="3" lean-forward="true" selection-start-line="2835" selection-start-column="3" selection-end-line="2835" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -32,11 +32,13 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>section</find>
       <find>orders</find>
       <find>additem</find>
       <find>coupon sec</find>
       <find>transaction</find>
+      <find>section</find>
+      <find>Section</find>
+      <find>get</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,7 +71,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -106,6 +107,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -207,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587100685592</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="app-test.js: attempts to test error handling">
+      <created>1587269025329</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1587269025329</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -221,7 +230,7 @@
       <window_info id="Resources Explorer" order="4" weight="0.3296131" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="7" visible="true" weight="0.12539515" />
+      <window_info active="true" content_ui="combo" id="Project" order="7" visible="true" weight="0.12539515" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.32917964" />
       <window_info anchor="bottom" id="TODO" order="1" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.15576324" />
@@ -287,7 +296,8 @@
     <MESSAGE value="spellchecking" />
     <MESSAGE value="app-test.js: added coupon ID from database for testing" />
     <MESSAGE value="transactions.js and app-test.js: added+edited example" />
-    <option name="LAST_COMMIT_MESSAGE" value="transactions.js and app-test.js: added+edited example" />
+    <MESSAGE value="app-test.js: attempts to test error handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="app-test.js: attempts to test error handling" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/tables.js">
@@ -311,13 +321,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" column="1" lean-forward="true" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/coupon.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="867">
@@ -332,13 +335,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/orders.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/transactions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -346,10 +342,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/helpfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="55" column="1" lean-forward="true" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/orders.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-157">
+          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/callServer.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front-end/customerApp/src/question.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="43" column="1" lean-forward="true" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/front-end/customerApp/__tests__/App-test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="2728" column="93" selection-start-line="2728" selection-start-column="93" selection-end-line="2728" selection-end-column="93" />
+        <state relative-caret-position="836">
+          <caret line="2835" column="3" lean-forward="true" selection-start-line="2835" selection-start-column="3" selection-end-line="2835" selection-end-column="3" />
         </state>
       </provider>
     </entry>

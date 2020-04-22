@@ -1375,6 +1375,59 @@ it("should confirm order", async () => {
     confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "3", items);
 });
 
+///////////////////////////////////////////////Question Section
+
+//this function will add a question doc to the database
+//the functions parameter is a doc object.
+//for example:
+/*let doc = {
+    orderID: '03se9wEgk4rYmbBB9Bv4',
+    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
+    review: ['Bad', 'Good','Trash']
+    }*/
+//then pass doc to the function i.e, addQuestionDoc(doc)
+it("should add question to question collection", async () => {
+    async function addQuestionDoc(doc) {
+        let isSuccess;
+        await firebase.firestore().collection('Question').add(doc)
+        .then(() => {
+            console.log("Successfully added question doc to the question collection.");
+            isSuccess = true;
+        })
+        .catch((error) => {
+            alert("Error adding question doc to the question collection: ", error);
+            isSuccess = false;
+        });
+        return isSuccess;
+    }
+
+    let doc = {
+        orderID: '03se9wEgk4rYmbBB9Bv4',
+        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
+        review: ['Bad','Good','Trash']
+        };
+    addQuestionDoc(doc);
+});
+
+it("should get all questions in collection", async () => {
+    //this function will get all of the question docs in the Question collection
+    async function getQuestionDocs() {
+        let questionDoc = []
+
+        await firebase.firestore().collection('Question').get()
+        .then((snapshot) => {
+            questionDoc = snapshot.docs.map(doc => doc.data());
+        })
+        .catch ((error) => {
+            alert('Failure getting question docs.', error);
+        });
+
+        return questionDoc;
+    }
+
+    getQuestionDocs();
+});
+
 
 
 ///////////////////////////////////////////////TESTING ERROR HANDLING (edits of code above)
@@ -2727,4 +2780,57 @@ it("should confirm order: error", async () => {
     //confirmOrder(ordID, custID, tableNum, items)
     let items = ["Pizza" ,"Apple Pie"];
     confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "99", items); // no table 99
+});
+
+///////////////////////////////////////////////Question Section
+
+//this function will add a question doc to the database
+//the functions parameter is a doc object.
+//for example:
+/*let doc = {
+    orderID: '03se9wEgk4rYmbBB9Bv4',
+    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
+    review: ['Bad', 'Good','Trash']
+    }*/
+//then pass doc to the function i.e, addQuestionDoc(doc)
+it("should add question to question collection: error", async () => {
+    async function addQuestionDoc(doc) {
+        let isSuccess;
+        await firebase.firestore().collection('Question').add(doc)
+        .then(() => {
+            console.log("Successfully added question doc to the question collection.");
+            isSuccess = true;
+        })
+        .catch((error) => {
+            alert("Error adding question doc to the question collection: ", error);
+            isSuccess = false;
+        });
+        return isSuccess;
+    }
+
+    let doc = {
+        orderID: 'Incorrect',
+        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
+        review: ['Bad','Good','Trash']
+        };
+    addQuestionDoc(doc); // orderID won't be found
+});
+
+it("should get all questions in collection: error", async () => {
+    //this function will get all of the question docs in the Question collection
+    async function getQuestionDocs() {
+        let questionDoc = []
+
+        await firebase.firestore().collection('Question').get()
+        .then((snapshot) => {
+            questionDoc = snapshot.docs.map(doc => doc.data());
+        })
+        .catch ((error) => {
+            alert('Failure getting question docs.', error);
+        });
+
+        return questionDoc;
+    }
+
+    getQuestionDocs('l'); // unused parameter
 });
