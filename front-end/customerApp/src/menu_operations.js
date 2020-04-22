@@ -26,7 +26,7 @@ export async function resetPopularItems() {
 
             await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
             .then(snapshot => {
-                query = snapshot.docs.map(doc => doc.data());
+                console.log('Succesfully updated document.');
             })
             .catch (error => {
                 console.log('Error getting documents', error);
@@ -55,6 +55,7 @@ export async function setPopularItems() {
     .catch (error => {
         console.log('Error getting documents', error);
         query = null;
+        break;
     });
 
     if (query == null) {
@@ -67,11 +68,12 @@ export async function setPopularItems() {
 
         await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
         .then(snapshot => {
-            query = snapshot.docs.map(doc => doc.data());
+            console.log('Succesfully updated document.');
         })
         .catch (error => {
             console.log('Error getting documents', error);
             query = null;
+            break;
         });
     }
 
