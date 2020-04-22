@@ -48,7 +48,7 @@ export async function resetPopularItems() {
 export async function setPopularItems() {
     let query;
     let isSuccess = true;
-    await firebase.firestore().collection('Menu').orderBy('orderTotal')
+    await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
