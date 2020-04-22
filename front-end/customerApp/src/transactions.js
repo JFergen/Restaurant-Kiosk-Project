@@ -56,6 +56,8 @@ export async function addTransaction(transaction) {
         console.error("Error adding Employee to Employee table: ", error);
         isSuccess = false;
     });
+    
+    
         
     if (!isSuccess) {
       return errorMessage;
