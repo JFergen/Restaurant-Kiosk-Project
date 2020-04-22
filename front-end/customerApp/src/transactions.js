@@ -47,7 +47,7 @@ export async function addTransaction(transaction) {
     let arr = Array.apply(0, Array(21)).map(function () {});
     arr[21] = dailyRev;
         
-     await firebase.firestore().collection('DailyRevenue').doc('2020').set({April: arr} )
+     await firebase.firestore().collection('DailyRevenue').doc('2020').set({April: arr, year: '2020'} )
     .then(() => {
         console.log("Employee added Successfully");
         isSuccess = true;
