@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, FlatList, Text, TouchableHighlight, ImageBackground } from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
 import { connect } from 'react-redux';
-import { setAppetizers, setBeverages, setDesserts, setEntrees } from '../../../store/actions/menu_actions';
+import { setAppetizers, setBeverages, setDesserts, setEntrees, setFiveDollarMeals } from '../../../store/actions/menu_actions';
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import InfoIcon from '../../../assets/menu/Info-Icon.png';
@@ -30,6 +30,8 @@ class Menu extends Component {
             this.type = 'entree'
         } else if (testType === 'dessert') {
             this.type = 'dessert'
+        } else if (testType === 'five dollar') {
+            this.type = 'five dollar'
         } else {
             alert('monkaS')
         }
@@ -44,6 +46,8 @@ class Menu extends Component {
             this.props.setEntrees(this.state.items)
         } else if (type === 'dessert') {
             this.props.setDesserts(this.state.items)
+        } else if (type === 'five dollar') {
+            this.props.setFiveDollarMeals(this.state.items)
         } else {
             alert('monkaS')
         }
@@ -200,10 +204,11 @@ class Menu extends Component {
 };
 
 const mapStateToProps = (state) => ({
-    appetizers: state.menReducer.appetizers,
-    beverages:  state.menReducer.beverages,
-    entrees:    state.menReducer.entrees,
-    desserts:   state.menReducer.desserts
+    appetizers:         state.menReducer.appetizers,
+    beverages:          state.menReducer.beverages,
+    entrees:            state.menReducer.entrees,
+    desserts:           state.menReducer.desserts,
+    fiveDollarMeals:    state.menReducer.fiveDollarMeals
 })
 
-export default connect(mapStateToProps, { setAppetizers, setBeverages, setEntrees, setDesserts })(Menu);
+export default connect(mapStateToProps, {setAppetizers, setBeverages, setEntrees, setDesserts, setFiveDollarMeals})(Menu);

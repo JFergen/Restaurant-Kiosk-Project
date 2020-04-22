@@ -1,12 +1,13 @@
-import { SET_MENU, SET_APPETIZERS, SET_BEVERAGES, SET_DESSERTS, SET_ENTREES } from './types';
+import { SET_MENU, SET_APPETIZERS, SET_BEVERAGES, SET_DESSERTS, SET_ENTREES, SET_FIVEDOLLARMEALS } from './types';
 
-export const setMenu = (entrees, beverages, desserts, appetizers) => dispatch => {
+export const setMenu = (entrees, beverages, desserts, appetizers, fiveDollarMeals) => dispatch => {
     dispatch({
         type: SET_MENU,
         newEntrees: entrees,
         newBeverages: beverages,
         newDesserts: desserts,
-        newAppetizers: appetizers
+        newAppetizers: appetizers,
+        newFiveDollarMeals: fiveDollarMeals
     });
 };
 
@@ -35,5 +36,12 @@ export const setEntrees = (newEntrees) => dispatch => {
     dispatch({
         type: SET_ENTREES,
         newEntrees: newEntrees
+    })
+}
+
+export const setFiveDollarMeals = (newFiveDollarMeals) => dispatch => {
+    dispatch({
+        type: SET_FIVEDOLLARMEALS,
+        newFiveDollarMeals: newFiveDollarMeals
     })
 }

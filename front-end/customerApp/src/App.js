@@ -17,7 +17,7 @@ import '@react-native-firebase/auth';
 
 firebase.functions().useFunctionsEmulator('http://localhost:5000');
 
-global.tableNumber = '1';
+global.tableNumber = '3';
 
 // Navigation
 const RootNavigator = createStackNavigator({

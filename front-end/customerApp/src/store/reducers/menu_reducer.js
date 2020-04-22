@@ -1,4 +1,4 @@
-import { SET_MENU, SET_APPETIZERS, SET_BEVERAGES, SET_ENTREES, SET_DESSERTS } from '../actions/types'
+import { SET_MENU, SET_APPETIZERS, SET_BEVERAGES, SET_ENTREES, SET_DESSERTS, SET_FIVEDOLLARMEALS } from '../actions/types'
 
 const initialState = {
     entrees: [],
@@ -14,35 +14,48 @@ export default function (state = initialState, action) {
                 entrees: action.newEntrees,
                 beverages: action.newBeverages,
                 desserts: action.newDesserts,
-                appetizers: action.newAppetizers
+                appetizers: action.newAppetizers,
+                fiveDollarMeals: action.newFiveDollarMeals
             }
         case SET_APPETIZERS:
             return {
                 appetizers: action.newAppetizers,
                 beverages: state.beverages,
                 entrees: state.entrees,
-                desserts: state.desserts
+                desserts: state.desserts,
+                fiveDollarMeals: action.fiveDollarMeals
             }
         case SET_BEVERAGES:
             return {
                 appetizers: state.appetizers,
                 beverages: action.newBeverages,
                 entrees: state.entrees,
-                desserts: state.desserts
+                desserts: state.desserts,
+                fiveDollarMeals: action.fiveDollarMeals
             }
         case SET_ENTREES:
             return {
                 appetizers: state.appetizers,
                 beverages: state.beverages,
                 entrees: action.newEntrees,
-                desserts: state.desserts
+                desserts: state.desserts,
+                fiveDollarMeals: action.fiveDollarMeals
             }
         case SET_DESSERTS:
             return {
                 appetizers: state.appetizers,
                 beverages: state.beverages,
                 entrees: state.entrees,
-                desserts: action.newDesserts
+                desserts: action.newDesserts,
+                fiveDollarMeals: action.fiveDollarMeals
+            }
+        case SET_FIVEDOLLARMEALS:
+            return {
+                appetizers: state.appetizers,
+                beverages: state.beverages,
+                entrees: state.entrees,
+                desserts: action.desserts,
+                fiveDollarMeals: action.newFiveDollarMeals
             }
         default:
             return state;
