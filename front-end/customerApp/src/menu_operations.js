@@ -4,6 +4,44 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 import { getIngredientQuantity } from './inventory';
 
+export async function setPopularItems() {
+    let query;
+
+    await firebase.firestore().collection('Menu').orderBy('orderTotal')
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        query = null;
+    });
+
+    if (query == null) {
+        return false;
+    }
+
+
+    for (let i = 0; i < 5; i++) {
+        query[i].popular = true;
+
+        await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            query = null;
+        });
+    }
+
+    if (query == null) {
+        return false;
+    }
+
+    return true;
+
+}
+
 
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')
