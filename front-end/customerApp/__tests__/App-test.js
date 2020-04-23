@@ -869,92 +869,6 @@ it("should mark table as normal", async () => {
 
 ///////////////////////////////////////////////Menu_operations Section
 
-it("should reset popular items on menu", async () => {
-    async function resetPopularItems() {
-        let query;
-        let isSuccess = true;
-
-        await firebase.firestore().collection('Menu').get()
-        .then(snapshot => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch (error => {
-            console.log('Error getting documents', error);
-            isSuccess = false;
-        });
-
-        if (!isSuccess) {
-            return false;
-        }
-
-        for (i in query) {
-            if (query[i].popular) {
-                query[i].popular = false;
-
-                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
-                .then(snapshot => {
-                    console.log('Succesfully updated document.');
-                })
-                .catch (error => {
-                    console.log('Error getting documents', error);
-                    isSuccess = false;
-                });
-            }
-        }
-
-        if (!isSuccess) {
-            return false;
-        }
-
-        return true;
-    }
-
-    resetPopularItems();
-});
-
-it("should set popular items on menu", async () => {
-    async function setPopularItems() {
-        let query;
-
-        await firebase.firestore().collection('Menu').orderBy('orderTotal')
-        .then(snapshot => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch (error => {
-            console.log('Error getting documents', error);
-            query = null;
-            break;
-        });
-
-        if (query == null) {
-            return false;
-        }
-
-
-        for (let i = 0; i < 5; i++) {
-            query[i].popular = true;
-
-            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
-            .then(snapshot => {
-                console.log('Succesfully updated document.');
-            })
-            .catch (error => {
-                console.log('Error getting documents', error);
-                query = null;
-                break;
-            });
-        }
-
-        if (query == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    setPopularItems();
-});
-
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')
 it("should get menu items based on type", async () => {
@@ -1461,62 +1375,8 @@ it("should confirm order", async () => {
     confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "3", items);
 });
 
-<<<<<<< HEAD
-=======
-///////////////////////////////////////////////Question Section
 
-//this function will add a question doc to the database
-//the functions parameter is a doc object.
-//for example:
-/*let doc = {
-    orderID: '03se9wEgk4rYmbBB9Bv4',
-    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
-    review: ['Bad', 'Good','Trash']
-    }*/
-//then pass doc to the function i.e, addQuestionDoc(doc)
-it("should add question to question collection", async () => {
-    async function addQuestionDoc(doc) {
-        let isSuccess;
-        await firebase.firestore().collection('Question').add(doc)
-        .then(() => {
-            console.log("Successfully added question doc to the question collection.");
-            isSuccess = true;
-        })
-        .catch((error) => {
-            alert("Error adding question doc to the question collection: ", error);
-            isSuccess = false;
-        });
-        return isSuccess;
-    }
 
-    let doc = {
-        orderID: '03se9wEgk4rYmbBB9Bv4',
-        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
-        review: ['Bad','Good','Trash']
-        };
-    addQuestionDoc(doc);
-});
-
-it("should get all questions in collection", async () => {
-    //this function will get all of the question docs in the Question collection
-    async function getQuestionDocs() {
-        let questionDoc = []
-
-        await firebase.firestore().collection('Question').get()
-        .then((snapshot) => {
-            questionDoc = snapshot.docs.map(doc => doc.data());
-        })
-        .catch ((error) => {
-            alert('Failure getting question docs.', error);
-        });
-
-        return questionDoc;
-    }
-
-    getQuestionDocs();
-});
-
->>>>>>> dev
 
 
 ///////////////////////////////////////////////TESTING ERROR HANDLING (edits of code above)
@@ -2366,92 +2226,6 @@ it("should mark table as normal: error", async () => {
 
 ///////////////////////////////////////////////Menu_operations Section
 
-it("should reset popular items on menu: error", async () => {
-    async function resetPopularItems() {
-        let query;
-        let isSuccess = true;
-
-        await firebase.firestore().collection('Menu').get()
-        .then(snapshot => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch (error => {
-            console.log('Error getting documents', error);
-            isSuccess = false;
-        });
-
-        if (!isSuccess) {
-            return false;
-        }
-
-        for (i in query) {
-            if (query[i].popular) {
-                query[i].popular = false;
-
-                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
-                .then(snapshot => {
-                    console.log('Successfully updated document.');
-                })
-                .catch (error => {
-                    console.log('Error getting documents', error);
-                    isSuccess = false;
-                });
-            }
-        }
-
-        if (!isSuccess) {
-            return false;
-        }
-
-        return true;
-    }
-
-    resetPopularItems('DUBS'); // unused parameter
-});
-
-it("should set popular items on menu: error", async () => {
-    async function setPopularItems() {
-        let query;
-
-        await firebase.firestore().collection('Menu').orderBy('orderTotal')
-        .then(snapshot => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch (error => {
-            console.log('Error getting documents', error);
-            query = null;
-            break;
-        });
-
-        if (query == null) {
-            return false;
-        }
-
-
-        for (let i = 0; i < 5; i++) {
-            query[i].popular = true;
-
-            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
-            .then(snapshot => {
-                console.log('Succesfully updated document.');
-            })
-            .catch (error => {
-                console.log('Error getting documents', error);
-                query = null;
-                break;
-            });
-        }
-
-        if (query == null) {
-            return false;
-        }
-
-        return true;
-    }
-
-    setPopularItems('DUBS'); //unused parameter
-});
-
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')
 it("should get menu items based on type: error", async () => {
@@ -2957,463 +2731,6 @@ it("should confirm order: error", async () => {
     confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "99", items); // no table 99
 });
 
-<<<<<<< HEAD
-//this function is used to add Menu item
-//the functions parameter is a item object.
-//for example:
-/*let item = {
- allergen: ['Egg' , 'Milk'],
- calories: 750,
- ingredients: ['cheese', 'tomato sauce', 'pepperoni'],
- name: 'Pizza',
- price: 6.99,
- type: 'entree',
- uri: 'image link'
- }*/
- //then pass item to the function i.e, addToMenu(item)
-it("should add item to menu", async () => {
-    async function addToMenu(item) {
-        let isSuccess;
-        firebase.firestore().collection('Menu').doc(item.name).set(item)
-        .then(() => {
-            console.log("Successfully added item to the menu.");
-            isSuccess = true;
-        })
-        .catch((error) => {
-            alert("Error adding item to menu: ", error);
-            isSuccess = false;
-        });
-        return isSuccess;
-    }
-
-    let item = {
-     allergen: ['Egg' , 'Milk'],
-     calories: 750,
-     ingredients: ['cheese', 'tomato sauce', 'pepperoni'],
-     name: 'Pizza',
-     price: 6.99,
-     type: 'entree',
-     uri: 'image link'
-     };
-
-     addToMenu(item);
-});
-
-//this function is used to update menu item information to the database
-//the functions parameter is a item object.
-//for example:
-/*let item = {
- allergen: ['Egg', 'Milk'],
- calories: 850,
- ingredients: ['blue cheese', 'tomato sauce', 'pineapple'],
- name: 'Pizza',
- price: 7.99,
- type: 'entree',
- uri: 'image link'
- }*/
-//then pass item to the function i.e, updateMenuItem(item)
-//this will update the the Pizza menu item's calories to 850,
-//the ingredients array will be changed to have the values ['blue cheese', 'tomato sauce', 'pineapple']
-//the name will remain the same
-//the price will be changed to be 7.99
-//the type will remain entree
-//the uri can be changed to whatever image link you want
-//updateMenuItem(item)
-it("should update menu item", async () => {
-    async function updateMenuItem(item) {
-        let isSuccess;
-
-        await firebase.firestore().collection('Menu').doc(item.name).update(item)
-        .then(() => {
-            isSuccess = true;
-        })
-        .catch((error) => {
-            console.error("Error updating item in menu: ", error);
-            isSuccess = false;
-        });
-
-        return isSuccess;
-    }
-    let item = {
-     allergen: ['Egg', 'Milk'],
-     calories: 850,
-     ingredients: ['blue cheese', 'tomato sauce', 'pineapple'],
-     name: 'Pizza',
-     price: 7.99,
-     type: 'entree',
-     uri: 'image link'
-     }
-
-     updateMenuItem(item);
-});
-
-//this function is used to get menu information from the database
-//the functions parameter is a string which is the menu item name i.e., getItemDetails('Pizza') will get the menu item data for the menu item who's named is Pizza
-it("should get menu item details", async () => {
-    async function getItemDetails(itemName) {
-        let query;
-
-        await firebase.firestore().collection('Menu').where('name', '==', itemName).get()
-        .then((snapshot) => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch ((error) => {
-            console.log('Error getting document', error);
-            query = null;
-        });
-
-        return query;
-    }
-
-    getItemDetails('Pizza');
-});
-
-//this function is used to check a particular items inventory is not empty
-//the parameter for this function is a string which is the name of the item i.e., checkInventory('Sugar')
-it("should check ingredient count", async () => {
-    async function checkInventory(name) {
-        let query;
-        await firebase.firestore().collection('Inventory').where('ingredientName', '==', name).get()
-            .then(snapshot => {
-                query = snapshot.docs.map(doc => doc.data());
-            })
-            .catch(error => {
-                console.log('Error getting documents', error);
-                query = null;
-            });
-
-        if (query == null) {
-            return null;
-        }
-
-        if (query[0].ingredientQuantity == 0) {
-            return 0;
-        } else
-            return 1;
-    }
-
-    checkInventory('Sugar');
-});
-
-//this function is used to delete a Menu item from the database
-//the functions parameter is a string which is the menu item name i.e., deleteFromMenu('Pizza') will delete the menu item who's name is Pizza
-it("should delete item from menu", async () => {
-    async function deleteFromMenu(itemName) {
-        let isSuccess;
-        firebase.firestore().collection('Menu').doc(itemName).delete()
-        .then(() => {
-            console.log("Successfully deleted item from the menu.");
-            isSuccess = true;
-        })
-        .catch((error) => {
-            alert("Error deleting item from menu: ", error);
-            isSuccess = false;
-        });
-        return isSuccess;
-    }
-
-    deleteFromMenu('Pizza');
-});
-
-///////////////////////////////////////////////Orders Section
-
-//function will add a order to the database
-//the function will return the orderID
-//the functions parameter is a string which is the customerID
-//for example createOrder("l8qDPeaGzOC4egZMW5hW", "3")
-it("should create order", async () => {
-    async function createOrder(custID, tableNum) {
-        let autoID = firebase.firestore().collection('Orders').doc().id;
-
-        let potentialError;
-
-        await firebase.firestore().collection('Orders').doc(autoID).set({
-            customerID: custID,
-            order: null,
-            waitstaff: null,
-            tableNumber: tableNum,
-            completionStatus: false,
-            price: null,
-            requests: null,
-            orderId: autoID
-        })
-        .then(() => {
-            console.log("Successfully created order.");
-            isSuccess = true;
-        })
-        .catch((error) => {
-            console.log("Error creating Order: ", error);
-            potentialError = error;
-            isSuccess = false;
-        });
-
-        if (!isSuccess) {
-            return potentialError;
-        }
-
-        return autoID;
-    }
-
-    createOrder("l8qDPeaGzOC4egZMW5hW", "3");
-});
-
-//this function will add an item to the order
-//the parameter orderID is a string, and item is  a array of items
-//for example:
-//let item=['Pizza', 'Cheese Cake'],
-//addItemToOrder('v6J7iJmyHxW5CIdCosvK', item)
-it("should add item to order", async () => {
-    async function addItemToOrder(orderID, item) {
-        let isSuccess;
-
-        await firebase.firestore().collection('Orders').doc(orderID).update({ item })
-        .then((success) => {
-            isSuccess = true;
-        })
-        .catch((error) => {
-            console.log('Error adding to order: ', error);
-            isSuccess = false;
-        });
-
-        return isSuccess;
-    }
-
-    let item=['Pizza', 'Cheese Cake'];
-    addItemToOrder('v6J7iJmyHxW5CIdCosvK', item);
-});
-
-//this function will remove an order from the data base
-//orderId is a string which is the order ID
-//for example: removeOrder('v6J7iJmyHxW5CIdCosvK')
-it("should remove order from database", async () => {
-    async function removeOrder(orderId) {
-        let isSuccess;
-
-        await firebase.firestore().collection('Orders').doc(orderID).delete()
-        .then(() => {
-            isSuccess = 1;
-        })
-        .catch((error) => {
-            console.log('Error deleting order: ', error);
-            isSuccess = 0;
-        });
-
-        return isSuccess;
-    }
-
-    removeOrder('v6J7iJmyHxW5CIdCosvK');
-});
-
-//this function gets all the orders in the database
-it("should get all orders", async () => {
-    async function getOrders() {
-        let query;
-
-        await firebase.firestore().collection('Orders').get()
-        .then((snapshot) => {
-            query = snapshot.docs.map(doc => doc.data());
-        })
-        .catch ((error) => {
-            console.log('Error getting document', error);
-            query = null;
-        });
-
-        return query;
-    }
-
-    getOrders();
-});
-
-//this function updates a specific order in the database
-//the function takes a object as it's parameter
-//for example:
-//let item = {
-//     completionStatus: false,
-//     customerID: "l8qDPeaGzOC4egZMW5hW",
-//     orderID: "v6J7iJmyHxW5CIdCosvK",
-//     orderedItems: ["Pizza" ,"Apple Pie"],
-//     price: 8.99,
-//     requests: "none",
-//     tableNumber: "3",
-//     waitstaff: "4MfW9403U5WqT5cSIgbG"
-// }
-//the completionStatus will remain false
-//the customerID will remain the same
-//the orderID will remain the same
-//the orderedItems will change to Pizza and Cheese Cake
-//the price will change to 20.99
-//the requests will change to make the pizza well done
-//the table number will remain the same
-//the waitstaff will remain the same
-//for example: updateOrderInformation(item)
-it("should update order info", async () => {
-    async function updateOrderInformation(item) {
-        let isSuccess;
-
-        await firebase.firestore().collection('Orders').doc(item.orderID).update(item)
-        .then(() => {
-            isSuccess = true;
-        })
-        .catch((error) => {
-            console.error("Error updating Order in database table: ", error);
-            isSuccess = false;
-        });
-
-        return isSuccess;
-    }
-
-    let item = {
-         completionStatus: false,
-         customerID: "l8qDPeaGzOC4egZMW5hW",
-         orderID: "v6J7iJmyHxW5CIdCosvK",
-         orderedItems: ["Pizza" ,"Apple Pie"],
-         price: 8.99,
-         requests: "none",
-         tableNumber: "3",
-         waitstaff: "4MfW9403U5WqT5cSIgbG"
-     }
-
-    updateOrderInformation(item);
-});
-
-//this function will get table orders
-//the parameter is a string which is the table number
-//for example getTableOrders('3')
-it("should get table orders", async () => {
-    async function getTableOrders(tableNumber){
-
-        let orders = []
-
-        await firebase.firestore().collection('Inventory').where('tableNumber', '==', tableNumber).get()
-        .then((snapshot) => {
-            orders = snapshot.docs.map(doc => doc.data());
-            console.log('Successfully retrieved orders.')
-        })
-        .catch ((error) => {
-            alert('Unable to retrieve order information', error);
-        });
-
-        if (orders = []) {
-            return 'No orders for this table';
-        }
-
-        return orders;
-    }
-
-    getTableOrders('3');
-});
-
-it("should confirm order", async () => {
-    async function confirmOrder(ordID, custID, tableNum, items){
-    //     for (i in items) {
-    //         if (items[i].quantity > 0) {
-    //             order.push(items[i]);
-    //         }
-    //     }
-
-        let newArray = [];
-        let uniqueObject = {};
-
-        for (i in items) {
-            let objTitle = items[i]['name'];
-            uniqueObject[objTitle] = items[i];
-        }
-
-        for (i in uniqueObject) {
-            newArray.push(uniqueObject[i]);
-        }
-
-        let order = newArray;
-        let inventory;
-
-        await firebase.firestore().collection('Inventory').get()
-        .then((snapshot) => {
-            inventory = snapshot.docs.map(doc => doc.data());
-        })
-        .catch ((error) => {
-            console.log('Error getting document', error);
-            inventory = null;
-        });
-
-        if (inventory == null) {
-            return false;
-        }
-
-
-        let hasEnoughInventory = true;
-
-        for (i in order) {
-            for (j in order[i].ingredients) {
-                for (k in inventory) {
-                    if (inventory[k].ingredientName == order[i].ingredients[j] && inventory[k].ingredientQuantity == 0) {
-                        hasEnoughInventory = false;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (!hasEnoughInventory) {
-            return false;
-        }
-
-        let finalizedOrder = [];
-        let totalPrice = 0;
-
-        for (i in order) {
-            finalizedOrder.push(order[i].name.concat(" ", order[i].quantity.toString()));
-            totalPrice += (order[i].quantity * order[i].price);
-        }
-
-        let staffID;
-        let isSuccess;
-
-        await firebase.firestore().collection('Tables').where('tableNumber', '==', tableNum).get()
-        .then((snapshot) => {
-            console.log('Successfully retrieved waitstaff id.');
-            staffID = snapshot.docs.map(doc => doc.data());
-            isSuccess = true;
-        })
-        .catch((error) => {
-          alert("Error getting waitstaff id from table: ", error);
-          isSuccess = false;
-
-        });
-
-        if (!isSuccess) {
-            return false;
-        }
-
-        staffID = staffID[0];
-
-        let completeOrder = {
-            completionStatus: false,
-            customerID: custID,
-            waitstaff: staffID,
-            orderID: ordID,
-            orderedItems: finalizedOrder,
-            price: totalPrice,
-            requests: 'none',
-            tableNumber: tableNum
-        };
-
-        await firebase.firestore().collection('Orders').doc(completeOrder.orderID).update(completeOrder)
-        .then((success) => {
-            isSuccess = true;
-        })
-        .catch((error) => {
-            console.log('Error adding to order: ', error);
-            isSuccess = false;
-        });
-
-        return isSuccess;
-
-    }
-
-    //confirmOrder(ordID, custID, tableNum, items)
-    let items = ["Pizza" ,"Apple Pie"];
-    confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "3", items);
-=======
 ///////////////////////////////////////////////Question Section
 
 //this function will add a question doc to the database
@@ -3465,5 +2782,182 @@ it("should get all questions in collection: error", async () => {
     }
 
     getQuestionDocs('l'); // unused parameter
->>>>>>> dev
+});
+
+///////////////////////////////////////////////Question Section
+
+//this function will add a question doc to the database
+//the functions parameter is a doc object.
+//for example:
+/*let doc = {
+    orderID: '03se9wEgk4rYmbBB9Bv4',
+    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
+    review: ['Bad', 'Good','Trash']
+    }*/
+//then pass doc to the function i.e, addQuestionDoc(doc)
+it("should add question to question collection", async () => {
+    async function addQuestionDoc(doc) {
+        let isSuccess;
+        await firebase.firestore().collection('Question').add(doc)
+        .then(() => {
+            console.log("Successfully added question doc to the question collection.");
+            isSuccess = true;
+        })
+        .catch((error) => {
+            alert("Error adding question doc to the question collection: ", error);
+            isSuccess = false;
+        });
+        return isSuccess;
+    }
+
+    let doc = {
+        orderID: '03se9wEgk4rYmbBB9Bv4',
+        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
+        review: ['Bad','Good','Trash']
+        };
+    addQuestionDoc(doc);
+});
+
+it("should get all questions in collection", async () => {
+    //this function will get all of the question docs in the Question collection
+    async function getQuestionDocs() {
+        let questionDoc = []
+
+        await firebase.firestore().collection('Question').get()
+        .then((snapshot) => {
+            questionDoc = snapshot.docs.map(doc => doc.data());
+        })
+        .catch ((error) => {
+            alert('Failure getting question docs.', error);
+        });
+
+        return questionDoc;
+    }
+
+    getQuestionDocs();
+});
+
+//popular items
+
+it("should reset all popular items", async () => {
+    async function resetPopularItems() {
+        let query;
+        let isSuccess = true;
+
+        await firebase.firestore().collection('Menu').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+
+        if (!isSuccess) {
+            return false;
+        }
+        
+        for (i in query) {
+            if (query[i].popular) {
+                query[i].popular = false;
+        
+                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+                .then(snapshot => {
+                    console.log('Succesfully updated document.');
+                })
+                .catch (error => {
+                    console.log('Error getting documents', error);
+                    isSuccess = false;
+                });
+            }
+        }
+        
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    resetPopularItems()
+});
+
+it("should set all popular items", async () => {
+
+    async function setPopularItems() {
+        let query;
+        let isSuccess = true;
+        let month = new Date();
+        month = month.getMonth();
+        
+        await firebase.firestore().collection('Menu').where('month', '==', month).get()
+        .then(snapshot => {
+            if (dataSnapshot.exists()) {
+                query = snapshot.docs.map(doc => doc.data());
+            }
+            else {
+                query = null;
+            }
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+                                                            
+        if (!isSucess) {
+            return false;
+        }
+        
+        if (query == null) {
+            await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+            .then(snapshot => {
+                console.log('Success updated month', error);
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                isSuccess = false;
+            });
+            
+            //need to reset orderTotal
+        }
+        
+        
+        
+        
+        await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+        
+        if (!isSuccess) {
+            return false;
+        }
+        
+
+        for (let i = 0; i < 5; i++) {
+            query[i].popular = true;
+
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                console.log('Succesfully updated document.');
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                isSuccess = false;
+            });
+        }
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+
+    }
+    setPopularItems()
 });
