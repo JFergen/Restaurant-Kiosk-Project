@@ -4,6 +4,122 @@ import '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 import { getIngredientQuantity } from './inventory';
 
+export async function resetPopularItems() {
+    let query;
+    let isSuccess = true;
+
+    await firebase.firestore().collection('Menu').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        isSuccess = false;
+    });
+
+    if (!isSuccess) {
+        return false;
+    }
+    
+    for (i in query) {
+        if (query[i].popular) {
+            query[i].popular = false;
+    
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                console.log('Succesfully updated document.');
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                isSuccess = false;
+            });
+        }
+    }
+    
+    if (!isSuccess) {
+        return false;
+    }
+
+    return true;
+
+}
+
+
+export async function setPopularItems() {
+    let query;
+    let isSuccess = true;
+    let month = new Date();
+    month = month.getMonth();
+    
+    await firebase.firestore().collection('Menu').where('month', '==', month).get()
+    .then(snapshot => {
+        if (dataSnapshot.exists()) {
+            query = snapshot.docs.map(doc => doc.data());
+        }
+        else {
+            query = null;
+        }
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        isSuccess = false;
+    });
+                                                        
+    if (!isSucess) {
+        return false;
+    }
+    
+    if (query == null) {
+        await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+        .then(snapshot => {
+            console.log('Success updated month', error);
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+        
+        //need to reset orderTotal
+    }
+    
+    
+    
+    
+    await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
+    .then(snapshot => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        isSuccess = false;
+    });
+    
+    if (!isSuccess) {
+        return false;
+    }
+    
+
+    for (let i = 0; i < 5; i++) {
+        query[i].popular = true;
+
+        await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+        .then(snapshot => {
+            console.log('Succesfully updated document.');
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+    }
+
+    if (!isSuccess) {
+        return false;
+    }
+
+    return true;
+
+}
+
 
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')
