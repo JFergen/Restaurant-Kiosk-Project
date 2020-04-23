@@ -48,11 +48,44 @@ export async function resetPopularItems() {
 export async function setPopularItems() {
     let query;
     let isSuccess = true;
-<<<<<<< HEAD
-    await firebase.firestore().collection('Menu').orderBy('orderTotal','desc').get()
-=======
+    let month = new Date();
+    month = month.getMonth();
+    
+    await firebase.firestore().collection('Menu').where('month', '==', month).get()
+    .then(snapshot => {
+        if (dataSnapshot.exists()) {
+            query = snapshot.docs.map(doc => doc.data());
+        }
+        else {
+            query = null;
+        }
+    })
+    .catch (error => {
+        console.log('Error getting documents', error);
+        isSuccess = false;
+    });
+                                                        
+    if (!isSucess) {
+        return false;
+    }
+    
+    if (query == null) {
+        await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+        .then(snapshot => {
+            console.log('Success updated month', error);
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+        
+        //need to reset orderTotal
+    }
+    
+    
+    
+    
     await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
->>>>>>> 9513cb2629772685a93c97dfaa3360b1d6e0605e
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
