@@ -869,6 +869,92 @@ it("should mark table as normal", async () => {
 
 ///////////////////////////////////////////////Menu_operations Section
 
+it("should reset popular items on menu", async () => {
+    async function resetPopularItems() {
+        let query;
+        let isSuccess = true;
+
+        await firebase.firestore().collection('Menu').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        for (i in query) {
+            if (query[i].popular) {
+                query[i].popular = false;
+
+                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+                .then(snapshot => {
+                    console.log('Succesfully updated document.');
+                })
+                .catch (error => {
+                    console.log('Error getting documents', error);
+                    isSuccess = false;
+                });
+            }
+        }
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+    }
+
+    resetPopularItems();
+});
+
+it("should set popular items on menu", async () => {
+    async function setPopularItems() {
+        let query;
+
+        await firebase.firestore().collection('Menu').orderBy('orderTotal')
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            query = null;
+            break;
+        });
+
+        if (query == null) {
+            return false;
+        }
+
+
+        for (let i = 0; i < 5; i++) {
+            query[i].popular = true;
+
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                console.log('Succesfully updated document.');
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                query = null;
+                break;
+            });
+        }
+
+        if (query == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    setPopularItems();
+});
+
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')
 it("should get menu items based on type", async () => {
@@ -2279,6 +2365,92 @@ it("should mark table as normal: error", async () => {
 });
 
 ///////////////////////////////////////////////Menu_operations Section
+
+it("should reset popular items on menu: error", async () => {
+    async function resetPopularItems() {
+        let query;
+        let isSuccess = true;
+
+        await firebase.firestore().collection('Menu').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        for (i in query) {
+            if (query[i].popular) {
+                query[i].popular = false;
+
+                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+                .then(snapshot => {
+                    console.log('Successfully updated document.');
+                })
+                .catch (error => {
+                    console.log('Error getting documents', error);
+                    isSuccess = false;
+                });
+            }
+        }
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+    }
+
+    resetPopularItems('DUBS'); // unused parameter
+});
+
+it("should set popular items on menu: error", async () => {
+    async function setPopularItems() {
+        let query;
+
+        await firebase.firestore().collection('Menu').orderBy('orderTotal')
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            query = null;
+            break;
+        });
+
+        if (query == null) {
+            return false;
+        }
+
+
+        for (let i = 0; i < 5; i++) {
+            query[i].popular = true;
+
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                console.log('Succesfully updated document.');
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                query = null;
+                break;
+            });
+        }
+
+        if (query == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    setPopularItems('DUBS'); //unused parameter
+});
 
 //this function is used to get the items on the menu based on their type
 //the functions parameter is a string which is the menu type i.e, getMenu('entree')

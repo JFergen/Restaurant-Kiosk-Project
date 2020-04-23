@@ -27,7 +27,7 @@ export async function resetPopularItems() {
     
             await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
             .then(snapshot => {
-                console.log('Succesfully updated document.');
+                console.log('Successfully updated document.');
             })
             .catch (error => {
                 console.log('Error getting documents', error);
