@@ -6,6 +6,7 @@ import { setAppetizers, setBeverages, setDesserts, setEntrees, setFiveDollarMeal
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import InfoIcon from '../../../assets/menu/Info-Icon.png';
+import ChiliPeper from '../../../assets/menu/pepper.png';
 import styles from './styles.js';
 
 class Menu extends Component {
@@ -112,6 +113,37 @@ class Menu extends Component {
         )
     }
 
+    renderPeper = (name) => {
+        let newItems = [...this.state.items];
+
+        var i;
+        let found = false;
+
+        for (i = 0; i < newItems.length; ++i) {
+            if (newItems[i].name === name) {
+                if (newItems[i].popular === true) {
+                    found = true;
+                    break;
+                }
+                
+                break;
+            }
+        }
+
+        if (found) {
+            return (
+                <ImageBackground
+                    style = {{flexDirection: 'row', alignSelf: 'center'}}
+                    source = {ChiliPeper}
+                />
+            )
+        } else {
+            return (
+                null
+            )
+        }
+    }
+
     dismissInfoDialog = () => {
         this.setState({ infoDialog: false })
     }
@@ -125,6 +157,8 @@ class Menu extends Component {
                     <View style = {styles.container}>
                         <View style = {{flex: 1}}>
                             <Text style = {styles.itemName}>{item.name} - ${item.price}</Text>
+
+                            {this.renderPeper(item.name)}
                             
                             <ImageBackground
                                 style = {{height: 110, width: 150}}

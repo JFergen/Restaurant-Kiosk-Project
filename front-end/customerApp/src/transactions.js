@@ -41,13 +41,33 @@ export async function addTransaction(transaction) {
         errorMessage = error;
     });
   
-    dailyRev = dailyRev[0].April[21];
+    dailyRev = dailyRev[0].April;
     dailyRev += parseFloat(transaction.orderTotal);
         
-    let arr = Array.apply(0, Array(21)).map(function () {});
-    arr[21] = dailyRev;
-        
-    await firebase.firestore().collection('DailyRevenue').doc('2020').set({April: arr} )
+     await firebase.firestore().collection('DailyRevenue').doc('2020').set({April: dailyRev, year: '2020'} )
+    .then(() => {
+        console.log("Employee added Successfully");
+        isSuccess = true;
+    })
+    .catch((error) => {
+        console.error("Error adding Employee to Employee table: ", error);
+        isSuccess = false;
+    });
+    
+    await firebase.firestore().collection('MonthlyRevenue').where('year', '==', '2020').get()
+    .then((snapshot) => {
+        console.log("Successfully retreived daily revenue");
+        isSuccess = true;
+        monthlyRev = snapshot.docs.map(doc => doc.data());
+    })
+    .catch((error) => {
+        alert("Error retreiving daily revenue ", error);
+        isSuccess = false;
+        errorMessage = error;
+    });
+    
+    
+    await firebase.firestore().collection('MonthlyRevenue').doc('2020').set({January: 11231, February: 26452, March: 454845, April: dailyRev, year: '2020'} )
     .then(() => {
         console.log("Employee added Successfully");
         isSuccess = true;

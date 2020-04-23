@@ -95,11 +95,11 @@ class PayScreen extends Component {
     // }
 
     updateRequests = index => text => {
-        console.log(this.buyingItems)
+        //console.log(this.buyingItems)
         //console.log(index, text)
         this.buyingItems[index].requests = text
 
-        console.log(this.buyingItems[0].requests)
+        //console.log(this.buyingItems[0].requests)
     }
 
     pressTenPercent = () => {
@@ -175,8 +175,6 @@ class PayScreen extends Component {
 
     initiatePay = async () => {
         let success = await confirmOrder(this.props.orderID, this.props.customerID, global.tableNumber, this.buyingItems)
-
-        console.log(this.buyingItems)
 
         if (success != false) {
             var i;

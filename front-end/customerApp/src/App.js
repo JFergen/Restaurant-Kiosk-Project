@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ImageBackground } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
+import Background from './assets/background.jpeg';
 import Loading from './components/loading/loading';
 import MainContainer from './components/main_container/main_container';
 import Registration from './components/register/registration';
@@ -17,7 +18,7 @@ import '@react-native-firebase/auth';
 
 firebase.functions().useFunctionsEmulator('http://localhost:5000');
 
-global.tableNumber = '3';
+global.tableNumber = '1';
 
 // Navigation
 const RootNavigator = createStackNavigator({
@@ -50,6 +51,7 @@ export default class App extends Component {
       currentDay: null
     }
     
+    this.startingHour = null;
     this.daysArray = [
       'Sunday',
       'Monday',
@@ -78,6 +80,8 @@ export default class App extends Component {
     let minutes = new Date().getMinutes();
     let seconds = new Date().getSeconds();
     let am_pm = 'pm';
+
+    this.startingHour = hour;
 
     if (minutes < 10) {
       minutes = '0' + minutes;
@@ -109,14 +113,29 @@ export default class App extends Component {
   }
 
   render() {
-    return (
-      <Provider store = {store}>
-        <View style = {{backgroundColor: '#f7cac9'}}>
-          <Text style = {{fontWeight: 'bold', alignSelf: 'center'}}>{this.state.currentDay}, {this.state.currentTime}</Text>
-        </View>
-        <AppContainer/>
-      </Provider>
-    )
+    if ( (this.startingHour < 10) || (this.startingHour > 11) || (this.startingHour == 11 && this.state.minutes > 29)) {
+      return (
+        <ImageBackground
+          source = {Background}
+          style = {{height: '100%', width: '100%'}}
+        >
+          <View style = {{backgroundColor: '#f7cac9'}}>
+            <Text style = {{fontWeight: 'bold', alignSelf: 'center'}}>{this.state.currentDay}, {this.state.currentTime}</Text>
+          </View>
+          
+          <Text style = {{fontSize: 45, fontWeight: 'bold', color: 'aqua'}}>Not open. Try again when we open at 10am.</Text>
+        </ImageBackground>
+      )
+    } else {
+      return (
+        <Provider store = {store}>
+          <View style = {{backgroundColor: '#f7cac9'}}>
+            <Text style = {{fontWeight: 'bold', alignSelf: 'center'}}>{this.state.currentDay}, {this.state.currentTime}</Text>
+          </View>
+          <AppContainer/>
+        </Provider>
+      )
+    }
   }
 }
 
