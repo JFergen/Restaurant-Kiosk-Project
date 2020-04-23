@@ -269,38 +269,39 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         return false;
     }
     
-//     for (i in completeOrder.orderedItems) {
-//         let item = completeOrder.orderedItems[i].split(' ');
-//         let query;
+    for (i in order) {
+        let item = completeOrder.orderedItems[i].split(' ');
+        let query;
+        await firebase.firestore().collection('Menu').doc(order[i].name).get()
+        .then((success) => {
+            isSuccess = true;
+           
+            query = success.data();
+            
+        })
+        .catch((error) => {
+            isSuccess = false;
+        });   
         
-//         await firebase.firestore().collection('Menu').doc(item[0]).get()
-//         .then((success) => {
-//             isSuccess = true;
-//             query = success.data();
-//         })
-//         .catch((error) => {
-//             isSuccess = false;
-//         });   
+        if (!isSuccess) {
+            return false;
+        }
         
-//         if (!isSuccess) {
-//             return false;
-//         }
+        query.orderTotal = query.orderTotal + parseInt(order[i].quantity, 10);
         
-//         let total = query.orderTotal + parseInt(item[1], 10);
+        await firebase.firestore().collection('Menu').doc(query.name).set(query)
+        .then((success) => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            isSuccess = false;
+        });   
         
-//         await firebase.firestore().collection('Menu').doc(item[0]).set({orderTotal: total})
-//         .then((success) => {
-//             isSuccess = true;
-//         })
-//         .catch((error) => {
-//             isSuccess = false;
-//         });   
+        if (!isSuccess) {
+            return false;
+        }
         
-//         if (!isSuccess) {
-//             return false;
-//         }
-        
-//     }
+    }
     
     return staffID;
     

@@ -66,7 +66,41 @@ class Menu extends Component {
         // }
         
         // question.addQuestionDoc(doc)
-        question.getQuestionDocs()
+        let ApplePie = {
+               allergens : ['Gluten','Milk'],
+               calories : 1000,
+               ingredients : ['Apple', 'Sugar', 'Flour','Milk'],
+               name : 'Apple Pie',
+               orderTotal : 3,
+               popular : true,
+               price : 8.99,
+               quantity : 1,
+               requests : 'none',
+               type : 'dessert',
+               uri : 'https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/5266844/910/607/m2/fpnw/wm1/wgnkqd9xgdgqtxrlnjc7trnc7tlqmqdzdpozbrtoxt7ngqdctm48ueswkvc9yham-.jpg?1540547491&s=5c34f52747a72484b42aa74b5f70473d'
+
+
+            }
+
+        let Burrito = {
+
+            allergens : ['Cheese','Bread'],
+               calories : 700,
+               ingredients : ['Cheese', 'Bread'],
+               name : 'Burrito',
+               orderTotal : 2,
+               popular : true,
+               price : 4.99,
+               quantity : 1,
+               requests : 'none',
+               type : 'entree',
+               uri : 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tacobueno.com%2Fassets%2Ffood%2Fburritos%2FBurrito_BOB_990x725.jpg%3Fv%3D1&f=1&nofb=1'
+
+
+        }
+        let items = [ApplePie,Burrito]
+        
+        //orders.confirmOrder("4CHZ6GZGNWfqK6PoDW5P","sIS8jNazm02eFwFZ7mrb",'1',items)
         .then(function(orders) {
             console.log(orders);
         })
