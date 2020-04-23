@@ -47,57 +47,21 @@ export async function resetPopularItems() {
 
 export async function setPopularItems() {
     let query;
-    let isSuccess = true;
-    // let month = new Date();
-    // month = month.getMonth();
-    
-    // await firebase.firestore().collection('Menu').where('month', '==', month).get()
-    // .then(snapshot => {
-    //     if (dataSnapshot.exists()) {
-    //         query = snapshot.docs.map(doc => doc.data());
-    //     }
-    //     else {
-    //         query = null;
-    //     }
-    // })
-    // .catch (error => {
-    //     console.log('Error getting documents', error);
-    //     isSuccess = false;
-    // });
-                                                        
-    // if (!isSuccess) {
-    //     return false;
-    // }
-    
-    // if (query == null) {
-    //     await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
-    //     .then(snapshot => {
-    //         console.log('Success updated month', error);
-    //     })
-    //     .catch (error => {
-    //         console.log('Error getting documents', error);
-    //         isSuccess = false;
-    //     });
-        
-    //     //need to reset orderTotal
-    // }
-    
-    
-    
-    
-    await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
+
+    await firebase.firestore().collection('Menu').orderBy('orderTotal')
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
     .catch (error => {
         console.log('Error getting documents', error);
-        isSuccess = false;
+        query = null;
+        break;
     });
-    
-    if (!isSuccess) {
+
+    if (query == null) {
         return false;
     }
-    
+
 
     for (let i = 0; i < 5; i++) {
         query[i].popular = true;
@@ -108,11 +72,12 @@ export async function setPopularItems() {
         })
         .catch (error => {
             console.log('Error getting documents', error);
-            isSuccess = false;
+            query = null;
+            break;
         });
     }
 
-    if (!isSuccess) {
+    if (query == null) {
         return false;
     }
 
