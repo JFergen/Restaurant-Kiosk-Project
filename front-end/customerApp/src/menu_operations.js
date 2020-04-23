@@ -48,39 +48,39 @@ export async function resetPopularItems() {
 export async function setPopularItems() {
     let query;
     let isSuccess = true;
-    let month = new Date();
-    month = month.getMonth();
+    // let month = new Date();
+    // month = month.getMonth();
     
-    await firebase.firestore().collection('Menu').where('month', '==', month).get()
-    .then(snapshot => {
-        if (dataSnapshot.exists()) {
-            query = snapshot.docs.map(doc => doc.data());
-        }
-        else {
-            query = null;
-        }
-    })
-    .catch (error => {
-        console.log('Error getting documents', error);
-        isSuccess = false;
-    });
+    // await firebase.firestore().collection('Menu').where('month', '==', month).get()
+    // .then(snapshot => {
+    //     if (dataSnapshot.exists()) {
+    //         query = snapshot.docs.map(doc => doc.data());
+    //     }
+    //     else {
+    //         query = null;
+    //     }
+    // })
+    // .catch (error => {
+    //     console.log('Error getting documents', error);
+    //     isSuccess = false;
+    // });
                                                         
-    if (!isSucess) {
-        return false;
-    }
+    // if (!isSuccess) {
+    //     return false;
+    // }
     
-    if (query == null) {
-        await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
-        .then(snapshot => {
-            console.log('Success updated month', error);
-        })
-        .catch (error => {
-            console.log('Error getting documents', error);
-            isSuccess = false;
-        });
+    // if (query == null) {
+    //     await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+    //     .then(snapshot => {
+    //         console.log('Success updated month', error);
+    //     })
+    //     .catch (error => {
+    //         console.log('Error getting documents', error);
+    //         isSuccess = false;
+    //     });
         
-        //need to reset orderTotal
-    }
+    //     //need to reset orderTotal
+    // }
     
     
     

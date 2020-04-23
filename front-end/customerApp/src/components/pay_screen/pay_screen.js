@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { confirmOrder } from '../../orders';
 import { addTransaction } from '../../transactions';
 import { validateCoupon } from '../../coupon';
+import {getQuestionDocs, addQuestionDoc} from '../../question';
 import styles from './styles';
 
 class PayScreen extends Component {
@@ -29,9 +30,23 @@ class PayScreen extends Component {
             creditCardDialog: false,
             serverCalledDialog: false,
             receiptDialog: false,
-            successDialog: false
+            successDialog: false,
+            questionsDialog: false
         };
         this.buyingItems = this.props.navigation.getParam('items');
+        this.questionsDoc = {
+            orderID: this.props.orderID,
+            questions: [
+                'How was your experience at our restaurant?', 
+                'How was our service?', 
+                'How was the quality of our food?'
+            ],
+            reviews: [
+                'N/A',
+                'N/A',
+                'N/A'
+            ]
+        }
         this.navigation = this.props.navigation.getParam('navigation');
         this.tipPercent = '20%'
         this.tipAmount = null
@@ -94,12 +109,16 @@ class PayScreen extends Component {
     //     this.setState({ canceled: false })
     // }
 
-    updateRequests = index => text => {
+    updateRequests = (index) => text => {
         //console.log(this.buyingItems)
         //console.log(index, text)
         this.buyingItems[index].requests = text
 
         //console.log(this.buyingItems[0].requests)
+    }
+
+    updateReview = (index) => text => {
+        this.questionsDoc.reviews[index] = text
     }
 
     pressTenPercent = () => {
@@ -379,7 +398,7 @@ class PayScreen extends Component {
         ++this.peoplePaid
         
         if (this.peoplePaid === this.numPeople) {
-            this.navigation.navigate('Load')
+            this.setState({ questionsDialog: true })
         } else {
             this.setState({ howToPayDialog: true })
         }
@@ -396,7 +415,7 @@ class PayScreen extends Component {
         ++this.peoplePaid
         
         if (this.peoplePaid === this.numPeople) {
-            this.navigation.navigate('Load')
+            this.setState({ questionsDialog: true })
         } else {
             this.setState({ howToPayDialog: true })
         }
@@ -413,7 +432,7 @@ class PayScreen extends Component {
         ++this.peoplePaid
         
         if (this.peoplePaid === this.numPeople) {
-            this.navigation.navigate('Load')
+            this.setState({ questionsDialog: true })
         } else {
             this.setState({ howToPayDialog: true })
         }
@@ -430,7 +449,7 @@ class PayScreen extends Component {
         ++this.peoplePaid
         
         if (this.peoplePaid === this.numPeople) {
-            this.navigation.navigate('Load')
+            this.setState({ questionsDialog: true })
         } else {
             this.setState({ howToPayDialog: true })
         }
@@ -447,10 +466,20 @@ class PayScreen extends Component {
         ++this.peoplePaid
         
         if (this.peoplePaid === this.numPeople) {
-            this.navigation.navigate('Load')
+            this.setState({ questionsDialog: true })
         } else {
             this.setState({ howToPayDialog: true })
         }
+    }
+
+    submitQuestions = async () => {
+        let check = await addQuestionDoc(this.questionsDoc);
+        if (check === false) {
+            console.log("Error adding reviews to database")
+        }
+
+        this.setState({ questionsDialog: false })
+        this.props.navigation.navigate('Load')
     }
 
     displayCouponDialog = () => {
@@ -488,6 +517,13 @@ class PayScreen extends Component {
         this.setState({
             receiptDialog: false,
             splitBillDialog: true
+        })
+    }
+
+    displayQuestionsDialog = () => {
+        this.setState({
+            successDialog: false,
+            questionsDialog: true
         })
     }
 
@@ -830,6 +866,57 @@ class PayScreen extends Component {
                                     onPress = {() => this.pressButtonFive()}
                                 />
                             </View>
+                        </View>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog
+                    visible = {this.state.questionsDialog}
+                    dialogAnimation = {new ScaleAnimation()}
+                    dialogTitle = {
+                        <DialogTitle title = "Survey"/>
+                    }
+                    footer = {
+                        <DialogFooter>
+                            <DialogButton
+                                text = "SUBMIT"
+                                onPress = {this.submitQuestions}
+                            />
+                        </DialogFooter>
+                    }
+                >
+                    <DialogContent>
+                        <View>
+                            <Text style = {styles.receiptText}>{this.questionsDoc.questions[0]}</Text>
+                            <View style = {{width: 300, height: 50, backgroundColor: 'grey', alignSelf: 'center', borderWidth: 2, borderColor: 'black', marginLeft: 10}}>
+                                <TextInput 
+                                    style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                                    multiline = {true}
+                                    placeholder = {this.questionsDoc.reviews[0]}
+                                    onChangeText = {this.updateReview(0)}
+                                />
+                            </View>
+
+                            <Text style = {styles.receiptText}>{this.questionsDoc.questions[1]}</Text>
+                            <View style = {{width: 300, height: 50, backgroundColor: 'grey', alignSelf: 'center', borderWidth: 2, borderColor: 'black', marginLeft: 10}}>
+                                <TextInput 
+                                    style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                                    multiline = {true}
+                                    placeholder = {this.questionsDoc.reviews[1]}
+                                    onChangeText = {this.updateReview(1)}
+                                />
+                            </View>
+
+                            <Text style = {styles.receiptText}>{this.questionsDoc.questions[2]}</Text>
+                            <View style = {{width: 300, height: 50, backgroundColor: 'grey', alignSelf: 'center', borderWidth: 2, borderColor: 'black', marginLeft: 10}}>
+                                <TextInput 
+                                    style = {{fontSize: 20, color: 'black', fontWeight: 'bold', lineHeight: 20}}
+                                    multiline = {true}
+                                    placeholder = {this.questionsDoc.reviews[2]}
+                                    onChangeText = {this.updateReview(2)}
+                                />
+                            </View>
+                                 
                         </View>
                     </DialogContent>
                 </Dialog>

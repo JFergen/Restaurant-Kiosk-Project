@@ -47,19 +47,20 @@ class MainContainer extends Component {
                                 <Menu menuList = {this.props.entrees}/>
                             </View>
 
-                            {/* Desserts */}
-                            <View style = {styles.menu}>
-                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
-                                <Text style = {styles.menuText}>Desserts</Text>
-                                <Menu menuList = {this.props.desserts}/>
-                            </View>
-
                             {/* $5 Meals */}
-                            <View style = {styles.lastMenu}>
+                            <View style = {styles.menu}>
                                 {/* A list of items with a name, picture, and "+" and "-" buttons */}
                                 <Text style = {styles.menuText}>$5 Meals (With a drink)</Text>
                                 <Menu menuList = {this.props.fiveDollarMeals}/>
                             </View>
+
+                            {/* Desserts */}
+                            <View style = {styles.lastMenu}>
+                                {/* A list of items with a name, picture, and "+" and "-" buttons */}
+                                <Text style = {styles.menuText}>Desserts</Text>
+                                <Menu menuList = {this.props.desserts}/>
+                            </View>
+  
                     </View>
                 </ScrollView>
             </ImageBackground>
@@ -71,8 +72,8 @@ const mapStateToProps = (state) => ({
     beverages:          state.menReducer.beverages,
     appetizers:         state.menReducer.appetizers,
     entrees:            state.menReducer.entrees,
+    fiveDollarMeals:    state.menReducer.fiveDollarMeals,
     desserts:           state.menReducer.desserts,
-    fiveDollarMeals:    state.menReducer.fiveDollarMeals
 })
 
 export default connect(mapStateToProps)(MainContainer);

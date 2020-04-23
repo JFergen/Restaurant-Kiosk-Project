@@ -113,7 +113,7 @@ export default class App extends Component {
   }
 
   render() {
-    if ( (this.startingHour < 10) || (this.startingHour > 11) || (this.startingHour == 11 && this.state.minutes > 29)) {
+    if ( (this.startingHour < 10) || (this.startingHour == 23 && this.state.minutes > 29)) {
       return (
         <ImageBackground
           source = {Background}

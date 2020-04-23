@@ -4,7 +4,8 @@ const initialState = {
     entrees: [],
     beverages: [],
     desserts: [],
-    appetizers: []
+    appetizers: [],
+    fiveDollarMeals: []
 }
 
 export default function (state = initialState, action) {
@@ -23,7 +24,7 @@ export default function (state = initialState, action) {
                 beverages: state.beverages,
                 entrees: state.entrees,
                 desserts: state.desserts,
-                fiveDollarMeals: action.fiveDollarMeals
+                fiveDollarMeals: state.fiveDollarMeals
             }
         case SET_BEVERAGES:
             return {
@@ -31,7 +32,7 @@ export default function (state = initialState, action) {
                 beverages: action.newBeverages,
                 entrees: state.entrees,
                 desserts: state.desserts,
-                fiveDollarMeals: action.fiveDollarMeals
+                fiveDollarMeals: state.fiveDollarMeals
             }
         case SET_ENTREES:
             return {
@@ -39,7 +40,7 @@ export default function (state = initialState, action) {
                 beverages: state.beverages,
                 entrees: action.newEntrees,
                 desserts: state.desserts,
-                fiveDollarMeals: action.fiveDollarMeals
+                fiveDollarMeals: state.fiveDollarMeals
             }
         case SET_DESSERTS:
             return {
@@ -47,14 +48,14 @@ export default function (state = initialState, action) {
                 beverages: state.beverages,
                 entrees: state.entrees,
                 desserts: action.newDesserts,
-                fiveDollarMeals: action.fiveDollarMeals
+                fiveDollarMeals: state.fiveDollarMeals
             }
         case SET_FIVEDOLLARMEALS:
             return {
                 appetizers: state.appetizers,
                 beverages: state.beverages,
                 entrees: state.entrees,
-                desserts: action.desserts,
+                desserts: state.desserts,
                 fiveDollarMeals: action.newFiveDollarMeals
             }
         default:

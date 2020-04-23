@@ -22,7 +22,7 @@ export async function addQuestionDoc(doc) {
         isSuccess = true;
     })
     .catch((error) => {
-        alert("Error adding question doc to the question collection: ", error);
+        console.log("Error adding question doc to the question collection: ", error);
         isSuccess = false;
     });
     return isSuccess;

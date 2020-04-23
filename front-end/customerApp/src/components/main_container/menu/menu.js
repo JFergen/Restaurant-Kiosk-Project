@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Image, FlatList, Text, TouchableHighlight, ImageBackground } from 'react-native';
-import Dialog, { DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle } from 'react-native-popup-dialog';
+import {View, Image, FlatList, Text, TouchableHighlight, ImageBackground} from 'react-native';
+import Dialog, {DialogContent, DialogFooter, DialogButton, ScaleAnimation, DialogTitle} from 'react-native-popup-dialog';
+import Overlay from 'react-native-modal-overlay';
 import { connect } from 'react-redux';
-import { setAppetizers, setBeverages, setDesserts, setEntrees, setFiveDollarMeals } from '../../../store/actions/menu_actions';
+import {setAppetizers, setBeverages, setDesserts, setEntrees, setFiveDollarMeals} from '../../../store/actions/menu_actions';
 import GreenPlus from '../../../assets/menu/green-plus.png';
 import RedMinus from '../../../assets/menu/red-minus.png';
 import InfoIcon from '../../../assets/menu/Info-Icon.png';
@@ -14,40 +15,27 @@ class Menu extends Component {
         super(props);
         this.state = {
             items: props.menuList,
-            infoDialog: false
+            infoDialog: false,
+            drinkOverlay: false
         };
         this.type = null;
         this.index = 0;
     }
 
     componentDidMount() {
-        let testType = this.state.items[0].type
-
-        if (testType === 'appetizer') {
-            this.type = 'appetizer'
-        } else if (testType === 'beverage') {
-            this.type = 'beverage'
-        } else if (testType === 'entree') {
-            this.type = 'entree'
-        } else if (testType === 'dessert') {
-            this.type = 'dessert'
-        } else if (testType === 'five dollar') {
-            this.type = 'five dollar'
-        } else {
-            alert('monkaS')
-        }
+        this.type = this.state.items[0].type
     }
 
-    updateArray = (type) => {
-        if (type === 'appetizer') {
+    updateArray = () => {
+        if (this.type === 'appetizer') {
             this.props.setAppetizers(this.state.items)
-        } else if (type === 'beverage') {
+        } else if (this.type === 'beverage') {
             this.props.setBeverages(this.state.items)
-        } else if (type === 'entree') {
+        } else if (this.type === 'entree') {
             this.props.setEntrees(this.state.items)
-        } else if (type === 'dessert') {
+        } else if (this.type === 'dessert') {
             this.props.setDesserts(this.state.items)
-        } else if (type === 'five dollar') {
+        } else if (this.type === 'five dollar') {
             this.props.setFiveDollarMeals(this.state.items)
         } else {
             alert('monkaS')
@@ -57,6 +45,7 @@ class Menu extends Component {
     incrementQty = (name) => {
         let newItems = [...this.state.items]
 
+        var i;
         for(i = 0; i < newItems.length; ++i) {
             if(newItems[i].name === name) {
                 ++newItems[i].quantity;
@@ -64,8 +53,35 @@ class Menu extends Component {
             }
         }
 
-        this.setState({items: newItems});
-        this.updateArray(this.type)
+        if (this.type === 'five dollar') {
+            this.setState({ drinkOverlay: true })
+        } else {
+            this.setState({items: newItems});
+            this.updateArray()
+        }
+    }
+
+    incrementQtyDrink = (name) => {
+        let beverages = [...this.props.beverages]
+        
+        var i;
+        for(i = 0; i < beverages.length; ++i) {
+            if(beverages[i].name === name) {
+                ++beverages[i].quantity;
+                break;
+            }
+        }
+        beverages[i].price = 0
+
+        let newItems = [...this.state.items]
+        newItems.drink = beverages[i];
+
+        this.setState({
+            items: newItems,
+            drinkOverlay: false
+        })
+        
+        this.updateArray();
     }
 
     decrementQty = (name) => {
@@ -132,8 +148,8 @@ class Menu extends Component {
 
         if (found) {
             return (
-                <ImageBackground
-                    style = {{flexDirection: 'row', alignSelf: 'center'}}
+                <Image
+                    style = {{height: 64, width: 64}}
                     source = {ChiliPeper}
                 />
             )
@@ -157,23 +173,26 @@ class Menu extends Component {
                     <View style = {styles.container}>
                         <View style = {{flex: 1}}>
                             <Text style = {styles.itemName}>{item.name} - ${item.price}</Text>
-
-                            {this.renderPeper(item.name)}
                             
                             <ImageBackground
-                                style = {{height: 110, width: 150}}
+                                style = {{height: 116, width: 150}}
                                 source = {{uri: item.uri}}
                             >
 
+                            <View style = {{flex: 1}}>
+                                {this.renderPeper(item.name)}
+                                
                                 <TouchableHighlight
+                                    style = {{alignSelf: 'flex-end'}}
                                     underlayColor = 'transparent'
                                     onPress = {() => this.displayInfoOverlay(item.name)}
                                 >
                                     <Image source = {InfoIcon}/>
                                 </TouchableHighlight>
+                            </View>
 
-                        </ImageBackground>
-                    </View>
+                            </ImageBackground>
+                        </View>
     
                         <View style = {{flex: 10, alignItems: 'flex-end'}}>
                             <Text style = {{fontSize: 45, marginRight: 55}}>{item.quantity}</Text>
@@ -211,6 +230,58 @@ class Menu extends Component {
 
 
 
+            {/* Overlays Here */}
+            <Overlay
+                visible = {this.state.drinkOverlay}
+                childrenWrapperStyle = {{width: 600, height: 800, alignSelf: 'center', backgroundColor: 'black'}}
+                animationType = {'zoomIn'}
+            >
+                <Text style = {{
+                    fontSize: 32,
+                    fontWeight: 'bold',
+                    color: 'white', 
+                    alignSelf: 'center'
+                }}>
+                    Choose a drink for your meal
+                </Text>
+                <FlatList
+                    data = {this.props.beverages}
+                    renderItem = {({item}) => (
+                        <View style = {styles.container}>
+                            <View style = {{flex: 1}}>
+                                <Text style = {styles.itemName}>{item.name}</Text>
+
+                                <ImageBackground
+                                    style = {{height: 116, width: 150}}
+                                    source = {{uri: item.uri}}
+                                >
+
+                                {this.renderPeper(item.name)}
+
+                                </ImageBackground>
+                            </View>
+                    
+                            <View style = {{flex: 10, alignItems: 'flex-end'}}>
+                                <View style = {{flex: 1, flexDirection: 'row', justifyContent: 'flex-end'}}>
+                                    <TouchableHighlight
+                                        underlayColor = 'transparent'
+                                        onPress = {() => this.incrementQtyDrink(item.name)}
+
+                                    >
+                                        <Image 
+                                            source = {GreenPlus}
+                                            style = {{height: 64, width: 64}}
+                                        />
+                                    </TouchableHighlight>
+                                </View>
+                            </View>
+
+
+                        </View>
+                    )}
+                    keyExtractor = {(item, index) => index.toString()}
+                />
+            </Overlay>
 
             {/* Dialog Boxes Here */}
             <Dialog

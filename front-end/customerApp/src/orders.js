@@ -265,6 +265,44 @@ export async function confirmOrder(ordID, custID, tableNum, items){
         isSuccess = false;
     });
     
+    if (!isSuccess) {
+        return false;
+    }
+    
+    for (i in order) {
+        let item = completeOrder.orderedItems[i].split(' ');
+        let query;
+        await firebase.firestore().collection('Menu').doc(order[i].name).get()
+        .then((success) => {
+            isSuccess = true;
+           
+            query = success.data();
+            
+        })
+        .catch((error) => {
+            isSuccess = false;
+        });   
+        
+        if (!isSuccess) {
+            return false;
+        }
+        
+        query.orderTotal = query.orderTotal + parseInt(order[i].quantity, 10);
+        
+        await firebase.firestore().collection('Menu').doc(query.name).set(query)
+        .then((success) => {
+            isSuccess = true;
+        })
+        .catch((error) => {
+            isSuccess = false;
+        });   
+        
+        if (!isSuccess) {
+            return false;
+        }
+        
+    }
+    
     return staffID;
     
 }

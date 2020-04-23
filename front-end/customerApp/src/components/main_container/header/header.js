@@ -121,7 +121,7 @@ class Header extends Component {
         let allItems = [];
         let buyingItems = [];
 
-        allItems = this.props.appetizers.concat(this.props.beverages, this.props.entrees, this.props.desserts)
+        allItems = this.props.appetizers.concat(this.props.beverages, this.props.entrees, this.props.desserts, this.props.fiveDollarMeals)
 
         for (var i = 0; i < allItems.length; i++) {
             if (allItems[i].quantity > 0) {
@@ -433,10 +433,11 @@ class Header extends Component {
 };
 
 const mapStateToProps = (state) => ({
-    appetizers: state.menReducer.appetizers,
-    beverages:  state.menReducer.beverages,
-    entrees:    state.menReducer.entrees,
-    desserts:   state.menReducer.desserts
+    appetizers:         state.menReducer.appetizers,
+    beverages:          state.menReducer.beverages,
+    entrees:            state.menReducer.entrees,
+    desserts:           state.menReducer.desserts,
+    fiveDollarMeals:    state.menReducer.fiveDollarMeals
 })
 
-export default connect(mapStateToProps, {})(Header);
+export default connect(mapStateToProps)(Header);
