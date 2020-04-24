@@ -99,7 +99,7 @@ class Menu extends Component {
 
         }
         let items = [ApplePie,Burrito]
-        
+        menuOperations.setPopularItems('five dollar')
         //orders.confirmOrder("4CHZ6GZGNWfqK6PoDW5P","sIS8jNazm02eFwFZ7mrb",'1',items)
         .then(function(orders) {
             console.log(orders);
