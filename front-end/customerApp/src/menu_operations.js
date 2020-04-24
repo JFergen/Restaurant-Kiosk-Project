@@ -45,17 +45,53 @@ export async function resetPopularItems() {
 }
 
 
-export async function setPopularItems() {
+export async function setPopularItems(type) {
     let query;
-
-    await firebase.firestore().collection('Menu').orderBy('orderTotal')
+    let isSuccess = true;
+    // let month = new Date();
+    // month = month.getMonth();
+    
+    // await firebase.firestore().collection('Menu').where('month', '==', month).get()
+    // .then(snapshot => {
+    //     if (dataSnapshot.exists()) {
+    //         query = snapshot.docs.map(doc => doc.data());
+    //     }
+    //     else {
+    //         query = null;
+    //     }
+    // })
+    // .catch (error => {
+    //     console.log('Error getting documents', error);
+    //     isSuccess = false;
+    // });
+                                                        
+    // if (!isSucess) {
+    //     return false;
+    // }
+    
+    // if (query == null) {
+    //     await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+    //     .then(snapshot => {
+    //         console.log('Success updated month', error);
+    //     })
+    //     .catch (error => {
+    //         console.log('Error getting documents', error);
+    //         isSuccess = false;
+    //     });
+        
+    //     //need to reset orderTotal
+    // }
+    
+    
+    
+    
+    await firebase.firestore().collection('Menu').where('type','==',type).orderBy('orderTotal', 'desc').get()
     .then(snapshot => {
         query = snapshot.docs.map(doc => doc.data());
     })
     .catch (error => {
         console.log('Error getting documents', error);
         query = null;
-        break;
     });
 
     if (query == null) {
@@ -63,7 +99,7 @@ export async function setPopularItems() {
     }
 
 
-    for (let i = 0; i < 5; i++) {
+     for (let i = 0; i < 3; i++) {
         query[i].popular = true;
 
         await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
@@ -73,8 +109,9 @@ export async function setPopularItems() {
         .catch (error => {
             console.log('Error getting documents', error);
             query = null;
-            break;
         });
+
+           
     }
 
     if (query == null) {
