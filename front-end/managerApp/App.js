@@ -11,18 +11,20 @@ import Login from './screens/Login';
 import EmployeeManagement from './screens/employees/EmployeeManagement';
 import Inventory from './screens/inventory/InventoryManagement';
 import NewInventoryItem from './screens/inventory/newInventoryItem';
-import EditInventory from './screens/inventory/editInventory';
 import VendorGuide from './screens/inventory/vendorGuide';
-import EditMenu from './screens/menu/editMenu';
-import ViewMenu from './screens/menu/viewMenu';
 import MenuManagement from './screens/menu/MenuManagement';
-import ApproveTimes from './screens/approveTimes/approveTimes';
 import ManageTips from './screens/manageTips/manageTips';
 import CompMeals from './screens/metrics/compMeals';
 import MetricsPage from './screens/metrics/MetricsPage';
 import TotalOrders from './screens/metrics/totalOrders';
 import SignUp from './screens/SignUp';
 import NewMenuItem from './screens/menu/newMenuItem';
+import Beverages from './screens/menu/beverages';
+import Appetizers from './screens/menu/appetizers';
+import Entrees from './screens/menu/entrees';
+import Desserts from './screens/menu/desserts';
+import FiveDollar from './screens/menu/fiveDollar';
+import AddCoupon from './screens/AddCoupon';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +38,46 @@ export function NavStack({ navigation }) {
         options={{ title: 'Login', headerStyle: {height: 70},
                                    headerTitleAlign: 'center'}}
       />
+
+      <Stack.Screen
+              name="Beverages"
+              component={Beverages}
+              options={{ title: 'Beverages', headerStyle: {height: 70},
+                                         headerTitleAlign: 'center'}}
+            />
+
+      <Stack.Screen
+                    name="AddCoupon"
+                    component={AddCoupon}
+                    options={{ title: 'Add Coupon', headerStyle: {height: 70},
+                                               headerTitleAlign: 'center'}}
+                  />
+
+      <Stack.Screen
+              name="Appetizers"
+              component={Appetizers}
+              options={{ title: 'Appetizers', headerStyle: {height: 70},
+                                         headerTitleAlign: 'center'}}
+            />
+
+      <Stack.Screen
+              name="Entrees"
+              component={Entrees}
+              options={{ title: 'Entrees', headerStyle: {height: 70},
+                                               headerTitleAlign: 'center'}}
+           />
+      <Stack.Screen
+              name="FiveDollar"
+              component={FiveDollar}
+              options={{ title: 'Five Dollar', headerStyle: {height: 70},
+                                         headerTitleAlign: 'center'}}
+            />
+      <Stack.Screen
+              name="Desserts"
+              component={Desserts}
+              options={{ title: 'Desserts', headerStyle: {height: 70},
+                                         headerTitleAlign: 'center'}}
+            />
 
       <Stack.Screen
               name="NewMenuItem"
@@ -79,13 +121,6 @@ export function NavStack({ navigation }) {
       />
 
       <Stack.Screen
-        name="EditInventory"
-        component={EditInventory}
-        options={{ title: 'Add/Edit Inventory' , headerStyle: {height: 70},
-                                                 headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
         name="VendorGuide"
         component={VendorGuide}
         options={{ title: 'Vendor Resupply Guide' , headerStyle: {height: 70},
@@ -100,30 +135,9 @@ export function NavStack({ navigation }) {
       />
 
       <Stack.Screen
-        name="ViewMenu"
-        component={ViewMenu}
-        options={{ title: 'View Menu' , headerStyle: {height: 70},
-                                        headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
-        name="EditMenu"
-        component={EditMenu}
-        options={{ title: 'Edit Menu' , headerStyle: {height: 70},
-                                        headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
-        name="ApproveTimes"
-        component={ApproveTimes}
-        options={{ title: 'Approve Times' , headerStyle: {height: 70},
-                                            headerTitleAlign: 'center'}}
-      />
-
-      <Stack.Screen
         name="ManageTips"
         component={ManageTips}
-        options={{ title: 'Manage Tips' , headerStyle: {height: 70},
+        options={{ title: 'Manage Tips/Transaction Data' , headerStyle: {height: 70},
                                           headerTitleAlign: 'center'}}
       />
 
