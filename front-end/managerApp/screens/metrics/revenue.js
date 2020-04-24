@@ -44,6 +44,19 @@ import firestore from '@react-native-firebase/firestore'
 //this will update the first three days of january
 //the year will stay the same
 //updateDailyRevenue(revenue)
+
+export async function addNewCoupon(item) {
+    await firebase.firestore().collection('Coupons').doc(item.code).set(item)
+    .then(() => {
+        console.log("Successfully added coupon to the coupon.");
+    })
+    .catch((error) => {
+        alert("Error adding ingredient to doc: ", error);
+    });
+}
+
+
+
 export async function updateDailyRevenue(revenue) {
     let isSuccess;
 
@@ -58,6 +71,35 @@ export async function updateDailyRevenue(revenue) {
 
     return isSuccess;
 
+}
+export async function getQuestions() {
+    let query;
+
+    await firebase.firestore().collection('Question').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+
+    return query;
+}
+
+//This function gets the questions from the back-end
+export async function getQuestionDocs() {
+    let questionDoc = []
+
+    await firebase.firestore().collection('Question').get()
+    .then((snapshot) => {
+        questionDoc = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        alert('Failure getting question docs.', error);
+    });
+
+    return questionDoc;
 }
 
 

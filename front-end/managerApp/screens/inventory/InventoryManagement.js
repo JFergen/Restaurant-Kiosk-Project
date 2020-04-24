@@ -1,6 +1,10 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert, Text, TouchableHighlight, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/functions';
+import '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 import inventory from './inventory'
 import {getInventory} from './inventory';
 import {deleteFromInventory} from './inventory';
@@ -13,13 +17,6 @@ import {updateInventory} from './inventory';
             query: [],
         }
     }
-
-  onUpdate = async (tempInventory) => {
-      let completion = await updateOrderInformation(tempInventoryPasses)
-                        .then(data => {
-                                 console.log(data);
-                         })
-     }
 
   getData = async () => {
      let tempData = await getInventory()
@@ -36,28 +33,25 @@ import {updateInventory} from './inventory';
    {this.getData()}
 
    const mapInventory = this.state.query.map(index => {
-      const tempInventory = {
-            ingredientName: index.ingredientName,
-            ingredientQuantity: index.ingredientQuantity,
-      }
+
+   const newInventory = {
+         ingredientName: "Apple",
+         ingredientQuantity: 450,
+   }
 
       return (
       <View style={styles.employeeContainer}>
 
           <TextInput
-           placeholder= {index.ingredientName}
+           placeholder=  {index.name}
            placeholderTextColor='rgba(255,255,255,1.0)'
            style={styles.input}
-           onChangeText={(val) => tempInventory.ingredientName(val),
-                        console.log(tempInventory.ingredientName)}
            />
 
           <TextInput
            placeholder=  {String(index.ingredientQuantity)}
            placeholderTextColor='rgba(255,255,255,1.0)'
            style={styles.input}
-           onChangeText={(val) => tempInventory.ingredientQuantity(val),
-                        console.log(tempInventory.ingredientQuantity)}
            />
 
           <TouchableHighlight style={styles.removeEmployeeButton}
@@ -66,6 +60,14 @@ import {updateInventory} from './inventory';
                   Remove Inventory Item
               </Text>
           </TouchableHighlight>
+
+          <TouchableHighlight style={styles.removeEmployeeButton}
+           onPress={() => alert('Inventory Updated')}>
+              <Text style={styles.menuText}>
+                  Commit Edits
+              </Text>
+          </TouchableHighlight>
+
       </View>
        )
    })
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     employeeContainer:
     {
         backgroundColor: '#3333ff',
-        height: 150,
+        height: 220,
         width: 800,
         alignItems: 'flex-start',
         justifyContent: 'space-around',

@@ -82,6 +82,21 @@ export async function getOrders() {
     return query;
 }
 
+export async function getTransactions() {
+    let query;
+
+    await firebase.firestore().collection('Transactions').get()
+    .then((snapshot) => {
+        query = snapshot.docs.map(doc => doc.data());
+    })
+    .catch ((error) => {
+        console.log('Error getting document', error);
+        query = null;
+    });
+
+    return query;
+}
+
 
 //this function updates a specific order in the database
 //the function takes a object as it's parameter

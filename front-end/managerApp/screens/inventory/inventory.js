@@ -32,6 +32,7 @@ export async function deleteFromInventory(itemName) {
 
     await firebase.firestore().collection('Inventory').doc(ingredientName).delete()
     .then(() => {
+        console.log("In delete function");
         isSuccess = true;
     })
     .catch((error) => {

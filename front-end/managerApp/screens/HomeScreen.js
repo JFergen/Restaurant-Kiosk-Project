@@ -23,6 +23,12 @@ function HomeScreen ({ navigation }) {
                          </Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('AddCoupon')}>
+                         <Text style = {styles.menuText}>
+                             Add Coupon
+                         </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.menuButton}
                      onPress={() => navigation.navigate('MenuManagement')}>
                          <Text style = {styles.menuText}>
                              Menu Management
@@ -35,15 +41,9 @@ function HomeScreen ({ navigation }) {
                          </Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.menuButton}
-                     onPress={() => navigation.navigate('ApproveTimes')}>
-                         <Text style = {styles.menuText}>
-                             Approve Times
-                         </Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.menuButton}
                      onPress={() => navigation.navigate('ManageTips')}>
                          <Text style = {styles.menuText}>
-                             Manage Tips
+                             Manage Tips / Transaction Data
                          </Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.menuButton}
@@ -51,17 +51,10 @@ function HomeScreen ({ navigation }) {
                          <Text style = {styles.menuText}>
                              Manage Employees
                          </Text>
-<<<<<<< HEAD:front-end/managerApp/src/App.js
-                    </TouchableHighlight> */
-            /* </View>
-    //    </ImageBackground>
-    <View>*/
-=======
                     </TouchableHighlight>
             </View>
        </View>
     </View>
->>>>>>> 76414c138e133c8d21a515cd3b4c3fdc81b5c307:front-end/managerApp/screens/HomeScreen.js
     )
 }
 
@@ -84,11 +77,11 @@ const styles = StyleSheet.create({
     },
 
     mainMenu: {
-        margin: 250,
+        margin: 20,
         paddingTop: 10,
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         alignContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
@@ -96,16 +89,17 @@ const styles = StyleSheet.create({
     },
 
     menuButton: {
-        width: 220,
-        height: 160,
+        width: 150,
+        height: 150,
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 20,
+        margin: 5,
         padding: 5,
         backgroundColor: '#3333ff'
     },
 
     menuText: {
+
         fontSize: 21,
         color: '#ffffff',
     },

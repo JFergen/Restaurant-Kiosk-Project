@@ -30,20 +30,22 @@ import {updateEmployeeInformation} from './employees';
 //                   )
 //                 }
 
-    OnUpdate = async (empID, newData) => {
-        const updateEmp = { empID, newData }
-        // Backend function call.
+    OnUpdate = async (newData) => {
+        const updateEmp = { newData }
         let completion = await updateEmployeeInformation(updateEmp)
         /* This is in function so that when the user clicks 'Ready'
          the order will disappear from the screen.*/
         let newEmpDetails = await getEmployees(this.props.id).then(
           emp1 => {
-            this.setState({ orderDetails: emp1 }, function () {
-              console.log(this.state.orderDetails);
+            this.setState({ updateEmployeeInformation: emp1 }, function () {
+              console.log(this.state.updateEmployeeInformation);
             })
           }
         )
       }
+
+
+
 
   getData = async () => {
      let tempData = await getEmployees()
@@ -61,26 +63,44 @@ import {updateEmployeeInformation} from './employees';
    {this.getData()}
 
    const mapInventory = this.state.query.map(index => {
+
       return (
       <View style={styles.employeeContainer}>
-          <Text style={styles.employeeContainerText}>
-              Name: {index.name}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Role: {index.role}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              EMPid: {index.id}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Email: {index.email}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              DOB: {index.dob}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Hourly Rate: {index.hourlyRate}
-          </Text>
+         <TextInput
+            placeholder= {index.name}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {index.email}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {index.role}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {index.password}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {index.dob}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {index.id}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
+         <TextInput
+            placeholder= {String(index.hourlyRate)}
+            placeholderTextColor='rgba(255,255,255,1.0)'
+            style={styles.employeeContainerText}
+         />
 
           <TouchableHighlight style={styles.removeEmployeeButton}
            onPress={() => deleteEmployee(index.id)}>
@@ -89,7 +109,7 @@ import {updateEmployeeInformation} from './employees';
               </Text>
           </TouchableHighlight>
           <TouchableHighlight style={styles.removeEmployeeButton}
-           onPress={() => this.props.navigation.navigate('editEmployee')}>
+           onPress={() => alert('Employee Updated')}>
               <Text style={styles.menuText}>
                   Edit Employee
               </Text>
@@ -154,7 +174,7 @@ const styles = StyleSheet.create({
     employeeContainer:
     {
         backgroundColor: '#3333ff',
-        height: 450,
+        height: 500,
         width: 800,
         alignItems: 'flex-start',
         justifyContent: 'space-around',

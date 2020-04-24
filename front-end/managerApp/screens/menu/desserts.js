@@ -3,10 +3,16 @@ import { StyleSheet, View, TextInput, Button, Alert, Text, TouchableHighlight, S
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {getTransactions} from '../metrics/orders';
+import menu_operations from './menu_operations';
+import {getMenu} from './menu_operations';
+import {addToMenu} from './menu_operations';
+import {deleteFromMenu} from './menu_operations';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/functions';
+import '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 
-
-export default class manageTips extends React.Component {
+ export default class Desserts extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -31,20 +37,21 @@ export default class manageTips extends React.Component {
 
     OnUpdate = async (empID, newData) => {
         const updateEmp = { empID, newData }
+        // Backend function call.
         let completion = await updateEmployeeInformation(updateEmp)
         /* This is in function so that when the user clicks 'Ready'
          the order will disappear from the screen.*/
         let newEmpDetails = await getEmployees(this.props.id).then(
           emp1 => {
-            this.setState({ updateEmployeeInformation: emp1 }, function () {
-              console.log(this.state.updateEmployeeInformation);
+            this.setState({ orderDetails: emp1 }, function () {
+              console.log(this.state.orderDetails);
             })
           }
         )
       }
 
   getData = async () => {
-     let tempData = await getTransactions()
+     let tempData = await getMenu('dessert')
        .then(data => {
          this.setState({ query : data })
          console.log(data);
@@ -58,35 +65,42 @@ export default class manageTips extends React.Component {
 
    {this.getData()}
 
-   const mapTransactions = this.state.query.map(index => {
+   const mapInventory = this.state.query.map(index => {
       return (
       <View style={styles.employeeContainer}>
           <Text style={styles.employeeContainerText}>
-              Amount Due: {index.amountDue}
+              Name: {index.name}
           </Text>
           <Text style={styles.employeeContainerText}>
-              discount: {index.discount}
+              Type: {index.type}
           </Text>
           <Text style={styles.employeeContainerText}>
-              order Total: {index.orderTotal}
+              Allergens: {index.allergens}
           </Text>
           <Text style={styles.employeeContainerText}>
-              Payment Method: {index.paymentMethod}
+              Calories: {index.calories}
           </Text>
           <Text style={styles.employeeContainerText}>
-              Tax: {index.tax}
+              Ingredients: {index.ingredients}
           </Text>
           <Text style={styles.employeeContainerText}>
-              Tips: {index.tips}
+              Price: {index.price}
           </Text>
           <Text style={styles.employeeContainerText}>
-              Waitstaff ID: {index.waitstaff}
+              Quantity: {index.quantity}
           </Text>
 
           <TouchableHighlight style={styles.removeEmployeeButton}
-           onPress={() => alert('Tip approved for this transaction!')}>
+           onPress={() => deleteFromMenu(index.name)}>
               <Text style={styles.menuText}>
-                  Approve Tips
+                  Remove Item From Menu
+              </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight style={styles.removeEmployeeButton}
+           onPress={() => alert('Menu Updated')}>
+              <Text style={styles.menuText}>
+                  Edit Item
               </Text>
           </TouchableHighlight>
       </View>
@@ -97,8 +111,20 @@ export default class manageTips extends React.Component {
 
   <View style={styles.background}>
         <ScrollView>
+            <TouchableHighlight style = {styles.buttons}
+             onPress={() => this.props.navigation.navigate('NewMenuItem')}>
+                <Text style={styles.menuText}>
+                    Add New Menu Item
+                </Text>
+             </TouchableHighlight>
+             <TouchableHighlight style = {styles.buttons}
+              onPress={() => this.getData()}>
+                 <Text style={styles.menuText}>
+                     Update Menu
+                 </Text>
+             </TouchableHighlight>
 
-        {mapTransactions}
+        {mapInventory}
         </ScrollView>
   </View>
   );

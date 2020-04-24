@@ -1,88 +1,50 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
-import menu_operations from './menu_operations';
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/functions';
 import '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import {addToMenu} from './menu_operations';
 
 const newMenuItem = ({navigation}) => {
 
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
-    const [DOB, setDOB] = useState('');
+    const [allergens, setAllergens] = useState('');
+    const [calories, setCalories] = useState('');
+    const [ingredients, setIngredients] = useState('');
+    const [price, setPrice] = useState('');
+    const [quantity, setQuantity] = useState('');
+    const [type, setType] = useState('');
 
-    const _onNewItemPressed = () => {
+    const _onNewMenuItemPressed = () => {
 
-            if (name === '') return alert('Enter Name');
-            if (email === '') return alert('Enter Email');
-            if (password === '') return alert('Enter Password');
-            if (role === '') return alert('Enter Role');
-            if (DOB === '') return alert('Enter DOB');
+//            if (name === '') return alert('Enter Name');
+//            if (email === '') return alert('Enter Email');
+//            if (password === '') return alert('Enter Password');
+//            if (role === '') return alert('Enter Role');
+//            if (DOB === '') return alert('Enter DOB');
 
             const newItem = {
-                dob: DOB,
-                email: email,
-                hourlyRate: 15.5,
-                id: '',
                 name: name,
-                password: password,
-                role: role,
+                allergens: allergens,
+                ingredients: allergens,
+                calories: calories,
+                price: price,
+                quantity: quantity,
+                requests: 'none',
+                type: type,
+                uri: '',
             }
 
             addToMenu(newItem);
     }
-
-    async function addEmployee(employee) {
-
-        let isSuccess;
-        let validEmail = true;
-
-        await firebase.firestore().collection('Employees').where('email', '==', employee.email).get()
-        .then((snapshot) => {
-            if (snapshot.empty) {
-                validEmail = true;
-            }
-
-        })
-        .catch (error => {
-            console.log('error getting doc', error);
-        });
-        if(validEmail==false)
-        {
-            console.log('Email already exists');
-            let emailExist = 'Email already exists'
-            return emailExist
-        }
-
-
-        let autoID = firebase.firestore().collection('Employees').doc().id;
-
-        employee.id = autoID;
-
-        await firebase.firestore().collection('Employees').doc(autoID).set(employee)
-        .then(() => {
-            console.log("Employee added Successfully");
-            isSuccess = true;
-            alert('New employee added');
-        })
-        .catch((error) => {
-            console.error("Error adding Employee to Employee table: ", error);
-            isSuccess = false;
-        });
-
-        return isSuccess;
-    }
-
 
 
         return (
             <View style={styles.container}>
 
                 <TextInput
-                placeholder="Employee Name"
+                placeholder="Name"
                 placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
                 onChangeText={(val) => setName(val)}
@@ -90,60 +52,74 @@ const newMenuItem = ({navigation}) => {
                 />
 
                 <TextInput
-                placeholder="Email"
+                placeholder="Allergens"
                 placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
-                onChangeText={(val) => setEmail(val)}
-                value={email}
+                onChangeText={(val) => setAllergens(val)}
+                value={allergens}
                 />
 
                 <TextInput
-                placeholder="Password"
+                placeholder="Ingredients"
                 placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
-                secureTextEntry= {true}
-                onChangeText={(val) => setPassword(val)}
-                value={password}
+                onChangeText={(val) => setIngredients(val)}
+                value={ingredients}
                 />
 
                 <TextInput
-                placeholder="Role"
+                placeholder="Calories"
                 placeholderTextColor='rgba(255,255,255,0.7)'
                 style={styles.input}
-                onChangeText={(val) => setRole(val)}
-                value={role}
+                onChangeText={(val) => setCalories(val)}
+                value={calories}
+                />
+
+                <TextInput
+                placeholder="Price"
+                placeholderTextColor='rgba(255,255,255,0.7)'
+                style={styles.input}
+                onChangeText={(val) => setPrice(val)}
+                value={price}
                 />
 
                  <TextInput
-                 placeholder="DOB (MM/DD/YYYY)"
+                 placeholder="Quantity"
                  placeholderTextColor='rgba(255,255,255,0.7)'
                  style={styles.input}
-                onChangeText={(val) => setDOB(val)}
-                value={DOB}
+                onChangeText={(val) => setQuantity(val)}
+                value={quantity}
+                 />
+
+                <TextInput
+                 placeholder="Type (entree, dessert, five dollar, beverage, or appetizer)"
+                 placeholderTextColor='rgba(255,255,255,0.7)'
+                 style={styles.input}
+                 onChangeText={(val) => setType(val)}
+                 value={type}
                  />
 
 
                 <Button
                 style={styles.addPosition}
-                title="Register" onPress = {_onNewItemPressed}>
+                title="Add to Menu" onPress = {_onNewMenuItemPressed}>
                 </Button>
             </View>
         );
     }
 
+    const styles = StyleSheet.create({
+        container: {
+            padding: 20
+        },
+        input: {
+            height: 60,
+            backgroundColor: 'gray',
+            marginBottom: 10,
+            color: 'white',
+            paddingHorizontal: 10
+        },
 
-export default newMenuItem;
+    })
 
-const styles = StyleSheet.create({
-    container: {
-        padding: 20
-    },
-    input: {
-        height: 60,
-        backgroundColor: 'gray',
-        marginBottom: 10,
-        color: 'white',
-        paddingHorizontal: 10
-    },
-
-})
+    export default newMenuItem;

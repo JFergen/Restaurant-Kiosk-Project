@@ -1,180 +1,99 @@
-import React, { Component, useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Alert, Text, TouchableHighlight, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, {Component, useState} from 'react';
+import { StyleSheet, ImageBackground, Text, View, Button, TouchableHighlight,} from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import menu_operations from './menu_operations';
-import {getMenu} from './menu_operations';
-import {addToMenu} from './menu_operations';
-import {deleteFromMenu} from './menu_operations';
-import firebase from '@react-native-firebase/app';
-import '@react-native-firebase/functions';
-import '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'
 
- export default class MenuManangement extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            query: [],
-        }
-    }
-//               OnButtonPress = async (orderID, completionStatus) => {
-//                   const orderStatus = { orderID, completionStatus }
-//                   // Backend function call.
-//                   let completion = await updateOrderInformation(orderStatus)
-//
-//                   /* This is in function so that when the user clicks 'Ready'
-//                    the order will disaper from the screen.*/
-//                   let neworderDetails = await getTableOrders(this.props.tableId).then(
-//                     order1 => {
-//                       this.setState({ orderDetails: order1 }, function () {
-//                         //console.log(this.state.orderDetails);
-//                       })
-//                     }
-//                   )
-//                 }
+function MenuManagement ({ navigation }) {
+    return (
+    <View style= {{flex: 1}}>
+        <View style ={styles.background}>
 
-    OnUpdate = async (empID, newData) => {
-        const updateEmp = { empID, newData }
-        // Backend function call.
-        let completion = await updateEmployeeInformation(updateEmp)
-        /* This is in function so that when the user clicks 'Ready'
-         the order will disappear from the screen.*/
-        let newEmpDetails = await getEmployees(this.props.id).then(
-          emp1 => {
-            this.setState({ orderDetails: emp1 }, function () {
-              console.log(this.state.orderDetails);
-            })
-          }
-        )
-      }
-
-  getData = async () => {
-     let tempData = await getMenu('entree')
-       .then(data => {
-         this.setState({ query : data })
-         console.log(data);
-       })
-       .catch(error => {
-         console.error(error)
-       })
-   }
-
-   render () {
-
-   {this.getData()}
-
-   const mapInventory = this.state.query.map(index => {
-      return (
-      <View style={styles.employeeContainer}>
-          <Text style={styles.employeeContainerText}>
-              Name: {index.name}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Type: {index.type}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Allergens: {index.allergens}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Calories: {index.calories}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Ingredients: {index.ingredients}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Price: {index.price}
-          </Text>
-          <Text style={styles.employeeContainerText}>
-              Quantity: {index.quantity}
-          </Text>
-
-          <TouchableHighlight style={styles.removeEmployeeButton}
-           onPress={() => deleteFromMenu(index.name)}>
-              <Text style={styles.menuText}>
-                  Remove Item From Menu
-              </Text>
-          </TouchableHighlight>
-      </View>
-       )
-   })
-
-  return (
-
-  <View style={styles.background}>
-        <ScrollView>
-            <TouchableHighlight style = {styles.buttons}
-             onPress={() => this.props.navigation.navigate('NewMenuItem')}>
-                <Text style={styles.menuText}>
-                    Add New Menu Item
-                </Text>
-             </TouchableHighlight>
-             <TouchableHighlight style = {styles.buttons}
-              onPress={() => this.getData()}>
-                 <Text style={styles.menuText}>
-                     Update Menu
-                 </Text>
-             </TouchableHighlight>
-
-        {mapInventory}
-        </ScrollView>
-  </View>
-  );
- }
+            <View style={styles.mainMenu}>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('Appetizers')}>
+                         <Text style = {styles.menuText}>
+                             Appetizers
+                         </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('Beverages')}>
+                         <Text style = {styles.menuText}>
+                             Beverages
+                         </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('Entrees')}>
+                         <Text style = {styles.menuText}>
+                             Entrees
+                         </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('Desserts')}>
+                         <Text style = {styles.menuText}>
+                             Desserts
+                         </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.menuButton}
+                     onPress={() => navigation.navigate('FiveDollar')}>
+                         <Text style = {styles.menuText}>
+                             Five Dollar Menu
+                         </Text>
+                    </TouchableHighlight>
+            </View>
+       </View>
+    </View>
+    )
 }
+
 
 const styles = StyleSheet.create({
 
     background: {
-            flex: 1,
-            backgroundColor: '#3498db',
-            alignItems: 'center'
-        },
+        flex: 1,
+        backgroundColor: '#3498db'
+    },
 
-        buttons: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: 60,
-            backgroundColor: '#595959',
-            margin: 20
-        },
+    logoutButton: {
+        justifyContent: 'flex-start',
+        height: 100,
+        width: 160,
+        margin: 20,
+        backgroundColor: '#990000',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 
-        removeEmployeeButton: {
-            alignSelf: 'stretch',
-            height: 40,
-            alignItems: 'center',
-            backgroundColor: '#ff6600',
-            margin: 10
-        },
+    mainMenu: {
+        margin: 200,
+        paddingTop: 10,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        flexShrink: 2.0,
+    },
+
+    menuButton: {
+        width: 220,
+        height: 160,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20,
+        padding: 5,
+        backgroundColor: '#3333ff'
+    },
 
     menuText: {
         fontSize: 21,
         color: '#ffffff',
     },
 
-    employeeContainer:
-    {
-        backgroundColor: '#3333ff',
-        height: 450,
-        width: 800,
-        alignItems: 'flex-start',
-        justifyContent: 'space-around',
-        margin: 40,
-        padding: 10
-    },
-
-    employeeContainerText:
-    {
-        fontSize: 24,
-        color: '#ffffff',
-
-    },
-
-    scrollView:
-    {
-        backgroundColor: '#ffffff',
-        paddingLeft: 400,
-        alignItems: 'center'
-    },
+    logoutText: {
+            color: '#ffffff',
+            fontSize: 20,
+        },
 })
+
+export default MenuManagement;
