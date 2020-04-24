@@ -53,7 +53,7 @@ export async function setPopularItems(type) {
     
     // await firebase.firestore().collection('Menu').where('month', '==', month).get()
     // .then(snapshot => {
-    //     if (dataSnapshot.exists()) {
+    //     if (snapshot.exists()) {
     //         query = snapshot.docs.map(doc => doc.data());
     //     }
     //     else {
