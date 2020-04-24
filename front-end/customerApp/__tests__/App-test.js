@@ -1375,58 +1375,7 @@ it("should confirm order", async () => {
     confirmOrder("v6J7iJmyHxW5CIdCosvK", "l8qDPeaGzOC4egZMW5hW", "3", items);
 });
 
-///////////////////////////////////////////////Question Section
 
-//this function will add a question doc to the database
-//the functions parameter is a doc object.
-//for example:
-/*let doc = {
-    orderID: '03se9wEgk4rYmbBB9Bv4',
-    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
-    review: ['Bad', 'Good','Trash']
-    }*/
-//then pass doc to the function i.e, addQuestionDoc(doc)
-it("should add question to question collection", async () => {
-    async function addQuestionDoc(doc) {
-        let isSuccess;
-        await firebase.firestore().collection('Question').add(doc)
-        .then(() => {
-            console.log("Successfully added question doc to the question collection.");
-            isSuccess = true;
-        })
-        .catch((error) => {
-            alert("Error adding question doc to the question collection: ", error);
-            isSuccess = false;
-        });
-        return isSuccess;
-    }
-
-    let doc = {
-        orderID: '03se9wEgk4rYmbBB9Bv4',
-        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
-        review: ['Bad','Good','Trash']
-        };
-    addQuestionDoc(doc);
-});
-
-it("should get all questions in collection", async () => {
-    //this function will get all of the question docs in the Question collection
-    async function getQuestionDocs() {
-        let questionDoc = []
-
-        await firebase.firestore().collection('Question').get()
-        .then((snapshot) => {
-            questionDoc = snapshot.docs.map(doc => doc.data());
-        })
-        .catch ((error) => {
-            alert('Failure getting question docs.', error);
-        });
-
-        return questionDoc;
-    }
-
-    getQuestionDocs();
-});
 
 
 
@@ -2833,4 +2782,182 @@ it("should get all questions in collection: error", async () => {
     }
 
     getQuestionDocs('l'); // unused parameter
+});
+
+///////////////////////////////////////////////Question Section
+
+//this function will add a question doc to the database
+//the functions parameter is a doc object.
+//for example:
+/*let doc = {
+    orderID: '03se9wEgk4rYmbBB9Bv4',
+    questions: ['How was your experience at our restaurant', 'How was our service','How was the quality of our food'],
+    review: ['Bad', 'Good','Trash']
+    }*/
+//then pass doc to the function i.e, addQuestionDoc(doc)
+it("should add question to question collection", async () => {
+    async function addQuestionDoc(doc) {
+        let isSuccess;
+        await firebase.firestore().collection('Question').add(doc)
+        .then(() => {
+            console.log("Successfully added question doc to the question collection.");
+            isSuccess = true;
+        })
+        .catch((error) => {
+            alert("Error adding question doc to the question collection: ", error);
+            isSuccess = false;
+        });
+        return isSuccess;
+    }
+
+    let doc = {
+        orderID: '03se9wEgk4rYmbBB9Bv4',
+        questions: ['How was your experience at our restaurant','How was our service','How was the quality of our food'],
+        review: ['Bad','Good','Trash']
+        };
+    addQuestionDoc(doc);
+});
+
+it("should get all questions in collection", async () => {
+    //this function will get all of the question docs in the Question collection
+    async function getQuestionDocs() {
+        let questionDoc = []
+
+        await firebase.firestore().collection('Question').get()
+        .then((snapshot) => {
+            questionDoc = snapshot.docs.map(doc => doc.data());
+        })
+        .catch ((error) => {
+            alert('Failure getting question docs.', error);
+        });
+
+        return questionDoc;
+    }
+
+    getQuestionDocs();
+});
+
+//popular items
+
+it("should reset all popular items", async () => {
+    async function resetPopularItems() {
+        let query;
+        let isSuccess = true;
+
+        await firebase.firestore().collection('Menu').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+
+        if (!isSuccess) {
+            return false;
+        }
+        
+        for (i in query) {
+            if (query[i].popular) {
+                query[i].popular = false;
+        
+                await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+                .then(snapshot => {
+                    console.log('Succesfully updated document.');
+                })
+                .catch (error => {
+                    console.log('Error getting documents', error);
+                    isSuccess = false;
+                });
+            }
+        }
+        
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    resetPopularItems()
+});
+
+it("should set all popular items", async () => {
+
+    async function setPopularItems() {
+        let query;
+        let isSuccess = true;
+        let month = new Date();
+        month = month.getMonth();
+        
+        await firebase.firestore().collection('Menu').where('month', '==', month).get()
+        .then(snapshot => {
+            if (dataSnapshot.exists()) {
+                query = snapshot.docs.map(doc => doc.data());
+            }
+            else {
+                query = null;
+            }
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+                                                            
+        if (!isSucess) {
+            return false;
+        }
+        
+        if (query == null) {
+            await firebase.firestore().collection('Menu').doc('CurrentMonth').set({month: month})
+            .then(snapshot => {
+                console.log('Success updated month', error);
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                isSuccess = false;
+            });
+            
+            //need to reset orderTotal
+        }
+        
+        
+        
+        
+        await firebase.firestore().collection('Menu').orderBy('orderTotal', 'desc').get()
+        .then(snapshot => {
+            query = snapshot.docs.map(doc => doc.data());
+        })
+        .catch (error => {
+            console.log('Error getting documents', error);
+            isSuccess = false;
+        });
+        
+        if (!isSuccess) {
+            return false;
+        }
+        
+
+        for (let i = 0; i < 5; i++) {
+            query[i].popular = true;
+
+            await firebase.firestore().collection('Menu').doc(query[i].name).set(query[i])
+            .then(snapshot => {
+                console.log('Succesfully updated document.');
+            })
+            .catch (error => {
+                console.log('Error getting documents', error);
+                isSuccess = false;
+            });
+        }
+
+        if (!isSuccess) {
+            return false;
+        }
+
+        return true;
+
+    }
+    setPopularItems()
 });
