@@ -5,7 +5,6 @@ import { createOrder } from '../../orders';
 import { connect } from 'react-redux';
 import { setCustomerID } from '../../store/actions/customer_actions';
 import { setOrderID } from '../../store/actions/order_actions';
-import {resetPopularItems, setPopularItems} from '../../menu_operations';
 import UserIcon from '../../assets/registration/user_icon.png';
 import LoginButton from '../../assets/registration/login_button.png';
 import RegisterButton from '../../assets/registration/register_button.png';
@@ -23,18 +22,6 @@ class Registration extends Component {
         }
         this.textStyleEmail = styles.textInput
         this.textStylePass = styles.textInput
-    }
-
-    componentDidMount = async () => {
-        let check = await resetPopularItems();
-        if (check === false) {
-            console.log("Error resetting popular items")
-        }
-
-        check = await setPopularItems();
-        if (check === false) {
-            alert("Error getting popular items")
-        }
     }
 
     updateFirstName = (text) => {

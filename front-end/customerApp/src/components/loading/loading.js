@@ -3,11 +3,19 @@ import { View, Text } from 'react-native';
 import { getMenu } from '../../menu_operations';
 import { connect } from 'react-redux';
 import { setMenu } from '../../store/actions/menu_actions'
+import {resetPopularItems, setPopularItems} from '../../menu_operations';
 import styles from './styles';
 import MainContainer from '../main_container/main_container';
 
 class Loading extends Component {
-  componentDidMount() {
+  componentDidMount = async () => {
+    await resetPopularItems();
+    await setPopularItems('entree');
+    await setPopularItems('appetizer');
+    await setPopularItems('beverage');
+    await setPopularItems('dessert');
+    await setPopularItems('five dollar');
+    
     this.getData();
   }
   
